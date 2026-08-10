@@ -1,0 +1,6 @@
+{
+  "name": "GearForge - Global Gaming Gear & System Planner",
+  "description": "Global gaming peripheral and PC setup engine with multi-currency support, AI FPS predictor, international retailer links, translation engine, and VIP Pass benefits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

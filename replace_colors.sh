@@ -1,0 +1,10 @@
+#!/bin/bash
+find src -type f -name "*.tsx" -o -name "*.ts" | xargs sed -i 's/\bamber-200\b/primary-200/g'
+find src -type f -name "*.tsx" -o -name "*.ts" | xargs sed -i 's/\bamber-300\b/primary-300/g'
+find src -type f -name "*.tsx" -o -name "*.ts" | xargs sed -i 's/\bamber-400\b/primary-400/g'
+find src -type f -name "*.tsx" -o -name "*.ts" | xargs sed -i 's/\bamber-500\b/primary-500/g'
+find src -type f -name "*.tsx" -o -name "*.ts" | xargs sed -i 's/\bamber-600\b/primary-600/g'
+find src -type f -name "*.tsx" -o -name "*.ts" | xargs sed -i 's/\bamber-950\b/primary-950/g'
+find src -type f -name "*.tsx" -o -name "*.ts" | xargs sed -i 's/text-\[var(--color-brand-cyan)\]/text-primary-400/g'
+find src -type f -name "*.tsx" -o -name "*.ts" | xargs sed -i 's/bg-\[var(--color-brand-cyan)\]/bg-primary-500/g'
+find src -type f -name "*.tsx" -o -name "*.ts" | xargs sed -i 's/border-\[var(--color-brand-cyan)\]/border-primary-500/g'

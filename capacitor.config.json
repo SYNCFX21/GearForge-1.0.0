@@ -1,0 +1,8 @@
+{
+  "appId": "com.gamerbudget.ph",
+  "appName": "GamerBudget PH",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

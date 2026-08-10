@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GamerBudget PH</string>
+    <string name="title_activity_main">GamerBudget PH</string>
+    <string name="package_name">com.gamerbudget.ph</string>
+    <string name="custom_url_scheme">com.gamerbudget.ph</string>
+</resources>
