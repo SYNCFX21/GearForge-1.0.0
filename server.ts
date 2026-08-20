@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
+import rateLimit from "express-rate-limit";
 
 dotenv.config();
 
@@ -65,6 +66,16 @@ app.get("/api/health", (req, res) => {
     currentTime: new Date().toISOString()
   });
 });
+
+const aiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,                  // limit each IP to 20 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests, please try again later." },
+});
+
+app.use("/api/gemini", aiLimiter);
 
 // 2. Custom AI gaming accessory suggestion route
 app.post("/api/gemini/suggest-accessories", async (req, res) => {

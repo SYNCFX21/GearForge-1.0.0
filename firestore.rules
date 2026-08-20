@@ -21,9 +21,26 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      // Users can read all profiles, but only write their own (unless admin)
-      allow read: if isAuthenticated();
-      allow write: if isOwner(userId) || isAdmin();
+      // Anyone signed in can read profiles
+      allow read: if isOwner(userId) || isAdmin();
+
+      // A user can create their own doc, but privileged fields must start at safe defaults
+      allow create: if isOwner(userId) &&
+        request.resource.data.role in ['user', null] &&
+        request.resource.data.isVip in [false, null] &&
+        request.resource.data.hasPermanentAdFree in [false, null] &&
+        request.resource.data.isMuted in [false, null];
+
+      // A user can update their own doc, but MAY NOT change privileged fields themselves
+      allow update: if isOwner(userId) &&
+        request.resource.data.role == resource.data.role &&
+        request.resource.data.isVip == resource.data.isVip &&
+        request.resource.data.hasPermanentAdFree == resource.data.hasPermanentAdFree &&
+        request.resource.data.isMuted == resource.data.isMuted &&
+        request.resource.data.mutedUntil == resource.data.mutedUntil;
+
+      // Admins can change anything, including privileged fields
+      allow update, delete: if isAdmin();
       
       match /loadouts/{loadoutId} {
         // Anyone can read loadouts, but only owner/admin can write

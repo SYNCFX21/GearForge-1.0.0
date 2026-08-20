@@ -191,46 +191,6 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
     }
   };
 
-  const handleDiscordLogin = () => {
-    setError(null);
-    setIsLoading(true);
-    setTimeout(() => {
-      const discordUser: UserProfile = {
-        uid: `discord-${Date.now()}`,
-        email: 'discord.gamer@gearforge.ph',
-        displayName: 'Discord_Gamer_PH',
-        photoURL: 'https://api.dicebear.com/7.x/bottts/svg?seed=DiscordGamerPH',
-        providerId: 'firebase',
-        registeredAt: new Date().toLocaleDateString('en-PH'),
-        
-      };
-      saveUserProfileToGearForgeDB(discordUser.uid, discordUser);
-      localStorage.setItem('ph_gamer_user', JSON.stringify(discordUser));
-      setIsLoading(false);
-      onLoginSuccess(discordUser);
-    }, 500);
-  };
-
-  const handleFacebookLogin = () => {
-    setError(null);
-    setIsLoading(true);
-    setTimeout(() => {
-      const fbUser: UserProfile = {
-        uid: `facebook-${Date.now()}`,
-        email: 'facebook.gamer@gearforge.ph',
-        displayName: 'FB_Gamer_PH',
-        photoURL: 'https://api.dicebear.com/7.x/bottts/svg?seed=FBGamerPH',
-        providerId: 'firebase',
-        registeredAt: new Date().toLocaleDateString('en-PH'),
-        
-      };
-      saveUserProfileToGearForgeDB(fbUser.uid, fbUser);
-      localStorage.setItem('ph_gamer_user', JSON.stringify(fbUser));
-      setIsLoading(false);
-      onLoginSuccess(fbUser);
-    }, 500);
-  };
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
       
@@ -397,7 +357,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
                   <div className="flex-grow border-t border-white/10"></div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 gap-2">
                   <button
                     type="button"
                     onClick={handleGoogleLogin}
@@ -412,33 +372,9 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
                     </svg>
                     <span>Google</span>
                   </button>
-
-                  <button
-                    type="button"
-                    onClick={handleDiscordLogin}
-                    disabled={isLoading}
-                    className="py-2.5 px-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/30 border border-[#5865F2]/40 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
-                  >
-                    <svg className="w-4 h-4 fill-[#5865F2] shrink-0" viewBox="0 0 127.14 96.36">
-                      <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.68,1.76,1.36,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,121.3,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36,40.3,42.45,40.3C48.9,40.3,54,46,53.88,53,53.88,60,48.8,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.08-12.7,11.44-12.7C91.1,40.3,96.25,46,96.14,53,96.14,60,91.1,65.69,84.69,65.69Z"/>
-                    </svg>
-                    <span>Discord</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleFacebookLogin}
-                    disabled={isLoading}
-                    className="py-2.5 px-2 bg-[#1877F2]/20 hover:bg-[#1877F2]/30 border border-[#1877F2]/40 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
-                  >
-                    <svg className="w-4 h-4 fill-[#1877F2] shrink-0" viewBox="0 0 24 24">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                    </svg>
-                    <span>Facebook</span>
-                  </button>
                 </div>
                 <p className="text-[10px] text-zinc-500 text-center pt-1">
-                  By logging in with Google, Discord, or Facebook, you agree to our Terms & Privacy Policy and OAuth compliance standards.
+                  By logging in with Google, you agree to our Terms & Privacy Policy and OAuth compliance standards.
                 </p>
               </form>
 
