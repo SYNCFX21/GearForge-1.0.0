@@ -405,8 +405,8 @@ export default function App() {
     new Date(user.trialEndsAt).getTime() < Date.now()
   );
 
-  const hasActiveVip = Boolean(user.isVip && (!user.isTrialActive || !isTrialExpired));
-  const hasAdFree = Boolean(user.hasPermanentAdFree || hasActiveVip);
+  const hasActiveVip = Boolean((user.isVip && (!user.isTrialActive || !isTrialExpired)) || user.role === 'super_admin' || user.role === 'admin');
+  const hasAdFree = Boolean(user.hasPermanentAdFree || hasActiveVip || user.role === 'super_admin' || user.role === 'admin');
 
   return (
     <div className="min-h-screen text-[#f5f5f7] antialiased selection:bg-primary-500 selection:text-black pb-16 relative overflow-hidden">
@@ -500,7 +500,11 @@ export default function App() {
                     >
                       {user.displayName}
                     </button>
-                    {user.isTrialActive && !isTrialExpired ? (
+                    {user.role === 'super_admin' ? (
+                      <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-500/40">Super Admin</span>
+                    ) : user.role === 'admin' ? (
+                      <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-500/40">Admin</span>
+                    ) : user.isTrialActive && !isTrialExpired ? (
                       <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase">7-Day Trial</span>
                     ) : isTrialExpired ? (
                       <span className="px-1.5 py-0.2 rounded bg-red-500/20 text-red-300 text-[9px] font-extrabold uppercase border border-red-500/40">Trial Expired</span>
@@ -928,17 +932,19 @@ export default function App() {
                                 {user.role === 'super_admin' ? '👑 Super Admin' : '🛡️ Admin'}
                               </span>
                             )}
-                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase shrink-0 ${
-                              user.isTrialActive 
-                                ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
-                                : user.hasPermanentAdFree 
-                                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                                : user.isVip 
-                                ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
-                                : 'bg-white/10 text-zinc-300'
-                            }`}>
-                              {user.isTrialActive ? '7-Day Trial' : user.hasPermanentAdFree ? 'Ad-Free' : user.isVip ? 'VIP Member' : 'Basic Tier'}
-                            </span>
+                            {user.role !== 'admin' && user.role !== 'super_admin' && (
+                              <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase shrink-0 ${
+                                user.isTrialActive 
+                                  ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
+                                  : user.hasPermanentAdFree 
+                                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                                  : user.isVip 
+                                  ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
+                                  : 'bg-white/10 text-zinc-300'
+                              }`}>
+                                {user.isTrialActive ? '7-Day Trial' : user.hasPermanentAdFree ? 'Ad-Free' : user.isVip ? 'VIP Member' : 'Basic Tier'}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </div>

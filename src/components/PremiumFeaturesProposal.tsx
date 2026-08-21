@@ -38,7 +38,7 @@ export default function PremiumFeaturesProposal({ user, onUpdateUser, onNavigate
   const [activeDemo, setActiveDemo] = useState<'pro' | 'export' | 'consultant'>('pro');
   const [demoSuccess, setDemoSuccess] = useState<string | null>(null);
 
-  const isVipOrAdFree = Boolean(user?.isVip || user?.hasPermanentAdFree);
+  const isVipOrAdFree = Boolean(user?.isVip || user?.hasPermanentAdFree || user?.role === 'super_admin' || user?.role === 'admin');
 
   const handleRunDemoAction = (msg: string) => {
     setDemoSuccess(msg);
