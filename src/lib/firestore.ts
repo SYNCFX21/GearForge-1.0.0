@@ -47,16 +47,8 @@ export const saveUserProfileToGearForgeDB = async (userId: string, profile: User
     
     let roleToSave = profile.role;
     
-    // Set super_admin role for a specific email
-    if (profile.email && profile.email.toLowerCase() === 'aaronsalagubang21@gmail.com') {
-      roleToSave = 'super_admin';
-      profile.displayName = 'Aaron Lanceta';
-    } else {
-      if (roleToSave === 'super_admin') {
-        roleToSave = 'user'; // Only Aaron can be super_admin
-      } else if (!roleToSave && isNewUser) {
-        roleToSave = 'user';
-      }
+    if (!roleToSave && isNewUser) {
+      roleToSave = 'user';
     }
 
     const { email, ...publicProfile } = profile;
