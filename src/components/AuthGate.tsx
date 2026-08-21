@@ -17,7 +17,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { auth } from '../lib/firebase';
 import { saveUserProfileToGearForgeDB } from '../lib/firestore';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
 
 interface AuthGateProps {
   onLoginSuccess: (user: UserProfile) => void;
@@ -145,6 +145,26 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
     } catch (err: any) {
       console.error(err);
       setError(getFriendlyErrorMessage(err.code, err.message));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    setError(null);
+    setSuccess(null);
+    
+    if (!email) {
+      setError('Please enter your email address to reset your password.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setSuccess('Password reset link sent! Please check your inbox.');
+    } catch (firebaseErr: any) {
+      setError(getFriendlyErrorMessage(firebaseErr.code, firebaseErr.message));
     } finally {
       setIsLoading(false);
     }
@@ -296,9 +316,21 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-zinc-300 uppercase tracking-wider block">
-                    Password (Min 6 chars) *
-                  </label>
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-bold text-zinc-300 uppercase tracking-wider block">
+                      Password (Min 6 chars) *
+                    </label>
+                    {isLoginMode && (
+                      <button
+                        type="button"
+                        onClick={handleForgotPassword}
+                        disabled={isLoading}
+                        className="text-[11px] font-bold text-primary-400 hover:text-primary-300 hover:underline transition"
+                      >
+                        Forgot Password?
+                      </button>
+                    )}
+                  </div>
                   <input
                     type="password"
                     required
