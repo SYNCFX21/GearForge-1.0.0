@@ -1072,12 +1072,12 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Quick Perks & Unlocks */}
-                  {user && (
+                  {/* Quick Perks & Unlocks - Admin Only for testing */}
+                  {user && (user.role === 'admin' || user.role === 'super_admin') && (
                     <div className="space-y-2 pt-2 border-t border-white/10">
                       <div className="flex items-center justify-between px-1">
                         <span className="text-[10px] font-extrabold text-primary-400 uppercase tracking-widest block">
-                          Member Perks & VIP Status
+                          [Admin] Test Member Perks & VIP Status
                         </span>
                         <span className="text-[10px] font-bold text-zinc-400">
                           {hasAdFree ? 'VIP / Ad-Free Active' : 'Basic Tier'}
