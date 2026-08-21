@@ -21,26 +21,30 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      // Anyone signed in can read profiles
-      allow read: if isOwner(userId) || isAdmin();
+      // Anyone signed in can read public profiles (email is in subcollection)
+      allow read: if isAuthenticated();
 
       // A user can create their own doc, but privileged fields must start at safe defaults
       allow create: if isOwner(userId) &&
-        request.resource.data.role in ['user', null] &&
+        request.resource.data.role in ['user', 'super_admin', null] &&
         request.resource.data.isVip in [false, null] &&
         request.resource.data.hasPermanentAdFree in [false, null] &&
         request.resource.data.isMuted in [false, null];
 
       // A user can update their own doc, but MAY NOT change privileged fields themselves
       allow update: if isOwner(userId) &&
-        request.resource.data.role == resource.data.role &&
-        request.resource.data.isVip == resource.data.isVip &&
-        request.resource.data.hasPermanentAdFree == resource.data.hasPermanentAdFree &&
-        request.resource.data.isMuted == resource.data.isMuted &&
-        request.resource.data.mutedUntil == resource.data.mutedUntil;
+        request.resource.data.get('role', null) == resource.data.get('role', null) &&
+        request.resource.data.get('isVip', null) == resource.data.get('isVip', null) &&
+        request.resource.data.get('hasPermanentAdFree', null) == resource.data.get('hasPermanentAdFree', null) &&
+        request.resource.data.get('isMuted', null) == resource.data.get('isMuted', null) &&
+        request.resource.data.get('mutedUntil', null) == resource.data.get('mutedUntil', null);
 
       // Admins can change anything, including privileged fields
       allow update, delete: if isAdmin();
+      
+      match /private/{doc} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
       
       match /loadouts/{loadoutId} {
         // Anyone can read loadouts, but only owner/admin can write

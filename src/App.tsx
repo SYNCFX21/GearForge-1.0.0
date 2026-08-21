@@ -91,7 +91,7 @@ export default function App() {
     document.documentElement.style.setProperty('--theme-color', theme.color);
     document.documentElement.style.setProperty('--app-bg', isDarkMode ? (theme.bgColor || '#050505') : '#f5f5f7');
     document.documentElement.style.setProperty('--card-bg', isDarkMode ? (theme.cardColor || '#09090b') : '#ffffff');
-    document.documentElement.style.setProperty('--text-main', isDarkMode ? (theme.textColor || '#ffffff') : '#1d1d1f');
+    document.documentElement.style.setProperty('--text-main', isDarkMode ? ((theme as any).textColor || '#ffffff') : '#1d1d1f');
     
     if (isDarkMode) {
       document.body.classList.remove('light-mode-active');

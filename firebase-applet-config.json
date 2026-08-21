@@ -1,12 +1,10 @@
 {
-  "projectId": "long-mote-0t3g1",
-  "appId": "1:222415557395:web:d988b296a6af630beac0e6",
-  "apiKey": "AIzaSyAENwbaEsFjMBtukDGWUxtycl_rOPZ-_3g",
-  "authDomain": "long-mote-0t3g1.firebaseapp.com",
-  "firestoreDatabaseId": "gearforgemaindb",
-  "storageBucket": "long-mote-0t3g1.firebasestorage.app",
-  "messagingSenderId": "222415557395",
-  "measurementId": "",
-  "oAuthClientId": "222415557395-fsanb9143giqamd2ok01mln091ijko54.apps.googleusercontent.com",
-  "recaptchaSiteKey": ""
+  "apiKey": "AIzaSyAkUcfBNf0R2HwYNh-_caJbrvmz2ltJ7Tc",
+  "authDomain": "gearforgedb.firebaseapp.com",
+  "projectId": "gearforgedb",
+  "storageBucket": "gearforgedb.firebasestorage.app",
+  "messagingSenderId": "185076292495",
+  "appId": "1:185076292495:web:912fcc0b6b1cdb33fc89fa",
+  "measurementId": "G-3TS3R4DK5Y",
+  "firestoreDatabaseId": "(default)"
 }

@@ -141,7 +141,10 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
           photoURL: `https://api.dicebear.com/7.x/bottts/svg?seed=${uid}`,
           providerId: 'firebase',
           registeredAt: new Date().toLocaleDateString('en-PH'),
-          
+          role: 'user',
+          isVip: false,
+          hasPermanentAdFree: false,
+          isMuted: false,
         };
 
         // Save profile to GearForgeDB Firestore & localStorage
@@ -177,7 +180,10 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
         photoURL: user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.uid}`,
         providerId: 'firebase',
         registeredAt: user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString('en-PH') : new Date().toLocaleDateString('en-PH'),
-        
+        role: 'user',
+        isVip: false,
+        hasPermanentAdFree: false,
+        isMuted: false,
       };
 
       await saveUserProfileToGearForgeDB(loggedUser.uid, loggedUser);

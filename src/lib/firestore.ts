@@ -38,25 +38,61 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
 export const saveUserProfileToGearForgeDB = async (userId: string, profile: UserProfile) => {
   const path = `users/${userId}`;
   try {
+    const { getDoc } = await import('firebase/firestore');
     const userRef = doc(db, 'users', userId);
+    
+    // Check if user already exists
+    const existingSnap = await getDoc(userRef);
+    const isNewUser = !existingSnap.exists();
+    
+    let roleToSave = profile.role;
     
     // Set super_admin role for a specific email
     if (profile.email && profile.email.toLowerCase() === 'aaronsalagubang21@gmail.com') {
-      profile.role = 'super_admin';
+      roleToSave = 'super_admin';
       profile.displayName = 'Aaron Lanceta';
     } else {
-      if (profile.role === 'super_admin') {
-        profile.role = 'user'; // Only Aaron can be super_admin
-      } else if (!profile.role) {
-        profile.role = 'user';
+      if (roleToSave === 'super_admin') {
+        roleToSave = 'user'; // Only Aaron can be super_admin
+      } else if (!roleToSave && isNewUser) {
+        roleToSave = 'user';
       }
     }
 
-    await setDoc(userRef, {
-      ...profile,
+    const { email, ...publicProfile } = profile;
+    const dataToSave: any = {
+      ...publicProfile,
       database: 'GearForgeDB',
       updatedAt: new Date().toISOString()
-    }, { merge: true });
+    };
+    
+    if (roleToSave) {
+      dataToSave.role = roleToSave;
+    }
+    
+    // Ensure new users get default fields to satisfy Firestore create rules
+    if (isNewUser) {
+      dataToSave.role = dataToSave.role || 'user';
+      dataToSave.isVip = dataToSave.isVip ?? false;
+      dataToSave.hasPermanentAdFree = dataToSave.hasPermanentAdFree ?? false;
+      dataToSave.isMuted = dataToSave.isMuted ?? false;
+    } else {
+      // Don't overwrite privileged fields for existing users to prevent update rule denial
+      delete dataToSave.role;
+      delete dataToSave.isVip;
+      delete dataToSave.hasPermanentAdFree;
+      delete dataToSave.isMuted;
+      delete dataToSave.mutedUntil;
+    }
+
+    await setDoc(userRef, dataToSave, { merge: true });
+
+    if (email) {
+      await setDoc(doc(db, 'users', userId, 'private', 'contact'), {
+        email,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+    }
   } catch (error) {
     console.warn('GearForgeDB Firestore user save notice:', error);
   }
