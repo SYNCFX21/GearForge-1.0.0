@@ -1,1 +1,17 @@
-GearForge is an AI-powered gaming gear and PC build advisor built for the Philippine gaming community. Tell it your budget, playstyle, and priorities, and it recommends personalized PC builds and accessories that actually fit — complete with price comparisons, gear reviews, and a growing community of gamers sharing loadouts. Built with React, Firebase, and the Gemini API, with a native Android version on the way.
+# 🎮 GearForge
+
+**AI-powered gaming gear and PC build advisor — built for the Philippine gaming community.**
+
+Tell GearForge your budget, playstyle, and priorities, and get personalized PC builds and accessory recommendations that actually fit. No guesswork, no overspending — just gear that matches how you play.
+
+## ✨ Features
+
+- 🤖 **AI-driven recommendations** powered by the Gemini API
+- 💰 **Budget-based PC builder** tailored to your price range
+- 🖱️ **Accessory comparisons** and community reviews
+- 👥 **Loadout sharing** with the GearForge community
+- 📱 **Native Android app** (coming soon)
+
+## 🛠️ Built with
+
+`React` · `TypeScript` · `Firebase` · `Gemini API` · `Capacitor`
