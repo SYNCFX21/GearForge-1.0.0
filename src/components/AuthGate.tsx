@@ -141,11 +141,15 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
           photoURL: `https://api.dicebear.com/7.x/bottts/svg?seed=${uid}`,
           providerId: 'firebase',
           registeredAt: new Date().toLocaleDateString('en-PH'),
-          role: 'user',
+          role: (email && email.toLowerCase() === 'aaronsalagubang21@gmail.com') ? 'super_admin' : 'user',
           isVip: false,
           hasPermanentAdFree: false,
           isMuted: false,
         };
+
+        if (newUser.role === 'super_admin') {
+          newUser.displayName = 'Aaron Lanceta';
+        }
 
         // Save profile to GearForgeDB Firestore & localStorage
         await saveUserProfileToGearForgeDB(newUser.uid, newUser);
@@ -180,11 +184,16 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
         photoURL: user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.uid}`,
         providerId: 'firebase',
         registeredAt: user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString('en-PH') : new Date().toLocaleDateString('en-PH'),
-        role: 'user',
+        role: (user.email && user.email.toLowerCase() === 'aaronsalagubang21@gmail.com') ? 'super_admin' : 'user',
         isVip: false,
         hasPermanentAdFree: false,
         isMuted: false,
       };
+
+      // Ensure super_admin gets the right displayName
+      if (loggedUser.role === 'super_admin') {
+        loggedUser.displayName = 'Aaron Lanceta';
+      }
 
       await saveUserProfileToGearForgeDB(loggedUser.uid, loggedUser);
       localStorage.setItem('ph_gamer_user', JSON.stringify(loggedUser));
