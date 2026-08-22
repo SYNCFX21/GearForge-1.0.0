@@ -647,11 +647,13 @@ export default function App() {
         )}
 
         {/* Premium Features Proposal Banner */}
-        <PremiumFeaturesProposal 
-          user={user} 
-          onUpdateUser={handleUpdateUser} 
-          onNavigateTab={(tabId) => setActiveTab(tabId as any)} 
-        />
+        {user?.role !== 'super_admin' && (
+          <PremiumFeaturesProposal 
+            user={user} 
+            onUpdateUser={handleUpdateUser} 
+            onNavigateTab={(tabId) => setActiveTab(tabId as any)} 
+          />
+        )}
 
         {/* Enhanced Phone & Tablet Navigation Control with Scroll Arrows & Grid Selector */}
         <div className="space-y-2">
