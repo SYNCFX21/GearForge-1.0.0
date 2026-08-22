@@ -37,7 +37,8 @@ export default function PCBuilder({ onSaveLoadout }: PCBuilderProps) {
         resolution
       };
 
-      const response = await fetch('/api/gemini/build-pc', {
+      const API_BASE = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${API_BASE}/api/gemini/build-pc`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody)
