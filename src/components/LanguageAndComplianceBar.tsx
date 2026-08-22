@@ -160,7 +160,7 @@ export default function LanguageAndComplianceBar({
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-bold text-primary-300 uppercase">Current Membership:</span>
                   <span className="px-3 py-1 rounded-full bg-primary-500 text-black font-extrabold text-xs">
-                    {user.isVip ?? true ? 'VIP PASS ACTIVE' : 'STANDARD FREE'}
+                    {user.role === 'super_admin' ? 'SUPER ADMIN ACTIVE' : (user.isVip ?? true ? 'VIP PASS ACTIVE' : 'STANDARD FREE')}
                   </span>
                 </div>
                 <div className="text-xs text-zinc-300 space-y-1.5">
@@ -187,19 +187,21 @@ export default function LanguageAndComplianceBar({
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                <span className="text-xs text-zinc-400">Want to test toggling VIP state?</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (onToggleVip) onToggleVip();
-                    setShowVipInfoModal(false);
-                  }}
-                  className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition cursor-pointer"
-                >
-                  {user.isVip ?? true ? 'Switch to Free Tier Mode' : 'Activate VIP Mode Now'}
-                </button>
-              </div>
+              {user.role !== 'super_admin' && (
+                <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                  <span className="text-xs text-zinc-400">Want to test toggling VIP state?</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (onToggleVip) onToggleVip();
+                      setShowVipInfoModal(false);
+                    }}
+                    className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition cursor-pointer"
+                  >
+                    {user.isVip ?? true ? 'Switch to Free Tier Mode' : 'Activate VIP Mode Now'}
+                  </button>
+                </div>
+              )}
             </motion.div>
           </div>
         )}

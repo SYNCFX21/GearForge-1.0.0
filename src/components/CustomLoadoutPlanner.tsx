@@ -386,7 +386,7 @@ export default function CustomLoadoutPlanner({ onSaveLoadout }: CustomLoadoutPla
                           </div>
                         </div>
 
-                        <div className="flex flex-col justify-between items-end shrink-0 md:text-right border-t md:border-t-0 pt-3 md:pt-0 border-white/8">
+                        <div className="flex flex-col justify-between items-start md:items-end shrink-0 text-left md:text-right border-t md:border-t-0 pt-3 md:pt-0 border-white/8">
                           <div>
                             <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest font-mono block">Estimated Price</span>
                             <span className="text-base font-extrabold text-predator-cyan font-mono">{formatCurrency(item.pricePhp)}</span>
@@ -394,7 +394,7 @@ export default function CustomLoadoutPlanner({ onSaveLoadout }: CustomLoadoutPla
 
                           <div className="mt-4 space-y-1.5 w-full md:w-auto">
                             <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest font-mono block">Buy on PH Stores:</span>
-                            <div className="flex gap-1.5">
+                            <div className="flex flex-wrap justify-start md:justify-end gap-1.5">
                               {item.storeSearchLinks.map((store) => (
                                 <a
                                   key={store.storeName}

@@ -50,7 +50,8 @@ import {
   ShieldCheck,
   AlertTriangle,
   User,
-  Lock
+  Lock,
+  Bug
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -473,6 +474,15 @@ export default function App() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+            <a
+              href="mailto:aaronsalagubang21@gmail.com?subject=GearForge Bug Report"
+              className="px-3.5 py-3 sm:py-0 sm:h-12 lg:h-[72px] bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 rounded-2xl sm:rounded-3xl hover:border-red-500/50 transition-all flex items-center justify-center gap-2 shadow-lg"
+              title="Report Bug"
+            >
+              <Bug className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest sm:hidden lg:inline">Report Bug</span>
+            </a>
+
             {/* Authenticated User Profile with Dynamic Badge */}
             <div className="flex items-center justify-between gap-3 bg-[var(--color-glass)] backdrop-blur-2xl border border-[var(--color-glass-border)] p-3 sm:p-4 rounded-2xl sm:rounded-3xl shrink-0 shadow-xl relative overflow-hidden">
               <div className="flex items-center gap-3">
@@ -714,7 +724,7 @@ export default function App() {
                   >
                     <Icon className={`w-3.5 h-3.5 ${isActive && (tab.id === 'builder' || tab.id === 'ai') ? 'text-primary-400' : tab.isVipFeature ? 'text-primary-400' : ''}`} />
                     <span>{tab.label}</span>
-                    {tab.isVipFeature && (
+                    {tab.isVipFeature && user?.role !== 'super_admin' && (
                       <div className="flex items-center gap-1">
                         {!hasActiveVip && <Lock className="w-3 h-3 text-primary-500" />}
                         <span className="px-1 py-0.2 rounded bg-primary-500/30 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-400/40">
@@ -815,7 +825,7 @@ export default function App() {
                           <div className="flex items-center gap-1.5">
                             <span className="font-extrabold text-sm text-white">{sec.label}</span>
                             {isSelected && <span className="text-[10px] bg-primary-500 text-black font-extrabold px-1.5 py-0.2 rounded">Active</span>}
-                            {sec.isVipFeature && !isSelected && (
+                            {sec.isVipFeature && !isSelected && user?.role !== 'super_admin' && (
                               <span className="text-[9px] bg-primary-500/20 text-primary-300 border border-primary-500/30 px-1.5 py-0.2 rounded uppercase font-bold tracking-wider">VIP</span>
                             )}
                           </div>
@@ -1069,7 +1079,7 @@ export default function App() {
                               <span className="text-[10px] bg-primary-500 text-black font-extrabold px-2 py-0.5 rounded-full shrink-0">
                                 Active
                               </span>
-                            ) : item.isVipFeature ? (
+                            ) : item.isVipFeature && user?.role !== 'super_admin' ? (
                               <span className="text-[9px] bg-primary-500/20 text-primary-300 border border-primary-500/30 px-1.5 py-0.2 rounded font-bold uppercase tracking-wider shrink-0">
                                 VIP
                               </span>
