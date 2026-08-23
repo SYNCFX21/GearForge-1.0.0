@@ -406,8 +406,9 @@ export default function App() {
     new Date(user.trialEndsAt).getTime() < Date.now()
   );
 
-  const hasActiveVip = Boolean((user.isVip && (!user.isTrialActive || !isTrialExpired)) || user.role === 'super_admin' || user.role === 'admin');
-  const hasAdFree = Boolean(user.hasPermanentAdFree || hasActiveVip || user.role === 'super_admin' || user.role === 'admin');
+  const isSuperAdmin = user?.role === 'super_admin' || user?.email?.toLowerCase().trim() === 'aaronsalagubang21@gmail.com';
+  const hasActiveVip = Boolean((user.isVip && (!user.isTrialActive || !isTrialExpired)) || isSuperAdmin || user.role === 'admin');
+  const hasAdFree = Boolean(user.hasPermanentAdFree || hasActiveVip || isSuperAdmin || user.role === 'admin');
 
   return (
     <div className="min-h-screen text-[#f5f5f7] antialiased selection:bg-primary-500 selection:text-black pb-16 relative overflow-hidden">
@@ -510,7 +511,7 @@ export default function App() {
                     >
                       {user.displayName}
                     </button>
-                    {user.role === 'super_admin' ? (
+                    {isSuperAdmin ? (
                       <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-500/40">Super Admin</span>
                     ) : user.role === 'admin' ? (
                       <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-500/40">Admin</span>
@@ -657,7 +658,7 @@ export default function App() {
         )}
 
         {/* Premium Features Proposal Banner */}
-        {user?.role !== 'super_admin' && (
+        {!isSuperAdmin && (
           <PremiumFeaturesProposal 
             user={user} 
             onUpdateUser={handleUpdateUser} 
@@ -724,7 +725,7 @@ export default function App() {
                   >
                     <Icon className={`w-3.5 h-3.5 ${isActive && (tab.id === 'builder' || tab.id === 'ai') ? 'text-primary-400' : tab.isVipFeature ? 'text-primary-400' : ''}`} />
                     <span>{tab.label}</span>
-                    {tab.isVipFeature && user?.role !== 'super_admin' && (
+                    {tab.isVipFeature && !isSuperAdmin && (
                       <div className="flex items-center gap-1">
                         {!hasActiveVip && <Lock className="w-3 h-3 text-primary-500" />}
                         <span className="px-1 py-0.2 rounded bg-primary-500/30 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-400/40">
@@ -825,7 +826,7 @@ export default function App() {
                           <div className="flex items-center gap-1.5">
                             <span className="font-extrabold text-sm text-white">{sec.label}</span>
                             {isSelected && <span className="text-[10px] bg-primary-500 text-black font-extrabold px-1.5 py-0.2 rounded">Active</span>}
-                            {sec.isVipFeature && !isSelected && user?.role !== 'super_admin' && (
+                            {sec.isVipFeature && !isSelected && !isSuperAdmin && (
                               <span className="text-[9px] bg-primary-500/20 text-primary-300 border border-primary-500/30 px-1.5 py-0.2 rounded uppercase font-bold tracking-wider">VIP</span>
                             )}
                           </div>
@@ -937,11 +938,11 @@ export default function App() {
                             </div>
                           </div>
                           <div className="flex flex-col items-end gap-1.5">
-                            {(user.role === 'admin' || user.role === 'super_admin') && (
+                            {(user.role === 'admin' || isSuperAdmin) && (
                               <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase shrink-0 border ${
-                                user.role === 'super_admin' ? 'bg-primary-500/20 text-primary-300 border-primary-500/40' : 'bg-primary-500/20 text-primary-300 border-primary-500/40'
+                                isSuperAdmin ? 'bg-primary-500/20 text-primary-300 border-primary-500/40' : 'bg-primary-500/20 text-primary-300 border-primary-500/40'
                               }`}>
-                                {user.role === 'super_admin' ? '👑 Super Admin' : '🛡️ Admin'}
+                                {isSuperAdmin ? '👑 Super Admin' : '🛡️ Admin'}
                               </span>
                             )}
                             {user.role !== 'admin' && user.role !== 'super_admin' && (
@@ -1004,7 +1005,7 @@ export default function App() {
                   </div>
 
                       {/* Admin Panel Access */}
-                      {(user.role === 'admin' || user.role === 'super_admin') && (
+                      {(user.role === 'admin' || isSuperAdmin) && (
                         <button
                           onClick={() => {
                             setIsAdminPanelOpen(true);
@@ -1079,7 +1080,7 @@ export default function App() {
                               <span className="text-[10px] bg-primary-500 text-black font-extrabold px-2 py-0.5 rounded-full shrink-0">
                                 Active
                               </span>
-                            ) : item.isVipFeature && user?.role !== 'super_admin' ? (
+                            ) : item.isVipFeature && !isSuperAdmin ? (
                               <span className="text-[9px] bg-primary-500/20 text-primary-300 border border-primary-500/30 px-1.5 py-0.2 rounded font-bold uppercase tracking-wider shrink-0">
                                 VIP
                               </span>
@@ -1316,7 +1317,7 @@ export default function App() {
         )}
 
         {/* Admin Panel Modal */}
-        {user && (user.role === 'admin' || user.role === 'super_admin') && (
+        {user && (user.role === 'admin' || isSuperAdmin) && (
           <AdminPanelModal
             isOpen={isAdminPanelOpen}
             onClose={() => setIsAdminPanelOpen(false)}
