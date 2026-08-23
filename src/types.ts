@@ -104,6 +104,16 @@ export interface Report {
   status: 'pending' | 'reviewed' | 'dismissed';
 }
 
+export interface BugReport {
+  id: string;
+  userId: string;
+  userEmail: string;
+  userName: string;
+  description: string;
+  status: 'open' | 'in-progress' | 'resolved';
+  createdAt: number;
+}
+
 export interface AICustomPlannerRequest {
   budget: number;
   preferences: string;

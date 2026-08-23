@@ -1,6 +1,6 @@
 import { db, auth } from './firebase';
 import { collection, doc, setDoc, getDocs, query, deleteDoc, orderBy } from 'firebase/firestore';
-import { SavedLoadout, UserProfile, Report } from '../types';
+import { SavedLoadout, UserProfile, Report, BugReport } from '../types';
 
 export enum OperationType {
   CREATE = 'create',
@@ -185,6 +185,43 @@ export const submitReportToFirestore = async (report: Report) => {
     await setDoc(reportRef, report);
   } catch (error) {
     console.warn('GearForgeDB submit report notice:', error);
+  }
+};
+
+export const submitBugReport = async (report: BugReport): Promise<void> => {
+  try {
+    const reportRef = doc(db, 'bug_reports', report.id);
+    await setDoc(reportRef, report);
+  } catch (err) {
+    console.error('Failed to submit bug report:', err);
+    throw err;
+  }
+};
+
+export const getBugReportsFromFirestore = async (): Promise<BugReport[]> => {
+  try {
+    const { getDocs, query, orderBy, collection } = await import('firebase/firestore');
+    const q = query(collection(db, 'bug_reports'), orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(q);
+    const reports: BugReport[] = [];
+    snapshot.forEach(doc => {
+      reports.push(doc.data() as BugReport);
+    });
+    return reports;
+  } catch (err) {
+    console.error('Failed to fetch bug reports:', err);
+    return [];
+  }
+};
+
+export const updateBugReportStatusInFirestore = async (reportId: string, status: 'open' | 'in-progress' | 'resolved'): Promise<void> => {
+  try {
+    const { updateDoc } = await import('firebase/firestore');
+    const reportRef = doc(db, 'bug_reports', reportId);
+    await updateDoc(reportRef, { status });
+  } catch (err) {
+    console.error('Failed to update bug report status:', err);
+    throw err;
   }
 };
 

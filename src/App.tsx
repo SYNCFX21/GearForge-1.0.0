@@ -9,6 +9,8 @@ import AIBudgetBuilder from './components/AIBudgetBuilder';
 import PriceHistoryGraph from './components/PriceHistoryGraph';
 import ItemReviewForum from './components/ItemReviewForum';
 import AdminPanelModal from './components/AdminPanelModal';
+import BugReportsPanelModal from './components/BugReportsPanelModal';
+import ReportBugModal from './components/ReportBugModal';
 import LanguageAndComplianceBar, { SUPPORTED_LANGUAGES, LanguageOption } from './components/LanguageAndComplianceBar';
 import { SavedLoadout, Accessory, UserProfile } from './types';
 import AuthGate from './components/AuthGate';
@@ -69,6 +71,8 @@ export default function App() {
   const [isDeletingAccount, setIsDeletingAccount] = useState<boolean>(false);
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
   const [isAdminPanelOpen, setIsAdminPanelOpen] = useState<boolean>(false);
+  const [isBugReportsPanelOpen, setIsBugReportsPanelOpen] = useState<boolean>(false);
+  const [isReportBugModalOpen, setIsReportBugModalOpen] = useState<boolean>(false);
   const [activeThemeId, setActiveThemeId] = useState<string>(() => localStorage.getItem("gf_active_theme_id") || "classic_cyan");
   const [customThemes, setCustomThemes] = useState<CustomTheme[]>(() => {
     try {
@@ -475,15 +479,6 @@ export default function App() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
-            <a
-              href="mailto:aaronsalagubang21@gmail.com?subject=GearForge Bug Report"
-              className="px-3.5 py-3 sm:py-0 sm:h-12 lg:h-[72px] bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 rounded-2xl sm:rounded-3xl hover:border-red-500/50 transition-all flex items-center justify-center gap-2 shadow-lg"
-              title="Report Bug"
-            >
-              <Bug className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest sm:hidden lg:inline">Report Bug</span>
-            </a>
-
             {/* Authenticated User Profile with Dynamic Badge */}
             <div className="flex items-center justify-between gap-3 bg-[var(--color-glass)] backdrop-blur-2xl border border-[var(--color-glass-border)] p-3 sm:p-4 rounded-2xl sm:rounded-3xl shrink-0 shadow-xl relative overflow-hidden">
               <div className="flex items-center gap-3">
@@ -708,9 +703,24 @@ export default function App() {
                 { id: 'catalog', icon: Layers, label: 'Gear Catalog', isVipFeature: false },
                 { id: 'compare', icon: Sliders, label: 'Compare', isVipFeature: false },
                 { id: 'directory', icon: Store, label: 'Stores', isVipFeature: false },
+                { id: 'bug', icon: Bug, label: 'Report Bug', isVipFeature: false, isAction: true },
               ].map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
+
+                if ((tab as any).isAction) {
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setIsReportBugModalOpen(true)}
+                      className="flex items-center gap-2 py-2.5 px-3.5 sm:px-4 rounded-xl font-semibold text-xs transition-all shrink-0 cursor-pointer whitespace-nowrap relative text-red-400 hover:text-white bg-red-500/10 hover:bg-red-500/20 border border-red-500/30"
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                }
+
                 return (
                   <button
                     key={tab.id}
@@ -797,9 +807,34 @@ export default function App() {
                     { id: 'catalog', icon: Layers, label: 'Full Gear Catalog', desc: '33+ PH gaming mice, keyboards & headsets', isVipFeature: false },
                     { id: 'compare', icon: Sliders, label: 'Compare Gear Specs', desc: 'Side-by-side spec & feature comparison', isVipFeature: false },
                     { id: 'directory', icon: Store, label: 'PH Local Stores Directory', desc: 'DataBlitz, Shopee, EasyPC & GameOne', isVipFeature: false },
+                    { id: 'bug', icon: Bug, label: 'Report Bug', desc: 'Report an issue to the developer', isVipFeature: false, isAction: true },
                   ].map((sec) => {
                     const Icon = sec.icon;
                     const isSelected = activeTab === sec.id;
+
+                    if ((sec as any).isAction) {
+                      return (
+                        <button
+                          key={sec.id}
+                          onClick={() => {
+                            setIsReportBugModalOpen(true);
+                            setShowSectionsGridModal(false);
+                          }}
+                          className="p-4 rounded-2xl border border-red-500/30 text-left flex items-start gap-3.5 transition cursor-pointer bg-red-500/10 hover:bg-red-500/20 group"
+                        >
+                          <div className="p-2.5 rounded-xl shrink-0 flex items-center justify-center relative bg-red-500/20 text-red-400 group-hover:scale-110 transition-transform">
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-extrabold text-sm text-red-400 group-hover:text-red-300 transition-colors">{sec.label}</span>
+                            </div>
+                            <p className="text-xs text-red-400/70 leading-normal">{sec.desc}</p>
+                          </div>
+                        </button>
+                      );
+                    }
+
                     return (
                       <button
                         key={sec.id}
@@ -1006,22 +1041,41 @@ export default function App() {
 
                       {/* Admin Panel Access */}
                       {(user.role === 'admin' || isSuperAdmin) && (
-                        <button
-                          onClick={() => {
-                            setIsAdminPanelOpen(true);
-                            setIsHamburgerOpen(false);
-                          }}
-                          className="w-full p-3 rounded-2xl bg-primary-500/20 hover:bg-primary-500/30 border border-primary-500/40 text-primary-300 text-left cursor-pointer transition flex items-center justify-between shadow-lg shadow-blue-500/10"
-                        >
-                          <div className="flex items-center gap-2.5">
-                            <ShieldCheck className="w-5 h-5 text-primary-400" />
-                            <div>
-                              <span className="font-extrabold text-xs block leading-tight">Admin Panel</span>
-                              <span className="text-[10px] text-primary-300/80 block leading-tight">Manage users, roles & bans</span>
+                        <div className="space-y-2">
+                          <button
+                            onClick={() => {
+                              setIsAdminPanelOpen(true);
+                              setIsHamburgerOpen(false);
+                            }}
+                            className="w-full p-3 rounded-2xl bg-primary-500/20 hover:bg-primary-500/30 border border-primary-500/40 text-primary-300 text-left cursor-pointer transition flex items-center justify-between shadow-lg shadow-blue-500/10"
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <ShieldCheck className="w-5 h-5 text-primary-400" />
+                              <div>
+                                <span className="font-extrabold text-xs block leading-tight">Admin Panel</span>
+                                <span className="text-[10px] text-primary-300/80 block leading-tight">Manage users, roles & bans</span>
+                              </div>
                             </div>
-                          </div>
-                          <ArrowRight className="w-4 h-4 text-primary-400 opacity-50" />
-                        </button>
+                            <ArrowRight className="w-4 h-4 text-primary-400 opacity-50" />
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              setIsBugReportsPanelOpen(true);
+                              setIsHamburgerOpen(false);
+                            }}
+                            className="w-full p-3 rounded-2xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 text-left cursor-pointer transition flex items-center justify-between shadow-lg shadow-red-500/10"
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <Bug className="w-5 h-5 text-red-400" />
+                              <div>
+                                <span className="font-extrabold text-xs block leading-tight">Bug Reports</span>
+                                <span className="text-[10px] text-red-300/80 block leading-tight">Review user-submitted issues</span>
+                              </div>
+                            </div>
+                            <ArrowRight className="w-4 h-4 text-red-400 opacity-50" />
+                          </button>
+                        </div>
                       )}
                     </div>
                   )}
@@ -1045,9 +1099,34 @@ export default function App() {
                         { id: 'catalog', icon: Layers, label: 'PH Gear Catalog', desc: '33+ PH gaming mice, keyboards & headsets', isVipFeature: false },
                         { id: 'compare', icon: Sliders, label: 'Compare Gear Specs', desc: 'Side-by-side specs analyzer', isVipFeature: false },
                         { id: 'directory', icon: Store, label: 'PH Stores Directory', desc: 'DataBlitz, Shopee & EasyPC', isVipFeature: false },
+                        { id: 'bug', icon: Bug, label: 'Report Bug', desc: 'Report an issue to the developer', isVipFeature: false, isAction: true },
                       ].map((item) => {
                         const Icon = item.icon;
                         const isCurrent = activeTab === item.id;
+
+                        if ((item as any).isAction) {
+                          return (
+                            <button
+                              key={item.id}
+                              onClick={() => {
+                                setIsReportBugModalOpen(true);
+                                setIsHamburgerOpen(false);
+                              }}
+                              className="w-full p-3 rounded-2xl border border-red-500/30 text-left flex items-center justify-between transition cursor-pointer bg-red-500/10 hover:bg-red-500/20 group"
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className="p-2 rounded-xl shrink-0 flex items-center justify-center relative bg-red-500/20 text-red-400 group-hover:scale-110 transition-transform">
+                                  <Icon className="w-4 h-4" />
+                                </div>
+                                <div>
+                                  <span className="text-xs font-bold text-red-400 block group-hover:text-red-300 transition-colors">{item.label}</span>
+                                  <span className="text-[10px] text-red-400/70 block">{item.desc}</span>
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        }
+
                         return (
                           <button
                             key={item.id}
@@ -1323,6 +1402,23 @@ export default function App() {
             onClose={() => setIsAdminPanelOpen(false)}
             currentUser={user}
             onUpdateCurrentUser={setUser}
+          />
+        )}
+
+        {/* Bug Reports Admin Panel Modal */}
+        {user && (user.role === 'admin' || isSuperAdmin) && (
+          <BugReportsPanelModal
+            isOpen={isBugReportsPanelOpen}
+            onClose={() => setIsBugReportsPanelOpen(false)}
+          />
+        )}
+
+        {/* Report Bug Modal for all users */}
+        {user && (
+          <ReportBugModal
+            isOpen={isReportBugModalOpen}
+            onClose={() => setIsReportBugModalOpen(false)}
+            user={user}
           />
         )}
 
