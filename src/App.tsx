@@ -21,6 +21,7 @@ import RulesModal from './components/RulesModal';
 import PCBuilder from './components/PCBuilder';
 import ThreeBackground, { BACKGROUND_THEMES } from './components/ThreeBackground';
 import ThemeEditorModal, { CustomTheme } from './components/ThemeEditorModal';
+import DecryptedText from './components/DecryptedText';
 import { 
   Gamepad2, 
   Coins, 
@@ -568,8 +569,21 @@ export default function App() {
             <div className="flex items-center gap-3 sm:gap-4">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-none">
-                    Gear<span className="text-primary-400">Forge</span>
+                  <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-none flex items-center">
+                    <DecryptedText
+                      text="Gear"
+                      speed={50}
+                      maxIterations={12}
+                      animateOn="hover"
+                    />
+                    <span className="text-primary-400">
+                      <DecryptedText
+                        text="Forge"
+                        speed={50}
+                        maxIterations={12}
+                        animateOn="hover"
+                      />
+                    </span>
                   </h1>
                 </div>
               </div>
