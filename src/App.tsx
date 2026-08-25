@@ -62,6 +62,7 @@ export default function App() {
   const [savedLoadouts, setSavedLoadouts] = useState<SavedLoadout[]>([]);
   const [showNotification, setShowNotification] = useState<string | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [isAuthResolving, setIsAuthResolving] = useState<boolean>(true);
   const [selectedSearchUser, setSelectedSearchUser] = useState<string | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageOption>(SUPPORTED_LANGUAGES[0]);
   const [isAutoTranslateActive, setIsAutoTranslateActive] = useState<boolean>(false);
@@ -125,6 +126,7 @@ export default function App() {
       await saveUserProfileToGearForgeDB(updatedUser.uid, updatedUser);
     } catch (err) {
       console.warn("Failed to persist user update to Firestore:", err);
+      throw err;
     }
     if (msg) {
       triggerNotification(msg);
@@ -171,6 +173,21 @@ export default function App() {
                 loggedUser = { ...loggedUser, ...fsProfile };
               }
 
+              // Local cache fallback for hasAcceptedRules (fixes terms modal repeating if db write was slow/failed but cached locally)
+              if (!loggedUser.hasAcceptedRules && firebaseUser.email) {
+                try {
+                  const cached = localStorage.getItem(`gf_user_${firebaseUser.email.toLowerCase().trim()}`);
+                  if (cached) {
+                    const parsed = JSON.parse(cached);
+                    if (parsed.hasAcceptedRules) {
+                      loggedUser.hasAcceptedRules = true;
+                    }
+                  }
+                } catch (e) {
+                  // ignore
+                }
+              }
+
               if (loggedUser.email && loggedUser.email.toLowerCase() === 'aaronsalagubang21@gmail.com') {
                 loggedUser.role = 'super_admin';
                 loggedUser.displayName = 'Aaron Lanceta';
@@ -200,14 +217,17 @@ export default function App() {
             } catch (err) {
               console.error("Failed to fetch loadouts from Firestore:", err);
             }
+            setIsAuthResolving(false);
           } else {
             setUser(null);
             localStorage.removeItem('ph_gamer_user');
             setSavedLoadouts([]);
+            setIsAuthResolving(false);
           }
         });
       } catch (err) {
         console.error("Firebase init failed:", err);
+        setIsAuthResolving(false);
       }
     };
 
@@ -309,8 +329,12 @@ export default function App() {
 
   const handleAcceptRules = async () => {
     if (!user) return;
-    const updatedUser = { ...user, hasAcceptedRules: true };
-    await handleUpdateUser(updatedUser, "Welcome to the GearForge Forum!");
+    try {
+      const updatedUser = { ...user, hasAcceptedRules: true };
+      await handleUpdateUser(updatedUser, "Welcome to the GearForge Forum!");
+    } catch (err: any) {
+      triggerNotification(`Failed to save rules acceptance: ${err.message || 'Unknown error'}`);
+    }
   };
 
   const handleDeclineRules = async () => {
@@ -325,6 +349,17 @@ export default function App() {
     localStorage.removeItem('ph_gamer_user');
     triggerNotification("You must accept the rules to use GearForge.");
   };
+
+  if (isAuthResolving) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--app-bg)] relative overflow-hidden">
+        <div className="flex flex-col items-center gap-4 z-10">
+          <div className="w-10 h-10 border-4 border-primary-500/20 border-t-primary-500 rounded-full animate-spin" />
+          <p className="text-primary-400 font-bold text-sm animate-pulse">Loading GearForge...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!user) {
     return <AuthGate onLoginSuccess={(loggedInUser) => setUser(loggedInUser)} />;
