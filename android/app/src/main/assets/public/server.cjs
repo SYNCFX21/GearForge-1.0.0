@@ -23,13 +23,16 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 
 // server.ts
 var import_express = __toESM(require("express"), 1);
+var import_cors = __toESM(require("cors"), 1);
 var import_path = __toESM(require("path"), 1);
 var import_vite = require("vite");
 var import_genai = require("@google/genai");
 var import_dotenv = __toESM(require("dotenv"), 1);
+var import_express_rate_limit = __toESM(require("express-rate-limit"), 1);
 import_dotenv.default.config();
 var app = (0, import_express.default)();
 var PORT = 3e3;
+app.use((0, import_cors.default)({ origin: "*" }));
 app.use(import_express.default.json());
 var aiClient = null;
 function getGeminiClient() {
@@ -78,6 +81,16 @@ app.get("/api/health", (req, res) => {
     currentTime: (/* @__PURE__ */ new Date()).toISOString()
   });
 });
+var aiLimiter = (0, import_express_rate_limit.default)({
+  windowMs: 15 * 60 * 1e3,
+  // 15 minutes
+  max: 20,
+  // limit each IP to 20 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests, please try again later." }
+});
+app.use("/api/gemini", aiLimiter);
 app.post("/api/gemini/suggest-accessories", async (req, res) => {
   try {
     const { budget, preferences, requiredCategories, playstyle } = req.body;
@@ -176,6 +189,111 @@ Provide your response in a structured JSON format following the schema. Keep the
     console.error("Gemini suggestion error:", error);
     res.status(500).json({
       error: error.message || "Something went wrong while fetching custom suggestions.",
+      isApiKeyMissing: !process.env.GEMINI_API_KEY
+    });
+  }
+});
+app.post("/api/gemini/build-pc", async (req, res) => {
+  try {
+    const { budget, preferences, resolution } = req.body;
+    if (!budget || typeof budget !== "number" || budget <= 0) {
+      return res.status(400).json({ error: "Please enter a valid PC build budget in PHP." });
+    }
+    const ai = getGeminiClient();
+    const systemInstruction = `You are "SariSariGamerPH", an expert Filipino PC Builder & tech advisor.
+Your goal is to suggest the perfect PC build (parts: CPU, Motherboard, GPU, RAM, Storage, Case, PSU, Cooler) that fits strictly within the user's budget in Philippine Peso (PHP).
+Provide highly realistic local pricing in PHP (street prices, not SRP list prices) and use local community favorites in the Philippines (e.g., Dynaquest, EasyPC, Datablitz pricing).
+You must speak in a warm, fun, and highly engaging Taglish (mixed Tagalog and English) using popular Philippine slang (e.g., "Solid 'to bossing!", "pampaswerte sa rank", "swak na swak sa budget"). Keep your explanations useful, helpful, and highly authentic!
+Ensure that the sum of the prices of all recommended parts is strictly LESS than or EQUAL to the budget: ${budget} PHP.
+For each recommended part, generate search links for local e-commerce stores: Shopee, Lazada, and EasyPC.`;
+    const prompt = `Recommend a custom PC build for a budget of \u20B1${budget} PHP.
+Target Resolution / Focus: ${resolution || "1080p"}
+Custom user preferences: ${preferences || "No specific preferences, just give the best value build."}
+
+Provide your response in a structured JSON format following the schema. Keep the item specifications, names, and pricing accurate to actual retail trends in Gilmore, EasyPC, Datablitz, and popular online shops in the Philippines.`;
+    const response = await ai.models.generateContent({
+      model: "gemini-3.6-flash",
+      contents: prompt,
+      config: {
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: import_genai.Type.OBJECT,
+          required: ["buildName", "totalCostPhp", "rationale", "parts"],
+          properties: {
+            buildName: {
+              type: import_genai.Type.STRING,
+              description: "A fun, localized name for this budget build (e.g., 'Gilmore Special', 'Tipid 1080p Beast')"
+            },
+            totalCostPhp: {
+              type: import_genai.Type.INTEGER,
+              description: "Sum of all suggested part prices, which must be strictly less than or equal to the requested budget"
+            },
+            rationale: {
+              type: import_genai.Type.STRING,
+              description: "An enthusiastic review/explanation of why this build was selected and how it achieves the best performance/value ratio, using friendly PH gamer slang (Taglish)"
+            },
+            estimatedFps1080p: {
+              type: import_genai.Type.STRING,
+              description: "Estimated FPS in popular games at 1080p (e.g., 'Valorant: 300+ FPS, Cyberpunk 2077: 60 FPS')"
+            },
+            parts: {
+              type: import_genai.Type.ARRAY,
+              description: "The recommended PC parts list",
+              items: {
+                type: import_genai.Type.OBJECT,
+                required: ["category", "name", "brand", "pricePhp", "description"],
+                properties: {
+                  category: {
+                    type: import_genai.Type.STRING,
+                    description: "Category of the part: cpu, motherboard, gpu, ram, storage, case, psu, cooler"
+                  },
+                  name: {
+                    type: import_genai.Type.STRING,
+                    description: "The exact model name (e.g., 'Ryzen 5 5600', 'RX 6600')"
+                  },
+                  brand: {
+                    type: import_genai.Type.STRING,
+                    description: "The brand name (e.g., 'AMD', 'Gigabyte', 'Corsair')"
+                  },
+                  pricePhp: {
+                    type: import_genai.Type.INTEGER,
+                    description: "Realistic localized estimated retail price in PHP"
+                  },
+                  description: {
+                    type: import_genai.Type.STRING,
+                    description: "Specs and brief localized review in Taglish explaining why this item is solid for this setup"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+    const text = response.text;
+    if (!text) {
+      throw new Error("No response text from Gemini API.");
+    }
+    const data = JSON.parse(text.trim());
+    if (data.parts && Array.isArray(data.parts)) {
+      data.parts = data.parts.map((part) => {
+        const query = `${part.brand} ${part.name}`;
+        return {
+          ...part,
+          storeSearchLinks: [
+            { storeName: "Shopee", url: generateStoreSearchUrl("Shopee", query) },
+            { storeName: "Lazada", url: generateStoreSearchUrl("Lazada", query) },
+            { storeName: "EasyPC", url: generateStoreSearchUrl("EasyPC", query) }
+          ]
+        };
+      });
+    }
+    res.json(data);
+  } catch (error) {
+    console.error("Gemini PC build error:", error);
+    res.status(500).json({
+      error: error.message || "Something went wrong while fetching custom PC build suggestions.",
       isApiKeyMissing: !process.env.GEMINI_API_KEY
     });
   }

@@ -50,7 +50,7 @@ export default function CustomLoadoutPlanner({ onSaveLoadout }: CustomLoadoutPla
     setIsApiKeyMissing(false);
 
     try {
-      const API_BASE = import.meta.env.VITE_API_URL || '';
+      const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
       const response = await fetch(`${API_BASE}/api/gemini/suggest-accessories`, {
         method: 'POST',
         headers: {

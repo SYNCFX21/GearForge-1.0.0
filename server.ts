@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
+app.use(cors({ origin: "*" })); // tighten to your actual domain(s) later
 app.use(express.json());
 
 // Initialize Gemini client lazily to prevent crashing on boot if key is missing,
