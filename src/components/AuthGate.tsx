@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { auth } from '../lib/firebase';
-import { saveUserProfileToGearForgeDB } from '../lib/firestore';
+import { saveUserProfileToGearForgeDB, getUserProfileFromFirestore } from '../lib/firestore';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
 
 interface AuthGateProps {
@@ -87,7 +87,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
           throw firebaseErr;
         }
 
-        const loggedUser: UserProfile = {
+        let loggedUser: UserProfile = {
           uid: userCredential.user.uid,
           email: userCredential.user.email || email,
           displayName: userCredential.user.displayName || displayName || email.split('@')[0].toUpperCase(),
@@ -96,6 +96,11 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
           registeredAt: userCredential.user.metadata.creationTime ? new Date(userCredential.user.metadata.creationTime).toLocaleDateString('en-PH') : new Date().toLocaleDateString('en-PH'),
           
         };
+
+        const fsProfile = await getUserProfileFromFirestore(loggedUser.uid);
+        if (fsProfile) {
+          loggedUser = { ...loggedUser, ...fsProfile };
+        }
 
         await saveUserProfileToGearForgeDB(loggedUser.uid, loggedUser);
         localStorage.setItem('ph_gamer_user', JSON.stringify(loggedUser));
@@ -175,10 +180,11 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
     setIsLoading(true);
     try {
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       
-      const loggedUser: UserProfile = {
+      let loggedUser: UserProfile = {
         uid: user.uid,
         email: user.email || '',
         displayName: user.displayName || 'Gamer',
@@ -190,6 +196,11 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
         hasPermanentAdFree: false,
         isMuted: false,
       };
+
+      const fsProfile = await getUserProfileFromFirestore(user.uid);
+      if (fsProfile) {
+        loggedUser = { ...loggedUser, ...fsProfile };
+      }
 
       await saveUserProfileToGearForgeDB(loggedUser.uid, loggedUser);
       localStorage.setItem('ph_gamer_user', JSON.stringify(loggedUser));

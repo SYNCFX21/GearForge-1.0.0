@@ -184,8 +184,15 @@ export default function App() {
                 saveUserProfileToGearForgeDB(firebaseUser.uid, loggedUser).catch(console.warn);
               }
 
-              setUser(loggedUser);
-              localStorage.setItem('ph_gamer_user', JSON.stringify(loggedUser));
+              setUser((prev) => {
+                const finalUser = { ...loggedUser };
+                // Prevent race condition: if the user already accepted rules in this session, preserve it
+                if (prev && prev.uid === finalUser.uid && prev.hasAcceptedRules) {
+                  finalUser.hasAcceptedRules = true;
+                }
+                localStorage.setItem('ph_gamer_user', JSON.stringify(finalUser));
+                return finalUser;
+              });
 
             try {
               const fsLoadouts = await getLoadoutsFromFirestore(firebaseUser.uid);
