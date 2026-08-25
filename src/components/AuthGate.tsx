@@ -17,7 +17,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { auth } from '../lib/firebase';
 import { saveUserProfileToGearForgeDB, getUserProfileFromFirestore } from '../lib/firestore';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
 
 interface AuthGateProps {
   onLoginSuccess: (user: UserProfile) => void;
@@ -231,9 +231,121 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
     }
   };
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
+  const handleFacebookLogin = async () => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      const provider = new FacebookAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
       
+      let loggedUser: UserProfile = {
+        uid: user.uid,
+        email: user.email || '',
+        displayName: user.displayName || 'Gamer',
+        photoURL: user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.uid}`,
+        providerId: 'firebase',
+        registeredAt: user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString('en-PH') : new Date().toLocaleDateString('en-PH'),
+        role: 'user',
+        isVip: false,
+        hasPermanentAdFree: false,
+        isMuted: false,
+      };
+
+      const fsProfile = await getUserProfileFromFirestore(user.uid);
+      if (fsProfile) {
+        loggedUser = { ...loggedUser, ...fsProfile };
+      }
+
+      await saveUserProfileToGearForgeDB(loggedUser.uid, loggedUser);
+      localStorage.setItem('ph_gamer_user', JSON.stringify(loggedUser));
+      onLoginSuccess(loggedUser);
+    } catch (err: any) {
+      console.error('Facebook login error:', err);
+      setError(err.message || 'Facebook authentication failed.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDiscordLogin = async () => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      const provider = new OAuthProvider('discord.com');
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      
+      let loggedUser: UserProfile = {
+        uid: user.uid,
+        email: user.email || '',
+        displayName: user.displayName || 'Gamer',
+        photoURL: user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.uid}`,
+        providerId: 'firebase',
+        registeredAt: user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString('en-PH') : new Date().toLocaleDateString('en-PH'),
+        role: 'user',
+        isVip: false,
+        hasPermanentAdFree: false,
+        isMuted: false,
+      };
+
+      const fsProfile = await getUserProfileFromFirestore(user.uid);
+      if (fsProfile) {
+        loggedUser = { ...loggedUser, ...fsProfile };
+      }
+
+      await saveUserProfileToGearForgeDB(loggedUser.uid, loggedUser);
+      localStorage.setItem('ph_gamer_user', JSON.stringify(loggedUser));
+      onLoginSuccess(loggedUser);
+    } catch (err: any) {
+      console.error('Discord login error:', err);
+      setError(err.message || 'Discord authentication failed.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div 
+      className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden select-none"
+      style={{ backgroundColor: '#100e0b' }}
+    >
+      {/* Phantom Arc - Aura Layers */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse 120% 145% at 50% -50%, rgba(0,0,0,0) 60%, rgb(12,24,210) 78%, rgba(0,0,0,0) 85%)",
+          mixBlendMode: "screen",
+          filter: "blur(72px)", /* Mobile would use 50px, but Tailwind arbitrary values or simple inline style is fine */
+          transform: "translateZ(0)",
+          willChange: "transform",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse 120% 145% at 50% -50%, rgba(0,0,0,0) 55%, rgba(12,24,210,0.4) 80%, rgba(0,0,0,0) 100%)",
+          mixBlendMode: "screen",
+          filter: "blur(252px)",
+          opacity: 0.9,
+          transform: "translateZ(0)",
+          willChange: "transform",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse 120% 145% at 50% -50%, rgba(0,0,0,0) 83.5%, #c8a8a6 84.5%, rgba(0,0,0,0) 85.5%)",
+          mixBlendMode: "lighten",
+          filter: "blur(72px)",
+          opacity: 0.8,
+          transform: "translateZ(0)",
+          willChange: "transform",
+        }}
+        aria-hidden="true"
+      />
 
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch z-10 my-8">
         
@@ -409,7 +521,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
                   <div className="flex-grow border-t border-white/10"></div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   <button
                     type="button"
                     onClick={handleGoogleLogin}
@@ -424,9 +536,33 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
                     </svg>
                     <span>Google</span>
                   </button>
+
+                  <button
+                    type="button"
+                    onClick={handleFacebookLogin}
+                    disabled={isLoading}
+                    className="py-2.5 px-2 bg-[#1877F2]/10 hover:bg-[#1877F2]/20 border border-[#1877F2]/30 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                  >
+                    <svg className="w-4 h-4 shrink-0 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    <span>Facebook</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleDiscordLogin}
+                    disabled={isLoading}
+                    className="py-2.5 px-2 bg-[#5865F2]/10 hover:bg-[#5865F2]/20 border border-[#5865F2]/30 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                  >
+                    <svg className="w-4 h-4 shrink-0 text-[#5865F2]" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+                    </svg>
+                    <span>Discord</span>
+                  </button>
                 </div>
                 <p className="text-[10px] text-zinc-500 text-center pt-1">
-                  By logging in with Google, you agree to our Terms & Privacy Policy and OAuth compliance standards.
+                  By logging in with any of these providers, you agree to our Terms & Privacy Policy and OAuth compliance standards.
                 </p>
               </form>
 
