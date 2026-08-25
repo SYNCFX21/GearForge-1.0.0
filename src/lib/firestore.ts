@@ -87,6 +87,7 @@ export const saveUserProfileToGearForgeDB = async (userId: string, profile: User
     }
   } catch (error) {
     console.warn('GearForgeDB Firestore user save notice:', error);
+    throw error;
   }
 };
 
