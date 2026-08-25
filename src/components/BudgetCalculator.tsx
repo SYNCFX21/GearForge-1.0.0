@@ -10,6 +10,15 @@ interface BudgetCalculatorProps {
   onSaveLoadout: (name: string, budget: number, playstyle: string, items: Accessory[]) => void;
 }
 
+/**
+ * BudgetCalculator Component
+ * Interactive gaming gear budget calculator. Dynamically builds accessory loadouts
+ * within the specified budget using playstyle category weightings, supports shuffling combinations,
+ * manual item lock overrides, and direct save to Firestore loadouts.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'calculator' active tab)
+ */
 export default function BudgetCalculator({ initialBudget, onSaveLoadout }: BudgetCalculatorProps) {
   const [budget, setBudget] = useState<number>(initialBudget);
   const [selectedPresetId, setSelectedPresetId] = useState<string>('allrounder');
@@ -32,21 +41,25 @@ export default function BudgetCalculator({ initialBudget, onSaveLoadout }: Budge
 
   const remainingBudget = budget - totalCost;
 
+  /** Clamps and updates the active budget limit */
   const handleBudgetChange = (value: number) => {
     const clamped = Math.max(500, Math.min(500000, value));
     setBudget(clamped);
     setTempBudgetText(clamped.toString());
   };
 
+  /** Increments shuffle seed to cycle through alternative gear combinations */
   const handleShuffleCombinations = () => {
     setShuffleSeed(prev => prev + 1);
   };
 
+  /** Resets shuffle seeds and removes all category item locks */
   const handleResetCombinations = () => {
     setShuffleSeed(0);
     setItemOverrides({});
   };
 
+  /** Swaps a category item to the next alternative in the catalog */
   const handleSwapItem = (cat: CategoryType, currentId: string) => {
     const categoryCandidates = ACCESSORY_CATALOG.filter(i => i.category === cat);
     if (categoryCandidates.length <= 1) return;

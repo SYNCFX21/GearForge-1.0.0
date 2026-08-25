@@ -8,6 +8,14 @@ interface ItemReviewForumProps {
   currentUser?: UserProfile | null;
 }
 
+/**
+ * ItemReviewForum Component
+ * Community discussion forum and reviews hub for browsing and reviewing accessories.
+ * Allows filtering by category and search terms, then mounts `AccessoryReviewSection` for the selected item.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'forum' active tab)
+ */
 export default function ItemReviewForum({ currentUser }: ItemReviewForumProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');

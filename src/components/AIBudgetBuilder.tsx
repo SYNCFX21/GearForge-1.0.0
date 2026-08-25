@@ -53,13 +53,22 @@ export const POPULAR_GAMES: TargetGame[] = [
   { id: 'dota2', name: 'Dota 2 / LoL', genre: 'MOBA', icon: '🛡️', minGpuTier: 1 },
 ];
 
+/**
+ * AIBudgetBuilder Component
+ * Offline-capable AI gaming build recommender based on target game selection,
+ * Southeast Asian multi-currency conversions (PHP, SGD, MYR, IDR, THB, VND),
+ * and target resolution performance requirements.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'ai-budget-builder' active tab)
+ */
 export default function AIBudgetBuilder() {
   const [selectedCurrency, setSelectedCurrency] = useState<CurrencyOption>(CURRENCIES[0]);
   const [budgetPhp, setBudgetPhp] = useState<number>(35000);
   const [selectedGames, setSelectedGames] = useState<string[]>(['valorant', 'cs2']);
   const [resolution, setResolution] = useState<'1080p' | '1440p' | '4K'>('1080p');
 
-  // Format currency helper
+  /** Formats a PHP base value into the active SEA converted currency format */
   const formatAmount = (phpVal: number) => {
     const converted = phpVal * selectedCurrency.rateToPhp;
     if (selectedCurrency.code === 'IDR' || selectedCurrency.code === 'VND') {
@@ -68,6 +77,7 @@ export default function AIBudgetBuilder() {
     return `${selectedCurrency.symbol}${converted.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   };
 
+  /** Toggles a target game in the benchmark optimization filter */
   const toggleGame = (gameId: string) => {
     setSelectedGames(prev => 
       prev.includes(gameId) 

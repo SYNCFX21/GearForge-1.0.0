@@ -10,6 +10,13 @@ interface ReportBugModalProps {
   user: UserProfile;
 }
 
+/**
+ * ReportBugModal Component
+ * Form modal allowing users to submit bug reports and feedback directly to Firestore.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (opened when user clicks the bug icon in the top navigation bar)
+ */
 export default function ReportBugModal({ isOpen, onClose, user }: ReportBugModalProps) {
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);

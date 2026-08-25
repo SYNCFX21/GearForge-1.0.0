@@ -9,6 +9,15 @@ interface CustomLoadoutPlannerProps {
   onSaveLoadout: (name: string, budget: number, playstyle: string, items: any[]) => void;
 }
 
+/**
+ * CustomLoadoutPlanner Component
+ * AI-powered gaming accessory setup advisor. Collects user budget, target playstyle,
+ * preferred peripheral categories, and custom notes, then queries the Gemini backend endpoint
+ * `/api/gemini/suggest-accessories` for recommendations formatted in authentic PH Taglish.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'ai-planner' active tab)
+ */
 export default function CustomLoadoutPlanner({ onSaveLoadout }: CustomLoadoutPlannerProps) {
   const [budget, setBudget] = useState<number>(7500);
   const [preferences, setPreferences] = useState<string>('');
@@ -30,6 +39,7 @@ export default function CustomLoadoutPlanner({ onSaveLoadout }: CustomLoadoutPla
     { label: 'Stereo Speakers', value: 'speakers' }
   ];
 
+  /** Toggles category inclusion in requested AI loadout recommendations */
   const handleCategoryToggle = (value: CategoryType) => {
     if (requiredCategories.includes(value)) {
       setRequiredCategories(requiredCategories.filter(c => c !== value));
@@ -38,6 +48,7 @@ export default function CustomLoadoutPlanner({ onSaveLoadout }: CustomLoadoutPla
     }
   };
 
+  /** Dispatches suggestion request to backend `/api/gemini/suggest-accessories` endpoint */
   const handleSuggest = async (e: React.FormEvent) => {
     e.preventDefault();
     if (budget <= 0) {
@@ -82,6 +93,7 @@ export default function CustomLoadoutPlanner({ onSaveLoadout }: CustomLoadoutPla
     }
   };
 
+  /** Formats a numeric value into Philippine Peso currency string */
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('en-PH', {
       style: 'currency',
@@ -91,6 +103,10 @@ export default function CustomLoadoutPlanner({ onSaveLoadout }: CustomLoadoutPla
     }).format(val);
   };
 
+  /**
+   * Adapts the AI accessory loadout response into standard Accessory objects
+   * and invokes the onSaveLoadout callback to save to Firestore.
+   */
   const handleSaveAiLoadout = () => {
     if (!aiResult) return;
     

@@ -53,6 +53,13 @@ interface AvatarChoiceModalProps {
   onSelectAvatar: (photoURL: string, avatarName: string) => void;
 }
 
+/**
+ * AvatarChoiceModal Component
+ * Modal gallery providing custom cyber-themed gamer avatar choices for user profiles.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (opened when user clicks their avatar to customize it)
+ */
 export default function AvatarChoiceModal({ isOpen, onClose, currentUser, onSelectAvatar }: AvatarChoiceModalProps) {
   if (!isOpen) return null;
 

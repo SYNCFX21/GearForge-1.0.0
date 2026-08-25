@@ -36,6 +36,12 @@ const CATEGORY_GROUPS: { id: CompareGroup; label: string; icon: string }[] = [
   { id: 'others', label: 'Others', icon: '🔌' },
 ];
 
+/**
+ * Maps granular accessory categories into top-level comparison groups.
+ * 
+ * @param category - CategoryType from accessory catalog
+ * @returns Top-level comparison group identifier
+ */
 const getCategoryGroup = (category: CategoryType): 'mouse' | 'keyboard' | 'headset' | 'others' => {
   if (category === 'mouse') return 'mouse';
   if (category === 'keyboard') return 'keyboard';
@@ -43,6 +49,15 @@ const getCategoryGroup = (category: CategoryType): 'mouse' | 'keyboard' | 'heads
   return 'others';
 };
 
+/**
+ * CompareAccessories Component
+ * Side-by-side technical comparison engine for gaming peripherals.
+ * Evaluates specs, pricing differences, specs win/loss badges, community sentiment,
+ * and value verdict between two selected items.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'compare' active tab)
+ */
 export default function CompareAccessories() {
   const [leftCategory, setLeftCategory] = useState<CompareGroup>('all');
   const [rightCategory, setRightCategory] = useState<CompareGroup>('all');

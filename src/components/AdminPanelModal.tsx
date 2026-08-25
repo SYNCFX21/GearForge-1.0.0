@@ -127,6 +127,19 @@ export const MOCK_COMMUNITY_USERS: UserProfile[] = [
   }
 ];
 
+/**
+ * AdminPanelModal Component
+ * Comprehensive administration and community moderation suite.
+ * Features:
+ * - User role management (User, Admin, Super Admin)
+ * - VIP tier assignment and permanent ad-free status toggling
+ * - Moderation actions (timed muting, temporary account suspensions, permanent bans)
+ * - User registration growth and cohort analytics
+ * - User report review triage queue
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (opened when an Admin clicks the Admin Shield icon in the top header)
+ */
 export default function AdminPanelModal({
   isOpen,
   onClose,

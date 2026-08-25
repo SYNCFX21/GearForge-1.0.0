@@ -31,6 +31,19 @@ interface PremiumFeaturesProposalProps {
   onNavigateTab?: (tabId: string) => void;
 }
 
+/**
+ * PremiumFeaturesProposal Component
+ * GearForge VIP subscription showcase and simulator.
+ * Outlines premium membership perks:
+ * - Ad-free browsing
+ * - Unlimited AI loadout generation
+ * - PDF build sheet export
+ * - Exclusive custom themes and VIP avatar badges
+ * - Instant simulated GCash/Maya checkout
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'premium' active tab)
+ */
 export default function PremiumFeaturesProposal({ user, onUpdateUser, onNavigateTab }: PremiumFeaturesProposalProps) {
   const [showModal, setShowModal] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);

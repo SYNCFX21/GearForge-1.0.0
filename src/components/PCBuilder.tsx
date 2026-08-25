@@ -8,6 +8,15 @@ interface PCBuilderProps {
   onSaveLoadout?: (name: string, budget: number, playstyle: string, items: Accessory[]) => void;
 }
 
+/**
+ * PCBuilder Component
+ * AI-powered custom PC build generator interface. Allows users to specify budget,
+ * target gaming resolution, and custom preferences, then calls the backend Gemini endpoint
+ * to get recommended PC parts, FPS estimations, and direct store links.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'pc-builder' active tab)
+ */
 export default function PCBuilder({ onSaveLoadout }: PCBuilderProps) {
   const [budget, setBudget] = useState<number>(40000);
   const [resolution, setResolution] = useState<string>('1080p');
@@ -17,6 +26,7 @@ export default function PCBuilder({ onSaveLoadout }: PCBuilderProps) {
   const [aiResult, setAiResult] = useState<AIPCBuildResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  /** Formats a numeric value into Philippine Peso currency string (e.g., ₱40,000) */
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('en-PH', {
       style: 'currency',
@@ -25,6 +35,10 @@ export default function PCBuilder({ onSaveLoadout }: PCBuilderProps) {
     }).format(val);
   };
 
+  /**
+   * Dispatches request to the backend `/api/gemini/build-pc` endpoint to generate
+   * an AI-optimized PC parts build.
+   */
   const handleGenerateBuild = async () => {
     setIsLoading(true);
     setError(null);
@@ -61,6 +75,7 @@ export default function PCBuilder({ onSaveLoadout }: PCBuilderProps) {
   const [copied, setCopied] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   
+  /** Constructs a text summary of the generated PC build for sharing or copying to clipboard */
   const generateShareText = () => {
     if (!aiResult) return '';
     return `🔥 Check out my AI-Generated PC Build: ${aiResult.buildName}!\n\n` +
@@ -86,6 +101,10 @@ export default function PCBuilder({ onSaveLoadout }: PCBuilderProps) {
     setShowShareModal(true);
   };
 
+  /**
+   * Adapts the AI PC Build response parts into standard Accessory objects
+   * and triggers saving to the user's Firestore loadouts subcollection.
+   */
   const handleSaveAiLoadout = () => {
     if (!aiResult || !onSaveLoadout) return;
 

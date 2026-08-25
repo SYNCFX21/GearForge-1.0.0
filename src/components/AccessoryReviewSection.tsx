@@ -12,6 +12,18 @@ interface AccessoryReviewSectionProps {
   currentUser?: UserProfile | null;
 }
 
+/**
+ * AccessoryReviewSection Component
+ * Reviews drawer panel for an individual gaming accessory.
+ * Features:
+ * - Local community sentiment overview
+ * - Review submission form with 5-star rating & Taglish tagline
+ * - Reporting inappropriate reviews
+ * - Author profile inspection modal trigger
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered inside the selected item detail side drawer)
+ */
 export default function AccessoryReviewSection({ accessory, onReviewAdded, currentUser }: AccessoryReviewSectionProps) {
   const [data, setData] = useState<{ reviews: Review[]; communitySentiment: string }>({
     reviews: [],

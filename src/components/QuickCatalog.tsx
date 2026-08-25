@@ -4,6 +4,14 @@ import { CategoryType, Accessory } from '../types';
 import { Search, Star, ExternalLink, ShieldAlert, SlidersHorizontal, Gamepad, Sparkles, MessageSquare } from 'lucide-react';
 import AccessoryReviewSection from './AccessoryReviewSection';
 
+/**
+ * QuickCatalog Component
+ * Fast searchable directory of all accessories across budget tiers and categories.
+ * Provides price badges, specifications, direct store search links, and review expansion.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'catalog' active tab)
+ */
 export default function QuickCatalog() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');

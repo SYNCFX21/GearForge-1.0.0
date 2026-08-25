@@ -1,6 +1,12 @@
 import React from 'react';
 
-// We keep BACKGROUND_THEMES here so we don't break imports in App.tsx
+/**
+ * Pre-configured cyberpunk background and accent theme presets.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (default themes and theme selector)
+ * - `src/components/ThemeEditorModal.tsx` (preset theme gallery)
+ */
 export const BACKGROUND_THEMES = [
   { id: 'classic_cyan', name: 'Classic Cyan', color: '#00f2ff', bgColor: '#050505', cardColor: '#09090b' },
   { id: 'rog_red', name: 'ROG Red', color: '#ff0033', bgColor: '#0a0000', cardColor: '#120000' },
@@ -12,6 +18,13 @@ export const BACKGROUND_THEMES = [
   { id: 'ocean_blue', name: 'Deep Ocean', color: '#00a8ff', bgColor: '#000508', cardColor: '#001018' },
 ];
 
+/**
+ * ThreeBackground Component
+ * Background visual canvas placeholder.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (application background canvas wrapper)
+ */
 export default function ThreeBackground({ themeIndex = 0 }: { themeIndex?: number }) {
   // Bubble background removed as requested by the user
   return null;

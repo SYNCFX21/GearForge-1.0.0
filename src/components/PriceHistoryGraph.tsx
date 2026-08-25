@@ -3,6 +3,14 @@ import { TrendingDown, TrendingUp, AlertCircle, ShoppingBag, Clock, Calendar, Sh
 import { ACCESSORY_CATALOG } from '../data/accessories';
 import { Accessory } from '../types';
 
+/**
+ * PriceHistoryGraph Component
+ * Visualizes 6-month historical price trends, all-time highs/lows,
+ * current discount margins, and price drop alert subscription for accessories.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'price-history' active tab)
+ */
 export default function PriceHistoryGraph() {
   const [selectedAccessoryId, setSelectedAccessoryId] = useState<string>(ACCESSORY_CATALOG[0].id);
   const [alertSubscribed, setAlertSubscribed] = useState(false);

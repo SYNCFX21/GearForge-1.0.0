@@ -1,6 +1,15 @@
 import React from 'react';
 import { ShoppingBag, Flame, BadgeAlert, Coins, ExternalLink, HelpCircle } from 'lucide-react';
 
+/**
+ * LocalStoresDirectory Component
+ * Comprehensive guide and directory for trusted Philippine PC gear stores
+ * (Datablitz, EasyPC, Shopee, Lazada, Gilmore Cyberzone, Bermor, Dynaquest)
+ * with voucher buying tips and physical warranty locations.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered under the 'stores' active tab)
+ */
 export default function LocalStoresDirectory() {
   const stores = [
     {

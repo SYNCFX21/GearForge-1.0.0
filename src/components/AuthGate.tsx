@@ -23,6 +23,18 @@ interface AuthGateProps {
   onLoginSuccess: (user: UserProfile) => void;
 }
 
+/**
+ * AuthGate Component
+ * Authentication modal and onboarding portal supporting:
+ * - Email/Password registration and login
+ * - Google Sign-In popups
+ * - Guest mode instant access
+ * - Password reset email triggers
+ * - Automatic profile synchronization with Firestore (`saveUserProfileToGearForgeDB`)
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (shown when an unauthenticated user opens the app or clicks "Sign In")
+ */
 export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
   const [isLoginMode, setIsLoginMode] = useState<boolean>(false); // Default to Create Account for easy onboard
   const [email, setEmail] = useState<string>('');
@@ -32,7 +44,13 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   
-  // Format Firebase auth error code into friendly user message
+  /**
+   * Converts raw Firebase Authentication error codes into human-readable error messages.
+   * 
+   * @param code - Firebase error code string (e.g. 'auth/email-already-in-use')
+   * @param rawMsg - Fallback raw error message
+   * @returns Friendly error description
+   */
   const getFriendlyErrorMessage = (code?: string, rawMsg?: string): string => {
     switch (code) {
       case 'auth/operation-not-allowed':

@@ -240,7 +240,18 @@ export const STATIC_REVIEWS: Record<string, { communitySentiment: string; review
   }
 };
 
-// Generates fallback reviews for IDs that might not have custom written reviews in STATIC_REVIEWS
+/**
+ * Retrieves community reviews, sentiment analysis, and user-submitted feedback for an accessory.
+ * Combines static curated reviews with user-generated reviews from localStorage and filters out deleted items.
+ * 
+ * @param item - Accessory details (id, name, brand, category, pricePhp, rating)
+ * @returns Object containing the list of reviews and an overall community sentiment summary string.
+ * 
+ * @whereUsed
+ * - `src/components/AccessoryReviewSection.tsx` (item review panel in drawer)
+ * - `src/components/ItemReviewForum.tsx` (community discussion forum tab)
+ * - `src/components/CustomLoadoutPlanner.tsx` (displaying item sentiment on generated loadouts)
+ */
 export function getReviewsForAccessory(item: { id: string; name: string; brand: string; category: string; pricePhp: number; rating: number }): { reviews: Review[]; communitySentiment: string } {
   const custom = STATIC_REVIEWS[item.id];
   
@@ -309,7 +320,20 @@ export function getReviewsForAccessory(item: { id: string; name: string; brand: 
   };
 }
 
-// Submits a new user review and persists in localStorage
+/**
+ * Submits a new user review for an accessory and persists it to local browser storage.
+ * 
+ * @param itemId - Unique identifier of the accessory
+ * @param user - Display name of the reviewer
+ * @param rating - Rating out of 5 stars
+ * @param comment - Review comment body
+ * @param tagline - Optional short summary/headline for the review
+ * @returns {Review} The newly created and saved Review object.
+ * 
+ * @whereUsed
+ * - `src/components/AccessoryReviewSection.tsx` (when user writes a review in the drawer)
+ * - `src/components/ItemReviewForum.tsx` (when posting a new review in the community forum)
+ */
 export function submitUserReview(itemId: string, user: string, rating: number, comment: string, tagline?: string): Review {
   const newReview: Review = {
     id: `user-review-${itemId}-${Date.now()}`,
@@ -335,7 +359,15 @@ export function submitUserReview(itemId: string, user: string, rating: number, c
   return newReview;
 }
 
-// Deletes a review by adding it to a deleted_reviews list in localStorage
+/**
+ * Soft-deletes a review by appending its ID to the local storage `deleted_reviews` blacklist.
+ * 
+ * @param reviewId - ID of the review to delete/hide
+ * 
+ * @whereUsed
+ * - `src/components/AccessoryReviewSection.tsx` (user deleting their own review)
+ * - `src/components/AdminPanelModal.tsx` (admin moderating reviews)
+ */
 export function deleteReview(reviewId: string): void {
   try {
     const deletedReviewsRaw = localStorage.getItem('deleted_reviews');

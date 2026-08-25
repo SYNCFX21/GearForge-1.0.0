@@ -6,18 +6,31 @@ import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 
+// Load environment variables from .env file
 dotenv.config();
 
 const app = express();
 const PORT = 3000;
 
+// Enable Cross-Origin Resource Sharing (CORS)
+// Allows requests from deployed frontend (e.g. Vercel) and mobile clients (Capacitor/Android)
 app.use(cors({ origin: "*" })); // tighten to your actual domain(s) later
 app.use(express.json());
 
-// Initialize Gemini client lazily to prevent crashing on boot if key is missing,
-// but checking and providing clear logs.
+// Singleton instance for Gemini AI client
 let aiClient: GoogleGenAI | null = null;
 
+/**
+ * Lazily initializes and returns the Google Gemini AI client singleton.
+ * Prevents server boot crashes if GEMINI_API_KEY is not immediately provided in development.
+ * 
+ * @throws {Error} If GEMINI_API_KEY environment variable is not configured.
+ * @returns {GoogleGenAI} The initialized GoogleGenAI client instance.
+ * 
+ * @whereUsed
+ * - POST /api/gemini/suggest-accessories (AI Gaming Accessories Advisor)
+ * - POST /api/gemini/build-pc (AI PC Component Builder)
+ */
 function getGeminiClient(): GoogleGenAI {
   if (!aiClient) {
     const apiKey = process.env.GEMINI_API_KEY;
@@ -37,7 +50,17 @@ function getGeminiClient(): GoogleGenAI {
   return aiClient;
 }
 
-// Helper to generate search URLs on server-side
+/**
+ * Generates direct search URLs for popular Philippine retail and e-commerce stores.
+ * 
+ * @param {string} storeName - Name of the store (e.g., 'Shopee', 'Lazada', 'Datablitz', 'EasyPC', 'PC Express', 'Dynaquest', 'Bermor Zone').
+ * @param {string} query - The search query (usually brand + model name).
+ * @returns {string} The localized search query URL.
+ * 
+ * @whereUsed
+ * - POST /api/gemini/suggest-accessories: Appends buy/check links for Shopee, Lazada, and Datablitz to each recommended accessory.
+ * - POST /api/gemini/build-pc: Appends buy/check links for Shopee, Lazada, and EasyPC to each recommended PC component.
+ */
 function generateStoreSearchUrl(storeName: string, query: string): string {
   const encoded = encodeURIComponent(query);
   switch (storeName) {
@@ -60,7 +83,14 @@ function generateStoreSearchUrl(storeName: string, query: string): string {
   }
 }
 
-// 1. Health check route
+/**
+ * Health check endpoint.
+ * 
+ * @route GET /api/health
+ * @whereUsed
+ * - Monitoring services (e.g. Render health checks, uptime monitors)
+ * - Diagnostics to check server status and if GEMINI_API_KEY is active.
+ */
 app.get("/api/health", (req, res) => {
   res.json({ 
     status: "ok", 
@@ -69,6 +99,13 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+/**
+ * Rate Limiter Middleware for Gemini AI endpoints.
+ * Restricts each IP to 20 AI generation requests per 15-minute window to avoid API quota exhaustion.
+ * 
+ * @whereUsed
+ * - Applied globally to all `/api/gemini/*` routes.
+ */
 const aiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 20,                  // limit each IP to 20 requests per window
@@ -79,7 +116,20 @@ const aiLimiter = rateLimit({
 
 app.use("/api/gemini", aiLimiter);
 
-// 2. Custom AI gaming accessory suggestion route
+/**
+ * AI Gaming Accessory Recommendation Endpoint.
+ * Uses Gemini 3.6 Flash with the "SariSariGamerPH" persona to generate a budget-constrained,
+ * localized accessory loadout (mouse, keyboard, headset, etc.) in structured JSON format with Taglish advice.
+ * 
+ * @route POST /api/gemini/suggest-accessories
+ * @param {number} req.body.budget - Budget in Philippine Pesos (PHP).
+ * @param {string} [req.body.preferences] - User custom preferences or notes.
+ * @param {string[]} [req.body.requiredCategories] - Categories of accessories to include.
+ * @param {string} [req.body.playstyle] - Target gaming playstyle (e.g. FPS, MOBA, Streamer).
+ * 
+ * @whereUsed
+ * - Frontend: `src/components/CustomLoadoutPlanner.tsx` (handleSuggest function when generating custom loadout recommendations).
+ */
 app.post("/api/gemini/suggest-accessories", async (req, res) => {
   try {
     const { budget, preferences, requiredCategories, playstyle } = req.body;
@@ -168,7 +218,7 @@ Provide your response in a structured JSON format following the schema. Keep the
 
     const data = JSON.parse(text.trim());
 
-    // Inject actual store links programmatically based on recommended item names
+    // Inject actual store search links based on recommended item names
     if (data.items && Array.isArray(data.items)) {
       data.items = data.items.map((item: any) => {
         const query = `${item.brand} ${item.name}`;
@@ -193,7 +243,20 @@ Provide your response in a structured JSON format following the schema. Keep the
   }
 });
 
-// 3. PC Builder AI Endpoint
+/**
+ * AI Custom PC Build Generator Endpoint.
+ * Uses Gemini 3.6 Flash to select and validate a complete set of PC components
+ * (CPU, Motherboard, GPU, RAM, Storage, Case, PSU, Cooler) based on budget and target resolution,
+ * returning realistic Philippine market prices, performance estimates, and Taglish rationale.
+ * 
+ * @route POST /api/gemini/build-pc
+ * @param {number} req.body.budget - Budget in Philippine Pesos (PHP).
+ * @param {string} [req.body.preferences] - Specific user notes or requests (e.g., 'All White', 'Intel only').
+ * @param {string} [req.body.resolution] - Target display resolution ('1080p', '1440p', '4K').
+ * 
+ * @whereUsed
+ * - Frontend: `src/components/PCBuilder.tsx` (handleGenerateBuild function when user triggers PC part list generation).
+ */
 app.post("/api/gemini/build-pc", async (req, res) => {
   try {
     const { budget, preferences, resolution } = req.body;
@@ -284,7 +347,7 @@ Provide your response in a structured JSON format following the schema. Keep the
     }
     const data = JSON.parse(text.trim());
 
-    // Inject actual store links programmatically based on recommended item names
+    // Inject actual store search links based on recommended item names
     if (data.parts && Array.isArray(data.parts)) {
       data.parts = data.parts.map((part: any) => {
         const query = `${part.brand} ${part.name}`;
@@ -309,8 +372,16 @@ Provide your response in a structured JSON format following the schema. Keep the
   }
 });
 
-
-// Vite / static file serving integration
+/**
+ * Server Bootstrap and Static File / Development Server Integrator.
+ * 
+ * - In Development (`NODE_ENV !== "production"`): Starts Vite in middleware mode with HMR for local development.
+ * - In Production (`NODE_ENV === "production"`): Serves compiled static assets from the `dist/` directory and handles SPA fallback routing.
+ * - Starts the HTTP listener on port 3000 binding to `0.0.0.0`.
+ * 
+ * @whereUsed
+ * - Application initialization on boot (`npm run dev`, `npm run start`, or Render production start command).
+ */
 async function bootstrap() {
   if (process.env.NODE_ENV !== "production") {
     // In development mode, mount Vite dev server as middleware
@@ -335,4 +406,5 @@ async function bootstrap() {
   });
 }
 
+// Start the server
 bootstrap();

@@ -8,6 +8,13 @@ interface UserSearchProps {
   onUserSelect: (username: string) => void;
 }
 
+/**
+ * UserSearch Component
+ * Autocomplete search dropdown allowing users to find community members by username or email.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (top navigation bar search input)
+ */
 export default function UserSearch({ onUserSelect }: UserSearchProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [users, setUsers] = useState<UserProfile[]>([]);

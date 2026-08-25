@@ -27,6 +27,15 @@ const PRESET_PALETTES = [
   '#ff00ff', '#ffffff', '#ff5500', '#111111', '#00ffaa'
 ];
 
+/**
+ * ThemeEditorModal Component
+ * Interactive visual theme customizer and palette switcher.
+ * Allows users to choose from built-in cyber presets or create, preview,
+ * save, and delete custom accent and background themes.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (opened when user clicks the theme/palette button in the navigation header)
+ */
 export default function ThemeEditorModal({ 
   isOpen, onClose, customThemes, onSaveTheme, onDeleteTheme, onSelectTheme, currentThemeId 
 }: ThemeEditorModalProps) {

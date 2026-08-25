@@ -1,5 +1,16 @@
 import { Accessory, BudgetTier, PlaystylePreset, CategoryType } from '../types';
 
+/**
+ * Generates direct store search query URLs for leading Philippine PC retail and e-commerce stores.
+ * 
+ * @param store - Target store name ('Shopee', 'Lazada', 'Datablitz', 'EasyPC', 'PC Express', 'Dynaquest', 'Bermor Zone')
+ * @param query - Product name or search keyword
+ * @returns {string} Fully qualified store search link
+ * 
+ * @whereUsed
+ * - Accessory item store purchase links throughout the entire catalog (`src/data/accessories.ts`)
+ * - Item cards in `BudgetCalculator.tsx`, `CompareAccessories.tsx`, and `QuickCatalog.tsx`
+ */
 export function getSearchUrl(store: string, query: string): string {
   const encoded = encodeURIComponent(query);
   switch (store) {
@@ -728,6 +739,20 @@ export const ACCESSORY_CATALOG: Accessory[] = [
   }
 ];
 
+/**
+ * Selects an optimal, budget-constrained gaming loadout based on playstyle category distributions.
+ * Performs iterative optimization to prevent budget overshoots and upgrades components if under-budget.
+ * Preserves user-locked category overrides.
+ * 
+ * @param budget - Total budget in Philippine Pesos (PHP)
+ * @param playstyleId - Identifier of the selected playstyle preset (e.g. 'fps', 'moba', 'streamer')
+ * @param shuffleSeed - Numeric seed to rotate alternative product choices on re-roll
+ * @param itemOverrides - Optional mapping of category to user-locked accessory IDs
+ * @returns {Accessory[]} Array of recommended accessories
+ * 
+ * @whereUsed
+ * - `src/components/BudgetCalculator.tsx` (main auto-generate loadout builder and re-shuffle button)
+ */
 export function getRecommendedPresetLoadout(
   budget: number, 
   playstyleId: string, 

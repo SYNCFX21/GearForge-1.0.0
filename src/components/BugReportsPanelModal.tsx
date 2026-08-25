@@ -9,6 +9,14 @@ interface BugReportsPanelModalProps {
   onClose: () => void;
 }
 
+/**
+ * BugReportsPanelModal Component
+ * Admin management panel to view, filter, and triage incoming user bug reports
+ * and status transitions ('open' -> 'in-progress' -> 'resolved').
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (opened when an Admin clicks the Bug Reports badge in the top bar)
+ */
 export default function BugReportsPanelModal({ isOpen, onClose }: BugReportsPanelModalProps) {
   const [reports, setReports] = useState<BugReport[]>([]);
   const [isLoading, setIsLoading] = useState(true);

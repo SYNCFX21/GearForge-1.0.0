@@ -57,6 +57,17 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
+/**
+ * App Component
+ * Root application component for GearForge.
+ * Manages:
+ * - Active navigation tabs ('preset', 'pcbuild', 'builder', 'price', 'forum', 'ai', 'catalog', 'compare', 'directory')
+ * - Authentication state & user session persistence
+ * - Global Cyberpunk and Dark/Light theme switching
+ * - Multi-language localization and automated translations
+ * - Saved loadouts management and synchronization with Firestore
+ * - Admin panel, moderation queues, and bug report modals
+ */
 export default function App() {
   const [activeTab, setActiveTab] = useState<'preset' | 'pcbuild' | 'builder' | 'price' | 'forum' | 'ai' | 'catalog' | 'compare' | 'directory'>('preset');
   const [savedLoadouts, setSavedLoadouts] = useState<SavedLoadout[]>([]);
@@ -114,7 +125,12 @@ export default function App() {
     }
   };
 
-  // Toggle or update user state
+  /**
+   * Updates user profile state in local storage and persists to Firestore.
+   * 
+   * @param updatedUser - The updated user profile
+   * @param msg - Optional toast notification message to display
+   */
   const handleUpdateUser = async (updatedUser: UserProfile, msg?: string) => {
     setUser(updatedUser);
     localStorage.setItem('ph_gamer_user', JSON.stringify(updatedUser));
@@ -133,6 +149,7 @@ export default function App() {
     }
   };
 
+  /** Toggles VIP membership tier and privileges for the current user */
   const handleToggleVip = () => {
     if (!user) return;
     const updatedUser: UserProfile = {
@@ -238,7 +255,14 @@ export default function App() {
     };
   }, []);
 
-  // Save a new loadout
+  /**
+   * Saves a newly created loadout to state and asynchronously writes to Firestore.
+   * 
+   * @param name - Loadout build title
+   * @param budget - Total budget
+   * @param playstyle - Active playstyle preset or resolution
+   * @param items - Array of accessories/components in the build
+   */
   const handleSaveLoadout = async (name: string, budget: number, playstyle: string, items: Accessory[]) => {
     const newLoadout: SavedLoadout = {
       id: `loadout-${Date.now()}`,
@@ -264,7 +288,11 @@ export default function App() {
     triggerNotification(`Successfully saved loadout: "${name}"!`);
   };
 
-  // Delete a saved loadout
+  /**
+   * Removes a loadout from state and deletes the corresponding Firestore document.
+   * 
+   * @param id - Saved loadout ID
+   */
   const handleDeleteLoadout = async (id: string) => {
     const updated = savedLoadouts.filter(l => l.id !== id);
     setSavedLoadouts(updated);
@@ -280,6 +308,7 @@ export default function App() {
     triggerNotification("Loadout deleted.");
   };
 
+  /** Displays a transient toast notification banner for 4 seconds */
   const triggerNotification = (message: string) => {
     setShowNotification(message);
     setTimeout(() => {
@@ -287,6 +316,7 @@ export default function App() {
     }, 4000);
   };
 
+  /** Formats a numeric value into Philippine Peso currency representation */
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('en-PH', {
       style: 'currency',
@@ -296,7 +326,10 @@ export default function App() {
     }).format(val);
   };
 
-  // Permanently delete user account & clean Firestore / localStorage
+  /**
+   * Permanently deletes user account, Firestore profile & subcollections,
+   * Firebase Auth credentials, and clears local storage data.
+   */
   const handlePermanentDeleteAccount = async () => {
     if (!user) return;
     setIsDeletingAccount(true);

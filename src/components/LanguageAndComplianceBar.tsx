@@ -45,6 +45,16 @@ interface LanguageAndComplianceBarProps {
   onToggleAutoTranslate: () => void;
 }
 
+/**
+ * LanguageAndComplianceBar Component
+ * Top utility toolbar providing:
+ * - Multi-language switching (English, Tagalog, Japanese, Korean, Thai, Vietnamese, German)
+ * - Auto-translate toggle
+ * - Terms of Service & Privacy Policy audit modal trigger
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (rendered at the very top of the application layout)
+ */
 export default function LanguageAndComplianceBar({
   user,
   onToggleVip,

@@ -12,6 +12,18 @@ interface UserProfileModalProps {
   onClose: () => void;
 }
 
+/**
+ * UserProfileModal Component
+ * Public member profile viewer displaying:
+ * - Avatar, username, VIP badge, bio, and role
+ * - Publicly shared saved PC and accessory loadouts
+ * - Authored review history across all accessories
+ * - Moderation report submission against inappropriate profiles
+ * 
+ * @whereUsed
+ * - `src/components/AccessoryReviewSection.tsx` (clicking on a reviewer's avatar/name)
+ * - `src/components/UserSearch.tsx` (clicking on a member in the search list)
+ */
 export default function UserProfileModal({ username, currentUser, onClose }: UserProfileModalProps) {
   const [profileUser, setProfileUser] = useState<UserProfile | null>(null);
   const [userLoadouts, setUserLoadouts] = useState<SavedLoadout[]>([]);

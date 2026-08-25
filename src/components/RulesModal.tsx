@@ -8,6 +8,13 @@ interface RulesModalProps {
   onDecline: () => void;
 }
 
+/**
+ * RulesModal Component
+ * Community guidelines and terms of service acceptance modal.
+ * 
+ * @whereUsed
+ * - `src/App.tsx` (shown when user opens community rules or on initial registration gate)
+ */
 export default function RulesModal({ isOpen, onAccept, onDecline }: RulesModalProps) {
   const [isChecked, setIsChecked] = useState(false);
   const [showError, setShowError] = useState(false);
