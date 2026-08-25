@@ -21,6 +21,7 @@ import RulesModal from './components/RulesModal';
 import PCBuilder from './components/PCBuilder';
 import ThreeBackground, { BACKGROUND_THEMES } from './components/ThreeBackground';
 import ThemeEditorModal, { CustomTheme } from './components/ThemeEditorModal';
+import DigitalRain from './components/DigitalRain';
 import DecryptedText from './components/DecryptedText';
 import { 
   Gamepad2, 
@@ -495,43 +496,12 @@ export default function App() {
       className="min-h-screen text-[#f5f5f7] antialiased selection:bg-primary-500 selection:text-black pb-16 relative overflow-hidden"
       style={{ backgroundColor: '#100e0b' }}
     >
-      {/* Blueprint - Aura Background Layers */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background: "linear-gradient(rgba(14,165,233,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(14,165,233,0.12) 1px, transparent 1px)",
-          backgroundSize: "50px 50px",
-          mixBlendMode: "normal",
-          transform: "translateZ(0)",
-          willChange: "transform",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background: "linear-gradient(rgba(14,165,233,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(14,165,233,0.06) 1px, transparent 1px)",
-          backgroundSize: "10px 10px",
-          mixBlendMode: "normal",
-          transform: "translateZ(0)",
-          willChange: "transform",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background: "radial-gradient(circle at 60% 40%, rgba(6,182,212,0.35) 0%, transparent 45%)",
-          mixBlendMode: "screen",
-          filter: "blur(252px)",
-          transform: "translateZ(0)",
-          willChange: "transform",
-        }}
-        aria-hidden="true"
-      />
+      {/* Digital Rain Background */}
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-30" aria-hidden="true">
+        <DigitalRain />
+      </div>
 
       <div className="relative z-10">
-        <ThreeBackground />
         
         {/* Top International Language Bar & Compliance Audit */}
       <LanguageAndComplianceBar
