@@ -23,21 +23,18 @@ import { BACKGROUND_THEMES } from './components/ThreeBackground';
 const ThreeBackground = React.lazy(() => import('./components/ThreeBackground'));
 import ThemeEditorModal, { CustomTheme } from './components/ThemeEditorModal';
 import DigitalRain from './components/DigitalRain';
-<<<<<<< HEAD
 import MagicRings from './components/MagicRings';
-=======
->>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
 import DecryptedText from './components/DecryptedText';
-import { 
-  Gamepad2, 
-  Coins, 
-  Sparkles, 
-  Sliders, 
+import {
+  Gamepad2,
+  Coins,
+  Sparkles,
+  Sliders,
   Layers,
-  Heart, 
-  Trash2, 
-  Check, 
-  Store, 
+  Heart,
+  Trash2,
+  Check,
+  Store,
   LogOut,
   Cpu,
   Monitor,
@@ -116,7 +113,7 @@ export default function App() {
     document.documentElement.style.setProperty('--app-bg', isDarkMode ? (theme.bgColor || '#050505') : '#f5f5f7');
     document.documentElement.style.setProperty('--card-bg', isDarkMode ? (theme.cardColor || '#09090b') : '#ffffff');
     document.documentElement.style.setProperty('--text-main', isDarkMode ? ((theme as any).textColor || '#ffffff') : '#1d1d1f');
-    
+
     if (isDarkMode) {
       document.body.classList.remove('light-mode-active');
     } else {
@@ -180,60 +177,60 @@ export default function App() {
 
         unsubscribeAuth = onAuthStateChanged(auth, async (firebaseUser) => {
           if (firebaseUser) {
-              const { getUserProfileFromFirestore } = await import('./lib/firestore');
-              let loggedUser: UserProfile = {
-                uid: firebaseUser.uid,
-                email: firebaseUser.email || '',
-                displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'Gamer',
-                photoURL: firebaseUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${firebaseUser.uid}`,
-                providerId: 'firebase',
-                registeredAt: firebaseUser.metadata.creationTime ? new Date(firebaseUser.metadata.creationTime).toLocaleDateString('en-PH') : new Date().toLocaleDateString('en-PH'),
-                isVip: false, // Default to false, will be overwritten by Firestore
-                vipTierName: undefined
-              };
-              
-              const fsProfile = await getUserProfileFromFirestore(firebaseUser.uid);
-              if (fsProfile) {
-                loggedUser = { ...loggedUser, ...fsProfile };
-              }
+            const { getUserProfileFromFirestore } = await import('./lib/firestore');
+            let loggedUser: UserProfile = {
+              uid: firebaseUser.uid,
+              email: firebaseUser.email || '',
+              displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'Gamer',
+              photoURL: firebaseUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${firebaseUser.uid}`,
+              providerId: 'firebase',
+              registeredAt: firebaseUser.metadata.creationTime ? new Date(firebaseUser.metadata.creationTime).toLocaleDateString('en-PH') : new Date().toLocaleDateString('en-PH'),
+              isVip: false, // Default to false, will be overwritten by Firestore
+              vipTierName: undefined
+            };
 
-              // Local cache fallback for hasAcceptedRules (fixes terms modal repeating if db write was slow/failed but cached locally)
-              if (!loggedUser.hasAcceptedRules && firebaseUser.email) {
-                try {
-                  const cached = localStorage.getItem(`gf_user_${firebaseUser.email.toLowerCase().trim()}`);
-                  if (cached) {
-                    const parsed = JSON.parse(cached);
-                    if (parsed.hasAcceptedRules) {
-                      loggedUser.hasAcceptedRules = true;
-                    }
+            const fsProfile = await getUserProfileFromFirestore(firebaseUser.uid);
+            if (fsProfile) {
+              loggedUser = { ...loggedUser, ...fsProfile };
+            }
+
+            // Local cache fallback for hasAcceptedRules (fixes terms modal repeating if db write was slow/failed but cached locally)
+            if (!loggedUser.hasAcceptedRules && firebaseUser.email) {
+              try {
+                const cached = localStorage.getItem(`gf_user_${firebaseUser.email.toLowerCase().trim()}`);
+                if (cached) {
+                  const parsed = JSON.parse(cached);
+                  if (parsed.hasAcceptedRules) {
+                    loggedUser.hasAcceptedRules = true;
                   }
-                } catch (e) {
-                  // ignore
                 }
+              } catch (e) {
+                // ignore
               }
+            }
 
-              if (loggedUser.email && loggedUser.email.toLowerCase() === 'aaronsalagubang21@gmail.com') {
-                loggedUser.role = 'super_admin';
-                loggedUser.displayName = 'Aaron Lanceta';
-                if (!fsProfile || fsProfile.role !== 'super_admin' || fsProfile.displayName !== 'Aaron Lanceta') {
-                  const { saveUserProfileToGearForgeDB } = await import('./lib/firestore');
-                  saveUserProfileToGearForgeDB(firebaseUser.uid, loggedUser).catch(console.warn);
-                }
-              } else if (loggedUser.role === 'super_admin') {
-                loggedUser.role = 'user';
+            if (loggedUser.email && loggedUser.email.toLowerCase() === 'aaronsalagubang21@gmail.com') {
+              loggedUser.role = 'super_admin';
+              loggedUser.displayName = 'Aaron Lanceta';
+              if (!fsProfile || fsProfile.role !== 'super_admin' || fsProfile.displayName !== 'Aaron Lanceta') {
                 const { saveUserProfileToGearForgeDB } = await import('./lib/firestore');
                 saveUserProfileToGearForgeDB(firebaseUser.uid, loggedUser).catch(console.warn);
               }
+            } else if (loggedUser.role === 'super_admin') {
+              loggedUser.role = 'user';
+              const { saveUserProfileToGearForgeDB } = await import('./lib/firestore');
+              saveUserProfileToGearForgeDB(firebaseUser.uid, loggedUser).catch(console.warn);
+            }
 
-              setUser((prev) => {
-                const finalUser = { ...loggedUser };
-                // Prevent race condition: if the user already accepted rules in this session, preserve it
-                if (prev && prev.uid === finalUser.uid && prev.hasAcceptedRules) {
-                  finalUser.hasAcceptedRules = true;
-                }
-                localStorage.setItem('ph_gamer_user', JSON.stringify(finalUser));
-                return finalUser;
-              });
+            setUser((prev) => {
+              const finalUser = { ...loggedUser };
+              // Prevent race condition: if the user already accepted rules in this session, preserve it
+              if (prev && prev.uid === finalUser.uid && prev.hasAcceptedRules) {
+                finalUser.hasAcceptedRules = true;
+              }
+              localStorage.setItem('ph_gamer_user', JSON.stringify(finalUser));
+              return finalUser;
+            });
 
             try {
               const fsLoadouts = await getLoadoutsFromFirestore(firebaseUser.uid);
@@ -283,7 +280,7 @@ export default function App() {
 
     const updated = [newLoadout, ...savedLoadouts];
     setSavedLoadouts(updated);
-    
+
     if (user) {
       try {
         const { saveLoadoutToFirestore } = await import('./lib/firestore');
@@ -303,7 +300,7 @@ export default function App() {
   const handleDeleteLoadout = async (id: string) => {
     const updated = savedLoadouts.filter(l => l.id !== id);
     setSavedLoadouts(updated);
-    
+
     if (user) {
       try {
         const { deleteLoadoutFromFirestore } = await import('./lib/firestore');
@@ -487,8 +484,8 @@ export default function App() {
 
   // Compute effective trial expiration and active VIP/Ad-Free status
   const isTrialExpired = Boolean(
-    user.isTrialActive && 
-    user.trialEndsAt && 
+    user.isTrialActive &&
+    user.trialEndsAt &&
     new Date(user.trialEndsAt).getTime() < Date.now()
   );
 
@@ -497,54 +494,54 @@ export default function App() {
   const hasAdFree = Boolean(user.hasPermanentAdFree || hasActiveVip || isSuperAdmin || user.role === 'admin');
 
   return (
-    <div 
+    <div
       className="min-h-screen text-[#f5f5f7] antialiased selection:bg-primary-500 selection:text-black pb-16 relative overflow-hidden"
       style={{ backgroundColor: '#100e0b' }}
     >
 <<<<<<< HEAD
-      {/* Background layer */}
-      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-        {activeTab === 'ai' ? (
-          <div className="h-full w-full opacity-60">
-            <MagicRings
-              color="#048fc7"
-              colorTwo="#003b9b"
-              ringCount={6}
-              speed={1.5}
-              attenuation={12}
-              lineThickness={2}
-              baseRadius={0.35}
-              radiusStep={0.1}
-              scaleRate={0.1}
-              opacity={1}
-              blur={0}
-              noiseAmount={0.1}
-              rotation={0}
-              ringGap={1.5}
-              fadeIn={0.7}
-              fadeOut={0.5}
-              followMouse={false}
-              mouseInfluence={0.2}
-              hoverScale={1.2}
-              parallax={0.05}
-              clickBurst={false}
-            />
-          </div>
-        ) : (
-          <div className="opacity-30 h-full w-full">
-            <DigitalRain />
-          </div>
-        )}
+  {/* Background layer */ }
+  <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+    {activeTab === 'ai' ? (
+      <div className="h-full w-full opacity-60">
+        <MagicRings
+          color="#048fc7"
+          colorTwo="#003b9b"
+          ringCount={6}
+          speed={1.5}
+          attenuation={12}
+          lineThickness={2}
+          baseRadius={0.35}
+          radiusStep={0.1}
+          scaleRate={0.1}
+          opacity={1}
+          blur={0}
+          noiseAmount={0.1}
+          rotation={0}
+          ringGap={1.5}
+          fadeIn={0.7}
+          fadeOut={0.5}
+          followMouse={false}
+          mouseInfluence={0.2}
+          hoverScale={1.2}
+          parallax={0.05}
+          clickBurst={false}
+        />
+      </div>
+    ) : (
+      <div className="opacity-30 h-full w-full">
+        <DigitalRain />
+      </div>
+    )}
 =======
       {/* Digital Rain Background */}
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-30" aria-hidden="true">
-        <DigitalRain />
+    <div className="pointer-events-none absolute inset-0 z-0 opacity-30" aria-hidden="true">
+      <DigitalRain />
 >>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
-      </div>
+    </div>
 
-      <div className="relative z-10">
-        
-        {/* Top International Language Bar & Compliance Audit */}
+    <div className="relative z-10">
+
+      {/* Top International Language Bar & Compliance Audit */}
       <LanguageAndComplianceBar
         user={user}
         onToggleVip={handleToggleVip}
@@ -573,7 +570,7 @@ export default function App() {
       </AnimatePresence>
 
       <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-6 sm:space-y-8 relative z-10">
-        
+
         {/* Apple/Gamer Hybrid Header */}
         <header className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 pb-6 border-b border-[var(--color-glass-border)]">
           <div className="flex items-center justify-between w-full lg:w-auto">
@@ -621,8 +618,8 @@ export default function App() {
             {/* Authenticated User Profile with Dynamic Badge */}
             <div className="flex items-center justify-between gap-3 bg-[var(--color-glass)] backdrop-blur-2xl border border-[var(--color-glass-border)] p-3 sm:p-4 rounded-2xl sm:rounded-3xl shrink-0 shadow-xl relative overflow-hidden">
               <div className="flex items-center gap-3">
-                <div 
-                  className="relative cursor-pointer group" 
+                <div
+                  className="relative cursor-pointer group"
                   onClick={() => setIsAvatarModalOpen(true)}
                   title="Click to Change Avatar (8 Presets)"
                 >
@@ -638,7 +635,7 @@ export default function App() {
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <button 
+                    <button
                       onClick={() => setSelectedSearchUser(user.displayName)}
                       className="text-xs font-bold text-white block truncate max-w-[100px] sm:max-w-[120px] hover:text-primary-400 transition cursor-pointer text-left"
                       title="View My Profile"
@@ -793,10 +790,10 @@ export default function App() {
 
         {/* Premium Features Proposal Banner */}
         {!isSuperAdmin && (
-          <PremiumFeaturesProposal 
-            user={user} 
-            onUpdateUser={handleUpdateUser} 
-            onNavigateTab={(tabId) => setActiveTab(tabId as any)} 
+          <PremiumFeaturesProposal
+            user={user}
+            onUpdateUser={handleUpdateUser}
+            onNavigateTab={(tabId) => setActiveTab(tabId as any)}
           />
         )}
 
@@ -864,13 +861,12 @@ export default function App() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
-                    className={`flex items-center gap-2 py-2.5 px-3.5 sm:px-4 rounded-xl font-semibold text-xs transition-all shrink-0 cursor-pointer whitespace-nowrap relative ${
-                      isActive
+                    className={`flex items-center gap-2 py-2.5 px-3.5 sm:px-4 rounded-xl font-semibold text-xs transition-all shrink-0 cursor-pointer whitespace-nowrap relative ${isActive
                         ? 'bg-[var(--theme-color)] text-white shadow-lg shadow-[var(--theme-color)]/30 scale-102 border border-primary-400/40'
                         : tab.isVipFeature
-                        ? 'text-primary-300 hover:text-white bg-primary-500/10 hover:bg-primary-500/20 border border-primary-500/30'
-                        : 'text-zinc-400 hover:text-white hover:bg-white/10'
-                    }`}
+                          ? 'text-primary-300 hover:text-white bg-primary-500/10 hover:bg-primary-500/20 border border-primary-500/30'
+                          : 'text-zinc-400 hover:text-white hover:bg-white/10'
+                      }`}
                   >
                     <Icon className={`w-3.5 h-3.5 ${isActive && (tab.id === 'builder' || tab.id === 'ai') ? 'text-primary-400' : tab.isVipFeature ? 'text-primary-400' : ''}`} />
                     <span>{tab.label}</span>
@@ -982,11 +978,10 @@ export default function App() {
                           setShowSectionsGridModal(false);
                           triggerNotification(`Switched to ${sec.label}`);
                         }}
-                        className={`p-4 rounded-2xl border text-left flex items-start gap-3.5 transition cursor-pointer ${
-                          isSelected
+                        className={`p-4 rounded-2xl border text-left flex items-start gap-3.5 transition cursor-pointer ${isSelected
                             ? 'bg-primary-500/20 border-primary-500/60 shadow-lg shadow-primary-500/10'
                             : 'bg-[var(--app-bg)]/50 border-white/10 hover:bg-white/10'
-                        }`}
+                          }`}
                       >
                         <div className={`p-2.5 rounded-xl shrink-0 flex items-center justify-center relative ${isSelected ? 'bg-primary-500 text-black font-bold' : 'bg-white/10 text-primary-400'}`}>
                           <Icon className="w-5 h-5" />
@@ -1113,22 +1108,20 @@ export default function App() {
                           </div>
                           <div className="flex flex-col items-end gap-1.5">
                             {(user.role === 'admin' || isSuperAdmin) && (
-                              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase shrink-0 border ${
-                                isSuperAdmin ? 'bg-primary-500/20 text-primary-300 border-primary-500/40' : 'bg-primary-500/20 text-primary-300 border-primary-500/40'
-                              }`}>
+                              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase shrink-0 border ${isSuperAdmin ? 'bg-primary-500/20 text-primary-300 border-primary-500/40' : 'bg-primary-500/20 text-primary-300 border-primary-500/40'
+                                }`}>
                                 {isSuperAdmin ? '👑 Super Admin' : '🛡️ Admin'}
                               </span>
                             )}
                             {user.role !== 'admin' && user.role !== 'super_admin' && (
-                              <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase shrink-0 ${
-                                user.isTrialActive 
+                              <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase shrink-0 ${user.isTrialActive
                                   ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
-                                  : user.hasPermanentAdFree 
-                                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                                  : user.isVip 
-                                  ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
-                                  : 'bg-white/10 text-zinc-300'
-                              }`}>
+                                  : user.hasPermanentAdFree
+                                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                                    : user.isVip
+                                      ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
+                                      : 'bg-white/10 text-zinc-300'
+                                }`}>
                                 {user.isTrialActive ? '7-Day Trial' : user.hasPermanentAdFree ? 'Ad-Free' : user.isVip ? 'VIP Member' : 'Basic Tier'}
                               </span>
                             )}
@@ -1136,47 +1129,47 @@ export default function App() {
                         </div>
                       </div>
 
-                      
-                  {/* Theme Selector */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
-                      <Palette className="w-4 h-4 text-primary-400" />
-                      App Theme
-                    </label>
-                    <button
-                      onClick={() => {
-                        setIsHamburgerOpen(false);
-                        setIsThemeEditorOpen(true);
-                      }}
-                      className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-sm text-white transition flex items-center justify-between cursor-pointer"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div 
-                          className="w-4 h-4 rounded-full border border-white/20 shadow-sm"
-                          style={{ backgroundColor: [...BACKGROUND_THEMES, ...customThemes].find(t => t.id === activeThemeId)?.color || BACKGROUND_THEMES[0].color }}
-                        />
-                        <span className="font-bold">{[...BACKGROUND_THEMES, ...customThemes].find(t => t.id === activeThemeId)?.name || 'Theme'}</span>
-                      </div>
-                      <span className="text-xs text-primary-400 bg-primary-500/10 px-2 py-1 rounded-md font-bold uppercase tracking-wide whitespace-nowrap">Create / Edit Theme</span>
-                    </button>
-                  </div>
 
-                      
-                  <div className="space-y-2 pt-2 border-t border-white/10 mt-4">
-                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2 pt-2">
-                      {isDarkMode ? <Moon className="w-4 h-4 text-primary-400" /> : <Sun className="w-4 h-4 text-primary-400" />}
-                      Appearance
-                    </label>
-                    <button
-                      onClick={() => setIsDarkMode(!isDarkMode)}
-                      className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-sm text-white transition flex items-center justify-between cursor-pointer"
-                    >
-                      <span>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
-                      <div className={`w-10 h-5 rounded-full p-1 transition ${isDarkMode ? 'bg-primary-500' : 'bg-zinc-600'}`}>
-                        <div className={`w-3 h-3 bg-white rounded-full transition transform ${isDarkMode ? 'translate-x-5' : 'translate-x-0'}`} />
+                      {/* Theme Selector */}
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
+                          <Palette className="w-4 h-4 text-primary-400" />
+                          App Theme
+                        </label>
+                        <button
+                          onClick={() => {
+                            setIsHamburgerOpen(false);
+                            setIsThemeEditorOpen(true);
+                          }}
+                          className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-sm text-white transition flex items-center justify-between cursor-pointer"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div
+                              className="w-4 h-4 rounded-full border border-white/20 shadow-sm"
+                              style={{ backgroundColor: [...BACKGROUND_THEMES, ...customThemes].find(t => t.id === activeThemeId)?.color || BACKGROUND_THEMES[0].color }}
+                            />
+                            <span className="font-bold">{[...BACKGROUND_THEMES, ...customThemes].find(t => t.id === activeThemeId)?.name || 'Theme'}</span>
+                          </div>
+                          <span className="text-xs text-primary-400 bg-primary-500/10 px-2 py-1 rounded-md font-bold uppercase tracking-wide whitespace-nowrap">Create / Edit Theme</span>
+                        </button>
                       </div>
-                    </button>
-                  </div>
+
+
+                      <div className="space-y-2 pt-2 border-t border-white/10 mt-4">
+                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2 pt-2">
+                          {isDarkMode ? <Moon className="w-4 h-4 text-primary-400" /> : <Sun className="w-4 h-4 text-primary-400" />}
+                          Appearance
+                        </label>
+                        <button
+                          onClick={() => setIsDarkMode(!isDarkMode)}
+                          className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-sm text-white transition flex items-center justify-between cursor-pointer"
+                        >
+                          <span>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
+                          <div className={`w-10 h-5 rounded-full p-1 transition ${isDarkMode ? 'bg-primary-500' : 'bg-zinc-600'}`}>
+                            <div className={`w-3 h-3 bg-white rounded-full transition transform ${isDarkMode ? 'translate-x-5' : 'translate-x-0'}`} />
+                          </div>
+                        </button>
+                      </div>
 
                       {/* Admin Panel Access */}
                       {(user.role === 'admin' || isSuperAdmin) && (
@@ -1274,11 +1267,10 @@ export default function App() {
                               setIsHamburgerOpen(false);
                               triggerNotification(`Navigated to ${item.label}`);
                             }}
-                            className={`w-full p-3 rounded-2xl border text-left flex items-center justify-between transition cursor-pointer ${
-                              isCurrent
+                            className={`w-full p-3 rounded-2xl border text-left flex items-center justify-between transition cursor-pointer ${isCurrent
                                 ? 'bg-primary-500/20 border-primary-500/60 text-white shadow-lg'
                                 : 'bg-white/5 border-white/5 hover:bg-white/10 text-zinc-300'
-                            }`}
+                              }`}
                           >
                             <div className="flex items-center gap-3">
                               <div className={`p-2 rounded-xl shrink-0 flex items-center justify-center relative ${isCurrent ? 'bg-primary-500 text-black font-bold' : 'bg-white/10 text-primary-400'}`}>
@@ -1524,13 +1516,13 @@ export default function App() {
               onDecline={handleDeclineRules}
             />
             <AvatarChoiceModal
-            isOpen={isAvatarModalOpen}
-            onClose={() => setIsAvatarModalOpen(false)}
-            currentUser={user}
-            onSelectAvatar={(photoURL, avatarName) => {
-              handleUpdateUser({ ...user, photoURL }, `✨ Avatar updated to ${avatarName}!`);
-            }}
-          />
+              isOpen={isAvatarModalOpen}
+              onClose={() => setIsAvatarModalOpen(false)}
+              currentUser={user}
+              onSelectAvatar={(photoURL, avatarName) => {
+                handleUpdateUser({ ...user, photoURL }, `✨ Avatar updated to ${avatarName}!`);
+              }}
+            />
           </>
         )}
 
@@ -1572,7 +1564,7 @@ export default function App() {
           )}
         </AnimatePresence>
       </main>
-      </div>
     </div>
+  </div>
   );
 }
