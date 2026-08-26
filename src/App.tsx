@@ -498,1073 +498,1074 @@ export default function App() {
       className="min-h-screen text-[#f5f5f7] antialiased selection:bg-primary-500 selection:text-black pb-16 relative overflow-hidden"
       style={{ backgroundColor: '#100e0b' }}
     >
-<<<<<<< HEAD
-  {/* Background layer */ }
-  <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-    {activeTab === 'ai' ? (
-      <div className="h-full w-full opacity-60">
-        <MagicRings
-          color="#048fc7"
-          colorTwo="#003b9b"
-          ringCount={6}
-          speed={1.5}
-          attenuation={12}
-          lineThickness={2}
-          baseRadius={0.35}
-          radiusStep={0.1}
-          scaleRate={0.1}
-          opacity={1}
-          blur={0}
-          noiseAmount={0.1}
-          rotation={0}
-          ringGap={1.5}
-          fadeIn={0.7}
-          fadeOut={0.5}
-          followMouse={false}
-          mouseInfluence={0.2}
-          hoverScale={1.2}
-          parallax={0.05}
-          clickBurst={false}
-        />
-      </div>
-    ) : (
-      <div className="opacity-30 h-full w-full">
-        <DigitalRain />
-      </div>
-    )}
-=======
-      {/* Digital Rain Background */}
-    <div className="pointer-events-none absolute inset-0 z-0 opacity-30" aria-hidden="true">
-      <DigitalRain />
->>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
-    </div>
 
-    <div className="relative z-10">
-
-      {/* Top International Language Bar & Compliance Audit */}
-      <LanguageAndComplianceBar
-        user={user}
-        onToggleVip={handleToggleVip}
-        selectedLanguage={selectedLanguage}
-        onSelectLanguage={setSelectedLanguage}
-        isAutoTranslateActive={isAutoTranslateActive}
-        onToggleAutoTranslate={() => setIsAutoTranslateActive(!isAutoTranslateActive)}
-      />
-
-
-      {/* Toast Notification */}
-      <AnimatePresence>
-        {showNotification && (
-          <motion.div
-            initial={{ opacity: 0, y: -20, x: '-50%' }}
-            animate={{ opacity: 1, y: 0, x: '-50%' }}
-            exit={{ opacity: 0, y: -20, x: '-50%' }}
-            className="fixed top-12 left-1/2 -translate-x-1/2 z-50 bg-[var(--color-glass)] backdrop-blur-2xl px-5 py-3 rounded-2xl shadow-2xl border border-[var(--color-glass-border)] flex items-center gap-3 text-sm font-semibold"
-          >
-            <div className="w-6 h-6 rounded-full bg-primary-500/20 flex items-center justify-center">
-              <Check className="w-3.5 h-3.5 text-primary-400" />
-            </div>
-            <span>{showNotification}</span>
-          </motion.div>
+      {/* Background layer */}
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        {activeTab === 'ai' ? (
+          <div className="h-full w-full opacity-60">
+            <MagicRings
+              color="#048fc7"
+              colorTwo="#003b9b"
+              ringCount={6}
+              speed={1.5}
+              attenuation={12}
+              lineThickness={2}
+              baseRadius={0.35}
+              radiusStep={0.1}
+              scaleRate={0.1}
+              opacity={1}
+              blur={0}
+              noiseAmount={0.1}
+              rotation={0}
+              ringGap={1.5}
+              fadeIn={0.7}
+              fadeOut={0.5}
+              followMouse={false}
+              mouseInfluence={0.2}
+              hoverScale={1.2}
+              parallax={0.05}
+              clickBurst={false}
+            />
+          </div>
+        ) : (
+          <div className="opacity-30 h-full w-full">
+            <DigitalRain />
+          </div>
         )}
-      </AnimatePresence>
 
-      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-6 sm:space-y-8 relative z-10">
+        {/* Digital Rain Background */}
+        <div className="pointer-events-none absolute inset-0 z-0 opacity-30" aria-hidden="true">
+          <DigitalRain />
+        </div>
 
-        {/* Apple/Gamer Hybrid Header */}
-        <header className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 pb-6 border-b border-[var(--color-glass-border)]">
-          <div className="flex items-center justify-between w-full lg:w-auto">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-none flex items-center">
-                    <DecryptedText
-                      text="Gear"
-                      speed={50}
-                      maxIterations={12}
-                      animateOn="hover"
-                    />
-                    <span className="text-primary-400">
+      </div>
+
+      <div className="relative z-10">
+
+        {/* Top International Language Bar & Compliance Audit */}
+        <LanguageAndComplianceBar
+          user={user}
+          onToggleVip={handleToggleVip}
+          selectedLanguage={selectedLanguage}
+          onSelectLanguage={setSelectedLanguage}
+          isAutoTranslateActive={isAutoTranslateActive}
+          onToggleAutoTranslate={() => setIsAutoTranslateActive(!isAutoTranslateActive)}
+        />
+
+
+        {/* Toast Notification */}
+        <AnimatePresence>
+          {showNotification && (
+            <motion.div
+              initial={{ opacity: 0, y: -20, x: '-50%' }}
+              animate={{ opacity: 1, y: 0, x: '-50%' }}
+              exit={{ opacity: 0, y: -20, x: '-50%' }}
+              className="fixed top-12 left-1/2 -translate-x-1/2 z-50 bg-[var(--color-glass)] backdrop-blur-2xl px-5 py-3 rounded-2xl shadow-2xl border border-[var(--color-glass-border)] flex items-center gap-3 text-sm font-semibold"
+            >
+              <div className="w-6 h-6 rounded-full bg-primary-500/20 flex items-center justify-center">
+                <Check className="w-3.5 h-3.5 text-primary-400" />
+              </div>
+              <span>{showNotification}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 space-y-6 sm:space-y-8 relative z-10">
+
+          {/* Apple/Gamer Hybrid Header */}
+          <header className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 pb-6 border-b border-[var(--color-glass-border)]">
+            <div className="flex items-center justify-between w-full lg:w-auto">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-none flex items-center">
                       <DecryptedText
-                        text="Forge"
+                        text="Gear"
                         speed={50}
                         maxIterations={12}
                         animateOn="hover"
                       />
-                    </span>
-                  </h1>
+                      <span className="text-primary-400">
+                        <DecryptedText
+                          text="Forge"
+                          speed={50}
+                          maxIterations={12}
+                          animateOn="hover"
+                        />
+                      </span>
+                    </h1>
+                  </div>
                 </div>
               </div>
+
+              {/* Hamburger Menu Toggle Button - Top Right on Mobile */}
+              <button
+                onClick={() => setIsHamburgerOpen(true)}
+                className="lg:hidden flex items-center gap-2 p-2.5 sm:p-3 bg-primary-500/20 hover:bg-primary-500/30 backdrop-blur-2xl border border-primary-500/50 hover:border-primary-400 rounded-2xl shrink-0 shadow-xl text-white cursor-pointer transition active:scale-95 group"
+                title="Open Navigation Menu"
+              >
+                <Menu className="w-5 h-5 text-primary-400 group-hover:rotate-90 transition-transform duration-300" />
+                <span className="font-extrabold text-xs tracking-wider uppercase text-primary-300">
+                  Menu
+                </span>
+              </button>
             </div>
 
-            {/* Hamburger Menu Toggle Button - Top Right on Mobile */}
-            <button
-              onClick={() => setIsHamburgerOpen(true)}
-              className="lg:hidden flex items-center gap-2 p-2.5 sm:p-3 bg-primary-500/20 hover:bg-primary-500/30 backdrop-blur-2xl border border-primary-500/50 hover:border-primary-400 rounded-2xl shrink-0 shadow-xl text-white cursor-pointer transition active:scale-95 group"
-              title="Open Navigation Menu"
-            >
-              <Menu className="w-5 h-5 text-primary-400 group-hover:rotate-90 transition-transform duration-300" />
-              <span className="font-extrabold text-xs tracking-wider uppercase text-primary-300">
-                Menu
-              </span>
-            </button>
-          </div>
+            <div className="flex-1 flex justify-center w-full px-0 lg:px-6 order-last lg:order-none mt-4 lg:mt-0">
+              <UserSearch onUserSelect={(username) => setSelectedSearchUser(username)} />
+            </div>
 
-          <div className="flex-1 flex justify-center w-full px-0 lg:px-6 order-last lg:order-none mt-4 lg:mt-0">
-            <UserSearch onUserSelect={(username) => setSelectedSearchUser(username)} />
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
-            {/* Authenticated User Profile with Dynamic Badge */}
-            <div className="flex items-center justify-between gap-3 bg-[var(--color-glass)] backdrop-blur-2xl border border-[var(--color-glass-border)] p-3 sm:p-4 rounded-2xl sm:rounded-3xl shrink-0 shadow-xl relative overflow-hidden">
-              <div className="flex items-center gap-3">
-                <div
-                  className="relative cursor-pointer group"
-                  onClick={() => setIsAvatarModalOpen(true)}
-                  title="Click to Change Avatar (8 Presets)"
-                >
-                  <img
-                    src={user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.displayName}`}
-                    alt="Avatar"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-primary-400/50 group-hover:scale-105 transition-transform"
-                    referrerPolicy="no-referrer"
-                  />
-                  <span className="absolute -bottom-1 -right-1 p-0.5 bg-primary-500 rounded-full text-black" title="Account Status">
-                    <Crown className="w-2.5 h-2.5 fill-black" />
-                  </span>
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      onClick={() => setSelectedSearchUser(user.displayName)}
-                      className="text-xs font-bold text-white block truncate max-w-[100px] sm:max-w-[120px] hover:text-primary-400 transition cursor-pointer text-left"
-                      title="View My Profile"
-                    >
-                      {user.displayName}
-                    </button>
-                    {isSuperAdmin ? (
-                      <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-500/40">Super Admin</span>
-                    ) : user.role === 'admin' ? (
-                      <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-500/40">Admin</span>
-                    ) : user.isTrialActive && !isTrialExpired ? (
-                      <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase">7-Day Trial</span>
-                    ) : isTrialExpired ? (
-                      <span className="px-1.5 py-0.2 rounded bg-red-500/20 text-red-300 text-[9px] font-extrabold uppercase border border-red-500/40">Trial Expired</span>
-                    ) : user.hasPermanentAdFree ? (
-                      <span className="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-extrabold uppercase">Ad-Free</span>
-                    ) : hasActiveVip ? (
-                      <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase">VIP Member</span>
-                    ) : (
-                      <span className="px-1.5 py-0.2 rounded bg-white/10 text-zinc-300 text-[9px] font-extrabold uppercase">Basic Tier</span>
-                    )}
-                  </div>
-                  <button
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+              {/* Authenticated User Profile with Dynamic Badge */}
+              <div className="flex items-center justify-between gap-3 bg-[var(--color-glass)] backdrop-blur-2xl border border-[var(--color-glass-border)] p-3 sm:p-4 rounded-2xl sm:rounded-3xl shrink-0 shadow-xl relative overflow-hidden">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="relative cursor-pointer group"
                     onClick={() => setIsAvatarModalOpen(true)}
-                    className="text-[10px] font-bold text-primary-400 hover:underline block text-left cursor-pointer"
+                    title="Click to Change Avatar (8 Presets)"
                   >
-                    Change Avatar (8 Presets)
+                    <img
+                      src={user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.displayName}`}
+                      alt="Avatar"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-primary-400/50 group-hover:scale-105 transition-transform"
+                      referrerPolicy="no-referrer"
+                    />
+                    <span className="absolute -bottom-1 -right-1 p-0.5 bg-primary-500 rounded-full text-black" title="Account Status">
+                      <Crown className="w-2.5 h-2.5 fill-black" />
+                    </span>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => setSelectedSearchUser(user.displayName)}
+                        className="text-xs font-bold text-white block truncate max-w-[100px] sm:max-w-[120px] hover:text-primary-400 transition cursor-pointer text-left"
+                        title="View My Profile"
+                      >
+                        {user.displayName}
+                      </button>
+                      {isSuperAdmin ? (
+                        <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-500/40">Super Admin</span>
+                      ) : user.role === 'admin' ? (
+                        <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-500/40">Admin</span>
+                      ) : user.isTrialActive && !isTrialExpired ? (
+                        <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase">7-Day Trial</span>
+                      ) : isTrialExpired ? (
+                        <span className="px-1.5 py-0.2 rounded bg-red-500/20 text-red-300 text-[9px] font-extrabold uppercase border border-red-500/40">Trial Expired</span>
+                      ) : user.hasPermanentAdFree ? (
+                        <span className="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-extrabold uppercase">Ad-Free</span>
+                      ) : hasActiveVip ? (
+                        <span className="px-1.5 py-0.2 rounded bg-primary-500/20 text-primary-300 text-[9px] font-extrabold uppercase">VIP Member</span>
+                      ) : (
+                        <span className="px-1.5 py-0.2 rounded bg-white/10 text-zinc-300 text-[9px] font-extrabold uppercase">Basic Tier</span>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setIsAvatarModalOpen(true)}
+                      className="text-[10px] font-bold text-primary-400 hover:underline block text-left cursor-pointer"
+                    >
+                      Change Avatar (8 Presets)
+                    </button>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={async () => {
+                      try {
+                        const { auth } = await import('./lib/firebase');
+                        await auth.signOut();
+                      } catch (e) {
+                        console.error('Sign out error:', e);
+                      }
+                      localStorage.removeItem('ph_gamer_user');
+                      setUser(null);
+                      triggerNotification("Signed out successfully.");
+                    }}
+                    className="p-2 sm:p-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl transition-colors cursor-pointer"
+                    title="Sign Out"
+                  >
+                    <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  </button>
+                  <button
+                    onClick={() => setIsDeleteModalOpen(true)}
+                    className="p-2 sm:p-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 rounded-xl transition-colors cursor-pointer"
+                    title="Delete Account Permanently"
+                  >
+                    <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
                 </div>
               </div>
-              <div className="flex items-center gap-1.5">
+
+              {/* Hamburger Menu Toggle Button - Far Right on PC / Desktop */}
+              <button
+                onClick={() => setIsHamburgerOpen(true)}
+                className="hidden lg:flex items-center gap-2.5 p-3.5 bg-primary-500/20 hover:bg-primary-500/30 backdrop-blur-2xl border border-primary-500/50 hover:border-primary-400 rounded-2xl shrink-0 shadow-xl text-white cursor-pointer transition active:scale-95 group"
+                title="Open Navigation Menu"
+              >
+                <Menu className="w-5 h-5 text-primary-400 group-hover:rotate-90 transition-transform duration-300" />
+                <span className="font-extrabold text-xs tracking-wider uppercase text-primary-300">
+                  Menu
+                </span>
+              </button>
+            </div>
+          </header>
+
+          {/* Basic User Sponsor Ad Banner (Hidden if VIP or Permanent Ad-Free) */}
+          {!hasAdFree && (
+            <div className="bg-gradient-to-r from-[var(--card-bg)] via-primary-500/10 to-[var(--card-bg)] border border-primary-500/30 p-3.5 sm:p-4 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-3 text-xs my-2">
+              <div className="flex items-center gap-2.5 text-center md:text-left">
+                <span className="px-2 py-0.5 rounded bg-primary-500/20 text-primary-300 font-extrabold uppercase text-[10px] border border-primary-500/40 shrink-0">
+                  Sponsor Deals
+                </span>
+                <p className="text-zinc-300 font-medium">
+                  🔥 <strong className="text-white">Razer, VXE & Royal Kludge PH Flash Deals</strong> — Up to 30% off on Datablitz & EasyPC.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
                 <button
-                  onClick={async () => {
-                    try {
-                      const { auth } = await import('./lib/firebase');
-                      await auth.signOut();
-                    } catch (e) {
-                      console.error('Sign out error:', e);
-                    }
-                    localStorage.removeItem('ph_gamer_user');
-                    setUser(null);
-                    triggerNotification("Signed out successfully.");
+                  onClick={() => {
+                    const trialUser: UserProfile = {
+                      ...user,
+                      isVip: true,
+                      isTrialActive: true,
+                      vipTierName: '7-Day VIP Free Trial',
+                      trialEndsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+                    };
+                    handleUpdateUser(trialUser, "🎉 7-Day VIP Free Trial Activated! Enjoy full AI features & 0 ads.");
                   }}
-                  className="p-2 sm:p-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl transition-colors cursor-pointer"
-                  title="Sign Out"
+                  className="px-3 py-1.5 rounded-xl bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 border border-primary-500/40 font-extrabold text-[11px] cursor-pointer transition flex items-center gap-1"
                 >
-                  <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <Sparkles className="w-3.5 h-3.5 text-primary-400" />
+                  <span>7-Day Free Trial</span>
                 </button>
                 <button
-                  onClick={() => setIsDeleteModalOpen(true)}
-                  className="p-2 sm:p-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 rounded-xl transition-colors cursor-pointer"
-                  title="Delete Account Permanently"
+                  onClick={() => {
+                    const adFreeUser: UserProfile = {
+                      ...user,
+                      hasPermanentAdFree: true,
+                      vipTierName: user.isVip ? user.vipTierName : 'Permanent Ad-Free'
+                    };
+                    handleUpdateUser(adFreeUser, "⚡ Permanent Ad-Free Status Unlocked for ₱70! Ads permanently disabled.");
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-extrabold text-[11px] cursor-pointer transition flex items-center gap-1"
                 >
-                  <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <Crown className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Remove Ads (₱70 Permanent)</span>
                 </button>
               </div>
             </div>
+          )}
 
-            {/* Hamburger Menu Toggle Button - Far Right on PC / Desktop */}
-            <button
-              onClick={() => setIsHamburgerOpen(true)}
-              className="hidden lg:flex items-center gap-2.5 p-3.5 bg-primary-500/20 hover:bg-primary-500/30 backdrop-blur-2xl border border-primary-500/50 hover:border-primary-400 rounded-2xl shrink-0 shadow-xl text-white cursor-pointer transition active:scale-95 group"
-              title="Open Navigation Menu"
-            >
-              <Menu className="w-5 h-5 text-primary-400 group-hover:rotate-90 transition-transform duration-300" />
-              <span className="font-extrabold text-xs tracking-wider uppercase text-primary-300">
-                Menu
-              </span>
-            </button>
-          </div>
-        </header>
-
-        {/* Basic User Sponsor Ad Banner (Hidden if VIP or Permanent Ad-Free) */}
-        {!hasAdFree && (
-          <div className="bg-gradient-to-r from-[var(--card-bg)] via-primary-500/10 to-[var(--card-bg)] border border-primary-500/30 p-3.5 sm:p-4 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-3 text-xs my-2">
-            <div className="flex items-center gap-2.5 text-center md:text-left">
-              <span className="px-2 py-0.5 rounded bg-primary-500/20 text-primary-300 font-extrabold uppercase text-[10px] border border-primary-500/40 shrink-0">
-                Sponsor Deals
-              </span>
-              <p className="text-zinc-300 font-medium">
-                🔥 <strong className="text-white">Razer, VXE & Royal Kludge PH Flash Deals</strong> — Up to 30% off on Datablitz & EasyPC.
-              </p>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <button
-                onClick={() => {
-                  const trialUser: UserProfile = {
-                    ...user,
-                    isVip: true,
-                    isTrialActive: true,
-                    vipTierName: '7-Day VIP Free Trial',
-                    trialEndsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
-                  };
-                  handleUpdateUser(trialUser, "🎉 7-Day VIP Free Trial Activated! Enjoy full AI features & 0 ads.");
-                }}
-                className="px-3 py-1.5 rounded-xl bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 border border-primary-500/40 font-extrabold text-[11px] cursor-pointer transition flex items-center gap-1"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-primary-400" />
-                <span>7-Day Free Trial</span>
-              </button>
-              <button
-                onClick={() => {
-                  const adFreeUser: UserProfile = {
-                    ...user,
-                    hasPermanentAdFree: true,
-                    vipTierName: user.isVip ? user.vipTierName : 'Permanent Ad-Free'
-                  };
-                  handleUpdateUser(adFreeUser, "⚡ Permanent Ad-Free Status Unlocked for ₱70! Ads permanently disabled.");
-                }}
-                className="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-extrabold text-[11px] cursor-pointer transition flex items-center gap-1"
-              >
-                <Crown className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Remove Ads (₱70 Permanent)</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Saved Loadouts Section */}
-        {savedLoadouts.length > 0 && (
-          <div className="bg-[var(--color-glass)] backdrop-blur-2xl border border-[var(--color-glass-border)] p-4 sm:p-6 rounded-2xl sm:rounded-[32px] space-y-4 shadow-2xl">
-            <div className="flex items-center gap-2">
-              <Heart className="w-5 h-5 text-[var(--color-brand-red)] fill-[var(--color-brand-red)] shrink-0 animate-pulse" />
-              <h2 className="font-bold text-sm text-white uppercase tracking-widest">Your Saved Setups ({savedLoadouts.length})</h2>
-            </div>
-            <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-2 scrollbar-hide touch-pan-x">
-              {savedLoadouts.map((loadout) => {
-                const totalCost = loadout.accessories.reduce((acc, item) => acc + item.pricePhp, 0);
-                return (
-                  <div
-                    key={loadout.id}
-                    className="p-4 sm:p-5 bg-white/5 rounded-2xl border border-white/5 flex items-center justify-between gap-6 shrink-0 min-w-[260px] sm:min-w-[300px] hover:bg-white/10 transition-colors"
-                  >
-                    <div>
-                      <h3 className="font-bold text-sm sm:text-base text-white leading-tight">{loadout.name}</h3>
-                      <p className="text-xs text-zinc-400 mt-1 font-medium">{loadout.playstyle}</p>
-                      <p className="text-xs sm:text-sm font-bold text-primary-400 mt-2">{formatCurrency(totalCost)}</p>
-                    </div>
-                    <button
-                      onClick={() => handleDeleteLoadout(loadout.id)}
-                      className="p-2 sm:p-2.5 bg-white/5 hover:bg-red-500/20 text-zinc-400 hover:text-red-400 rounded-full transition-colors cursor-pointer"
-                      title="Delete Loadout"
+          {/* Saved Loadouts Section */}
+          {savedLoadouts.length > 0 && (
+            <div className="bg-[var(--color-glass)] backdrop-blur-2xl border border-[var(--color-glass-border)] p-4 sm:p-6 rounded-2xl sm:rounded-[32px] space-y-4 shadow-2xl">
+              <div className="flex items-center gap-2">
+                <Heart className="w-5 h-5 text-[var(--color-brand-red)] fill-[var(--color-brand-red)] shrink-0 animate-pulse" />
+                <h2 className="font-bold text-sm text-white uppercase tracking-widest">Your Saved Setups ({savedLoadouts.length})</h2>
+              </div>
+              <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-2 scrollbar-hide touch-pan-x">
+                {savedLoadouts.map((loadout) => {
+                  const totalCost = loadout.accessories.reduce((acc, item) => acc + item.pricePhp, 0);
+                  return (
+                    <div
+                      key={loadout.id}
+                      className="p-4 sm:p-5 bg-white/5 rounded-2xl border border-white/5 flex items-center justify-between gap-6 shrink-0 min-w-[260px] sm:min-w-[300px] hover:bg-white/10 transition-colors"
                     >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                );
-              })}
+                      <div>
+                        <h3 className="font-bold text-sm sm:text-base text-white leading-tight">{loadout.name}</h3>
+                        <p className="text-xs text-zinc-400 mt-1 font-medium">{loadout.playstyle}</p>
+                        <p className="text-xs sm:text-sm font-bold text-primary-400 mt-2">{formatCurrency(totalCost)}</p>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteLoadout(loadout.id)}
+                        className="p-2 sm:p-2.5 bg-white/5 hover:bg-red-500/20 text-zinc-400 hover:text-red-400 rounded-full transition-colors cursor-pointer"
+                        title="Delete Loadout"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Premium Features Proposal Banner */}
-        {!isSuperAdmin && (
-          <PremiumFeaturesProposal
-            user={user}
-            onUpdateUser={handleUpdateUser}
-            onNavigateTab={(tabId) => setActiveTab(tabId as any)}
-          />
-        )}
+          {/* Premium Features Proposal Banner */}
+          {!isSuperAdmin && (
+            <PremiumFeaturesProposal
+              user={user}
+              onUpdateUser={handleUpdateUser}
+              onNavigateTab={(tabId) => setActiveTab(tabId as any)}
+            />
+          )}
 
-        {/* Enhanced Phone & Tablet Navigation Control with Scroll Arrows & Grid Selector */}
-        <div className="space-y-2">
-          {/* Mobile Scroll Hint & Quick Action Bar */}
-          <div className="flex items-center justify-between text-xs text-zinc-400 px-1 sm:hidden">
-            <span className="flex items-center gap-1 font-medium text-[11px] text-primary-300/90">
-              <Sparkles className="w-3 h-3 text-primary-400" />
-              Swipe or tap arrows to view all 8 features:
-            </span>
-            <button
-              onClick={() => setShowSectionsGridModal(true)}
-              className="text-[11px] font-extrabold text-primary-400 underline flex items-center gap-1 cursor-pointer"
-            >
-              <Grid className="w-3 h-3" />
-              <span>View All 8 Sections</span>
-            </button>
-          </div>
+          {/* Enhanced Phone & Tablet Navigation Control with Scroll Arrows & Grid Selector */}
+          <div className="space-y-2">
+            {/* Mobile Scroll Hint & Quick Action Bar */}
+            <div className="flex items-center justify-between text-xs text-zinc-400 px-1 sm:hidden">
+              <span className="flex items-center gap-1 font-medium text-[11px] text-primary-300/90">
+                <Sparkles className="w-3 h-3 text-primary-400" />
+                Swipe or tap arrows to view all 8 features:
+              </span>
+              <button
+                onClick={() => setShowSectionsGridModal(true)}
+                className="text-[11px] font-extrabold text-primary-400 underline flex items-center gap-1 cursor-pointer"
+              >
+                <Grid className="w-3 h-3" />
+                <span>View All 8 Sections</span>
+              </button>
+            </div>
 
-          <div className="flex items-center gap-1.5 bg-[var(--color-glass)] backdrop-blur-2xl p-1.5 sm:p-2 rounded-2xl border border-[var(--color-glass-border)] shadow-xl w-full relative">
-            {/* Left Scroll Arrow */}
-            <button
-              onClick={() => handleScrollTabs('left')}
-              className="p-2 sm:p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition shrink-0 cursor-pointer active:scale-95"
-              title="Scroll Tabs Left"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-1.5 bg-[var(--color-glass)] backdrop-blur-2xl p-1.5 sm:p-2 rounded-2xl border border-[var(--color-glass-border)] shadow-xl w-full relative">
+              {/* Left Scroll Arrow */}
+              <button
+                onClick={() => handleScrollTabs('left')}
+                className="p-2 sm:p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition shrink-0 cursor-pointer active:scale-95"
+                title="Scroll Tabs Left"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
 
-            {/* Scrollable Tab Bar */}
-            <div
-              ref={tabsContainerRef}
-              className="flex overflow-x-auto gap-2 scrollbar-hide touch-pan-x scroll-smooth flex-1 py-0.5"
-            >
-              {[
-                { id: 'preset', icon: Sliders, label: 'Configurator', isVipFeature: false },
-                { id: 'pcbuild', icon: Monitor, label: 'PC Builder', isVipFeature: false },
-                { id: 'builder', icon: Cpu, label: 'AI FPS Builder', isVipFeature: true },
-                { id: 'price', icon: TrendingDown, label: 'Price History', isVipFeature: true },
-                { id: 'forum', icon: MessageSquare, label: 'Item Review Forum', isVipFeature: false },
-                { id: 'ai', icon: Sparkles, label: 'AI Concierge', isVipFeature: true },
-                { id: 'catalog', icon: Layers, label: 'Gear Catalog', isVipFeature: false },
-                { id: 'compare', icon: Sliders, label: 'Compare', isVipFeature: false },
-                { id: 'directory', icon: Store, label: 'Stores', isVipFeature: false },
-                { id: 'bug', icon: Bug, label: 'Report Bug', isVipFeature: false, isAction: true },
-              ].map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
+              {/* Scrollable Tab Bar */}
+              <div
+                ref={tabsContainerRef}
+                className="flex overflow-x-auto gap-2 scrollbar-hide touch-pan-x scroll-smooth flex-1 py-0.5"
+              >
+                {[
+                  { id: 'preset', icon: Sliders, label: 'Configurator', isVipFeature: false },
+                  { id: 'pcbuild', icon: Monitor, label: 'PC Builder', isVipFeature: false },
+                  { id: 'builder', icon: Cpu, label: 'AI FPS Builder', isVipFeature: true },
+                  { id: 'price', icon: TrendingDown, label: 'Price History', isVipFeature: true },
+                  { id: 'forum', icon: MessageSquare, label: 'Item Review Forum', isVipFeature: false },
+                  { id: 'ai', icon: Sparkles, label: 'AI Concierge', isVipFeature: true },
+                  { id: 'catalog', icon: Layers, label: 'Gear Catalog', isVipFeature: false },
+                  { id: 'compare', icon: Sliders, label: 'Compare', isVipFeature: false },
+                  { id: 'directory', icon: Store, label: 'Stores', isVipFeature: false },
+                  { id: 'bug', icon: Bug, label: 'Report Bug', isVipFeature: false, isAction: true },
+                ].map((tab) => {
+                  const Icon = tab.icon;
+                  const isActive = activeTab === tab.id;
 
-                if ((tab as any).isAction) {
+                  if ((tab as any).isAction) {
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => setIsReportBugModalOpen(true)}
+                        className="flex items-center gap-2 py-2.5 px-3.5 sm:px-4 rounded-xl font-semibold text-xs transition-all shrink-0 cursor-pointer whitespace-nowrap relative text-red-400 hover:text-white bg-red-500/10 hover:bg-red-500/20 border border-red-500/30"
+                      >
+                        <Icon className="w-3.5 h-3.5" />
+                        <span>{tab.label}</span>
+                      </button>
+                    );
+                  }
+
                   return (
                     <button
                       key={tab.id}
-                      onClick={() => setIsReportBugModalOpen(true)}
-                      className="flex items-center gap-2 py-2.5 px-3.5 sm:px-4 rounded-xl font-semibold text-xs transition-all shrink-0 cursor-pointer whitespace-nowrap relative text-red-400 hover:text-white bg-red-500/10 hover:bg-red-500/20 border border-red-500/30"
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                      <span>{tab.label}</span>
-                    </button>
-                  );
-                }
-
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id as any)}
-                    className={`flex items-center gap-2 py-2.5 px-3.5 sm:px-4 rounded-xl font-semibold text-xs transition-all shrink-0 cursor-pointer whitespace-nowrap relative ${isActive
+                      onClick={() => setActiveTab(tab.id as any)}
+                      className={`flex items-center gap-2 py-2.5 px-3.5 sm:px-4 rounded-xl font-semibold text-xs transition-all shrink-0 cursor-pointer whitespace-nowrap relative ${isActive
                         ? 'bg-[var(--theme-color)] text-white shadow-lg shadow-[var(--theme-color)]/30 scale-102 border border-primary-400/40'
                         : tab.isVipFeature
                           ? 'text-primary-300 hover:text-white bg-primary-500/10 hover:bg-primary-500/20 border border-primary-500/30'
                           : 'text-zinc-400 hover:text-white hover:bg-white/10'
-                      }`}
-                  >
-                    <Icon className={`w-3.5 h-3.5 ${isActive && (tab.id === 'builder' || tab.id === 'ai') ? 'text-primary-400' : tab.isVipFeature ? 'text-primary-400' : ''}`} />
-                    <span>{tab.label}</span>
-                    {tab.isVipFeature && !isSuperAdmin && (
-                      <div className="flex items-center gap-1">
-                        {!hasActiveVip && <Lock className="w-3 h-3 text-primary-500" />}
-                        <span className="px-1 py-0.2 rounded bg-primary-500/30 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-400/40">
-                          VIP
-                        </span>
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+                        }`}
+                    >
+                      <Icon className={`w-3.5 h-3.5 ${isActive && (tab.id === 'builder' || tab.id === 'ai') ? 'text-primary-400' : tab.isVipFeature ? 'text-primary-400' : ''}`} />
+                      <span>{tab.label}</span>
+                      {tab.isVipFeature && !isSuperAdmin && (
+                        <div className="flex items-center gap-1">
+                          {!hasActiveVip && <Lock className="w-3 h-3 text-primary-500" />}
+                          <span className="px-1 py-0.2 rounded bg-primary-500/30 text-primary-300 text-[9px] font-extrabold uppercase border border-primary-400/40">
+                            VIP
+                          </span>
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
 
-            {/* Right Scroll Arrow */}
-            <button
-              onClick={() => handleScrollTabs('right')}
-              className="p-2 sm:p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition shrink-0 cursor-pointer active:scale-95"
-              title="Scroll Tabs Right"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-
-            {/* All Sections Grid Button for Mobile & Tablet */}
-            <button
-              onClick={() => setShowSectionsGridModal(true)}
-              className="flex items-center gap-1.5 py-2.5 px-3 rounded-xl bg-primary-500/20 hover:bg-primary-500/30 border border-primary-500/40 text-primary-300 font-extrabold text-xs shrink-0 cursor-pointer transition shadow-sm active:scale-95"
-              title="Open All App Sections Menu"
-            >
-              <Grid className="w-4 h-4 text-primary-400" />
-              <span className="hidden md:inline">All Sections</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile & Tablet All Sections Grid Modal */}
-        <AnimatePresence>
-          {showSectionsGridModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[var(--app-bg)]/85 backdrop-blur-xl overflow-y-auto">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="bg-[color-mix(in_srgb,var(--card-bg)_80%,white)] border border-primary-500/40 rounded-[28px] p-5 sm:p-7 max-w-2xl w-full shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto"
+              {/* Right Scroll Arrow */}
+              <button
+                onClick={() => handleScrollTabs('right')}
+                className="p-2 sm:p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition shrink-0 cursor-pointer active:scale-95"
+                title="Scroll Tabs Right"
               >
-                <button
-                  onClick={() => setShowSectionsGridModal(false)}
-                  className="absolute top-5 right-5 p-2 rounded-full bg-white/10 text-zinc-400 hover:text-white transition cursor-pointer"
+                <ChevronRight className="w-4 h-4" />
+              </button>
+
+              {/* All Sections Grid Button for Mobile & Tablet */}
+              <button
+                onClick={() => setShowSectionsGridModal(true)}
+                className="flex items-center gap-1.5 py-2.5 px-3 rounded-xl bg-primary-500/20 hover:bg-primary-500/30 border border-primary-500/40 text-primary-300 font-extrabold text-xs shrink-0 cursor-pointer transition shadow-sm active:scale-95"
+                title="Open All App Sections Menu"
+              >
+                <Grid className="w-4 h-4 text-primary-400" />
+                <span className="hidden md:inline">All Sections</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile & Tablet All Sections Grid Modal */}
+          <AnimatePresence>
+            {showSectionsGridModal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[var(--app-bg)]/85 backdrop-blur-xl overflow-y-auto">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                  className="bg-[color-mix(in_srgb,var(--card-bg)_80%,white)] border border-primary-500/40 rounded-[28px] p-5 sm:p-7 max-w-2xl w-full shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto"
                 >
-                  <X className="w-5 h-5" />
-                </button>
+                  <button
+                    onClick={() => setShowSectionsGridModal(false)}
+                    className="absolute top-5 right-5 p-2 rounded-full bg-white/10 text-zinc-400 hover:text-white transition cursor-pointer"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
 
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-primary-500/20 text-primary-400 border border-primary-500/30">
-                    <Grid className="w-6 h-6" />
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 rounded-2xl bg-primary-500/20 text-primary-400 border border-primary-500/30">
+                      <Grid className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-extrabold text-white">All App Sections (8)</h3>
+                      <p className="text-xs text-zinc-400 mt-0.5">Tap any feature to jump directly to it on phone or tablet</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-extrabold text-white">All App Sections (8)</h3>
-                    <p className="text-xs text-zinc-400 mt-0.5">Tap any feature to jump directly to it on phone or tablet</p>
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
-                  {[
-                    { id: 'preset', icon: Sliders, label: 'Gear Configurator', desc: 'Custom budget tuning & brand swapping', isVipFeature: false },
-                    { id: 'pcbuild', icon: Monitor, label: 'AI PC Builder', desc: 'Custom AI-recommended PC parts build', isVipFeature: false },
-                    { id: 'builder', icon: Cpu, label: 'AI FPS Builder', desc: 'Predict gaming FPS & hardware bottlenecks', isVipFeature: true },
-                    { id: 'price', icon: TrendingDown, label: 'Price Trend History', desc: '6-month price graph & buy indicators', isVipFeature: true },
-                    { id: 'forum', icon: MessageSquare, label: 'Item Review Forum', desc: 'Community ratings & reviews', isVipFeature: false },
-                    { id: 'ai', icon: Sparkles, label: '24/7 AI Concierge', desc: 'Personal hardware build consultant', isVipFeature: true },
-                    { id: 'catalog', icon: Layers, label: 'Full Gear Catalog', desc: '33+ PH gaming mice, keyboards & headsets', isVipFeature: false },
-                    { id: 'compare', icon: Sliders, label: 'Compare Gear Specs', desc: 'Side-by-side spec & feature comparison', isVipFeature: false },
-                    { id: 'directory', icon: Store, label: 'PH Local Stores Directory', desc: 'DataBlitz, Shopee, EasyPC & GameOne', isVipFeature: false },
-                    { id: 'bug', icon: Bug, label: 'Report Bug', desc: 'Report an issue to the developer', isVipFeature: false, isAction: true },
-                  ].map((sec) => {
-                    const Icon = sec.icon;
-                    const isSelected = activeTab === sec.id;
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+                    {[
+                      { id: 'preset', icon: Sliders, label: 'Gear Configurator', desc: 'Custom budget tuning & brand swapping', isVipFeature: false },
+                      { id: 'pcbuild', icon: Monitor, label: 'AI PC Builder', desc: 'Custom AI-recommended PC parts build', isVipFeature: false },
+                      { id: 'builder', icon: Cpu, label: 'AI FPS Builder', desc: 'Predict gaming FPS & hardware bottlenecks', isVipFeature: true },
+                      { id: 'price', icon: TrendingDown, label: 'Price Trend History', desc: '6-month price graph & buy indicators', isVipFeature: true },
+                      { id: 'forum', icon: MessageSquare, label: 'Item Review Forum', desc: 'Community ratings & reviews', isVipFeature: false },
+                      { id: 'ai', icon: Sparkles, label: '24/7 AI Concierge', desc: 'Personal hardware build consultant', isVipFeature: true },
+                      { id: 'catalog', icon: Layers, label: 'Full Gear Catalog', desc: '33+ PH gaming mice, keyboards & headsets', isVipFeature: false },
+                      { id: 'compare', icon: Sliders, label: 'Compare Gear Specs', desc: 'Side-by-side spec & feature comparison', isVipFeature: false },
+                      { id: 'directory', icon: Store, label: 'PH Local Stores Directory', desc: 'DataBlitz, Shopee, EasyPC & GameOne', isVipFeature: false },
+                      { id: 'bug', icon: Bug, label: 'Report Bug', desc: 'Report an issue to the developer', isVipFeature: false, isAction: true },
+                    ].map((sec) => {
+                      const Icon = sec.icon;
+                      const isSelected = activeTab === sec.id;
 
-                    if ((sec as any).isAction) {
+                      if ((sec as any).isAction) {
+                        return (
+                          <button
+                            key={sec.id}
+                            onClick={() => {
+                              setIsReportBugModalOpen(true);
+                              setShowSectionsGridModal(false);
+                            }}
+                            className="p-4 rounded-2xl border border-red-500/30 text-left flex items-start gap-3.5 transition cursor-pointer bg-red-500/10 hover:bg-red-500/20 group"
+                          >
+                            <div className="p-2.5 rounded-xl shrink-0 flex items-center justify-center relative bg-red-500/20 text-red-400 group-hover:scale-110 transition-transform">
+                              <Icon className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-extrabold text-sm text-red-400 group-hover:text-red-300 transition-colors">{sec.label}</span>
+                              </div>
+                              <p className="text-xs text-red-400/70 leading-normal">{sec.desc}</p>
+                            </div>
+                          </button>
+                        );
+                      }
+
                       return (
                         <button
                           key={sec.id}
                           onClick={() => {
-                            setIsReportBugModalOpen(true);
+                            setActiveTab(sec.id as any);
                             setShowSectionsGridModal(false);
+                            triggerNotification(`Switched to ${sec.label}`);
                           }}
-                          className="p-4 rounded-2xl border border-red-500/30 text-left flex items-start gap-3.5 transition cursor-pointer bg-red-500/10 hover:bg-red-500/20 group"
+                          className={`p-4 rounded-2xl border text-left flex items-start gap-3.5 transition cursor-pointer ${isSelected
+                            ? 'bg-primary-500/20 border-primary-500/60 shadow-lg shadow-primary-500/10'
+                            : 'bg-[var(--app-bg)]/50 border-white/10 hover:bg-white/10'
+                            }`}
                         >
-                          <div className="p-2.5 rounded-xl shrink-0 flex items-center justify-center relative bg-red-500/20 text-red-400 group-hover:scale-110 transition-transform">
+                          <div className={`p-2.5 rounded-xl shrink-0 flex items-center justify-center relative ${isSelected ? 'bg-primary-500 text-black font-bold' : 'bg-white/10 text-primary-400'}`}>
                             <Icon className="w-5 h-5" />
+                            {sec.isVipFeature && !hasActiveVip && (
+                              <div className="absolute -top-1.5 -right-1.5 bg-[var(--app-bg)] rounded-full border border-zinc-800 p-0.5">
+                                <Lock className="w-2.5 h-2.5 text-primary-500" />
+                              </div>
+                            )}
                           </div>
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-extrabold text-sm text-red-400 group-hover:text-red-300 transition-colors">{sec.label}</span>
+                          <div className="space-y-0.5">
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-extrabold text-sm text-white">{sec.label}</span>
+                              {isSelected && <span className="text-[10px] bg-primary-500 text-black font-extrabold px-1.5 py-0.2 rounded">Active</span>}
+                              {sec.isVipFeature && !isSelected && !isSuperAdmin && (
+                                <span className="text-[9px] bg-primary-500/20 text-primary-300 border border-primary-500/30 px-1.5 py-0.2 rounded uppercase font-bold tracking-wider">VIP</span>
+                              )}
                             </div>
-                            <p className="text-xs text-red-400/70 leading-normal">{sec.desc}</p>
+                            <p className="text-xs text-zinc-400 leading-normal">{sec.desc}</p>
                           </div>
                         </button>
                       );
-                    }
-
-                    return (
-                      <button
-                        key={sec.id}
-                        onClick={() => {
-                          setActiveTab(sec.id as any);
-                          setShowSectionsGridModal(false);
-                          triggerNotification(`Switched to ${sec.label}`);
-                        }}
-                        className={`p-4 rounded-2xl border text-left flex items-start gap-3.5 transition cursor-pointer ${isSelected
-                            ? 'bg-primary-500/20 border-primary-500/60 shadow-lg shadow-primary-500/10'
-                            : 'bg-[var(--app-bg)]/50 border-white/10 hover:bg-white/10'
-                          }`}
-                      >
-                        <div className={`p-2.5 rounded-xl shrink-0 flex items-center justify-center relative ${isSelected ? 'bg-primary-500 text-black font-bold' : 'bg-white/10 text-primary-400'}`}>
-                          <Icon className="w-5 h-5" />
-                          {sec.isVipFeature && !hasActiveVip && (
-                            <div className="absolute -top-1.5 -right-1.5 bg-[var(--app-bg)] rounded-full border border-zinc-800 p-0.5">
-                              <Lock className="w-2.5 h-2.5 text-primary-500" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="space-y-0.5">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-extrabold text-sm text-white">{sec.label}</span>
-                            {isSelected && <span className="text-[10px] bg-primary-500 text-black font-extrabold px-1.5 py-0.2 rounded">Active</span>}
-                            {sec.isVipFeature && !isSelected && !isSuperAdmin && (
-                              <span className="text-[9px] bg-primary-500/20 text-primary-300 border border-primary-500/30 px-1.5 py-0.2 rounded uppercase font-bold tracking-wider">VIP</span>
-                            )}
-                          </div>
-                          <p className="text-xs text-zinc-400 leading-normal">{sec.desc}</p>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-white/10 flex justify-end">
-                  <button
-                    onClick={() => setShowSectionsGridModal(false)}
-                    className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition cursor-pointer"
-                  >
-                    Close Menu
-                  </button>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
-
-        <ThemeEditorModal
-          isOpen={isThemeEditorOpen}
-          onClose={() => setIsThemeEditorOpen(false)}
-          customThemes={customThemes}
-          currentThemeId={activeThemeId}
-          onSaveTheme={(theme) => {
-            const updated = [...customThemes, theme];
-            setCustomThemes(updated);
-            localStorage.setItem("gf_custom_themes", JSON.stringify(updated));
-            setActiveThemeId(theme.id);
-            localStorage.setItem("gf_active_theme_id", theme.id);
-          }}
-          onDeleteTheme={(id) => {
-            const updated = customThemes.filter(t => t.id !== id);
-            setCustomThemes(updated);
-            localStorage.setItem("gf_custom_themes", JSON.stringify(updated));
-            if (activeThemeId === id) {
-              setActiveThemeId(BACKGROUND_THEMES[0].id);
-              localStorage.setItem("gf_active_theme_id", BACKGROUND_THEMES[0].id);
-            }
-          }}
-          onSelectTheme={(theme) => {
-            setActiveThemeId(theme.id);
-            localStorage.setItem("gf_active_theme_id", theme.id);
-          }}
-        />
-
-        {/* Slide-Over Hamburger Drawer for PC, Tablet & Mobile */}
-        <AnimatePresence>
-          {isHamburgerOpen && (
-            <div className="fixed inset-0 z-50 flex justify-end bg-[var(--app-bg)]/80 backdrop-blur-md">
-              {/* Click outside backdrop to close */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsHamburgerOpen(false)}
-                className="absolute inset-0"
-              />
-
-              {/* Slide-in Drawer Panel */}
-              <motion.div
-                initial={{ x: '100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '100%' }}
-                transition={{ type: 'spring', damping: 26, stiffness: 220 }}
-                className="relative z-10 w-full max-w-sm sm:max-w-md bg-[var(--card-bg)] border-l border-primary-500/30 h-full overflow-y-auto p-5 sm:p-6 flex flex-col justify-between shadow-2xl"
-              >
-                <div className="space-y-6">
-                  {/* Header */}
-                  <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-2xl bg-primary-500/20 border border-primary-500/40 text-primary-400">
-                        <Gamepad2 className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-extrabold text-white leading-tight">
-                          Gear<span className="text-primary-400">Forge</span> Menu
-                        </h3>
-                        <span className="text-[11px] font-semibold text-zinc-400 block">All Features & Control Hub</span>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setIsHamburgerOpen(false)}
-                      className="p-2.5 rounded-full bg-white/10 text-zinc-400 hover:text-white hover:bg-white/20 transition cursor-pointer"
-                      title="Close Navigation Drawer"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
+                    })}
                   </div>
 
-                  {/* User Profile Card */}
-                  {user && (
-                    <div className="space-y-2">
-                      <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.displayName}`}
-                              alt="Avatar"
-                              className="w-10 h-10 rounded-full border border-primary-400/50"
-                            />
-                            <div>
-                              <span className="text-sm font-bold text-white block">{user.displayName}</span>
-                              <span className="text-[11px] text-zinc-400">{user.email}</span>
+                  <div className="mt-6 pt-4 border-t border-white/10 flex justify-end">
+                    <button
+                      onClick={() => setShowSectionsGridModal(false)}
+                      className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition cursor-pointer"
+                    >
+                      Close Menu
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
+
+          <ThemeEditorModal
+            isOpen={isThemeEditorOpen}
+            onClose={() => setIsThemeEditorOpen(false)}
+            customThemes={customThemes}
+            currentThemeId={activeThemeId}
+            onSaveTheme={(theme) => {
+              const updated = [...customThemes, theme];
+              setCustomThemes(updated);
+              localStorage.setItem("gf_custom_themes", JSON.stringify(updated));
+              setActiveThemeId(theme.id);
+              localStorage.setItem("gf_active_theme_id", theme.id);
+            }}
+            onDeleteTheme={(id) => {
+              const updated = customThemes.filter(t => t.id !== id);
+              setCustomThemes(updated);
+              localStorage.setItem("gf_custom_themes", JSON.stringify(updated));
+              if (activeThemeId === id) {
+                setActiveThemeId(BACKGROUND_THEMES[0].id);
+                localStorage.setItem("gf_active_theme_id", BACKGROUND_THEMES[0].id);
+              }
+            }}
+            onSelectTheme={(theme) => {
+              setActiveThemeId(theme.id);
+              localStorage.setItem("gf_active_theme_id", theme.id);
+            }}
+          />
+
+          {/* Slide-Over Hamburger Drawer for PC, Tablet & Mobile */}
+          <AnimatePresence>
+            {isHamburgerOpen && (
+              <div className="fixed inset-0 z-50 flex justify-end bg-[var(--app-bg)]/80 backdrop-blur-md">
+                {/* Click outside backdrop to close */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setIsHamburgerOpen(false)}
+                  className="absolute inset-0"
+                />
+
+                {/* Slide-in Drawer Panel */}
+                <motion.div
+                  initial={{ x: '100%' }}
+                  animate={{ x: 0 }}
+                  exit={{ x: '100%' }}
+                  transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+                  className="relative z-10 w-full max-w-sm sm:max-w-md bg-[var(--card-bg)] border-l border-primary-500/30 h-full overflow-y-auto p-5 sm:p-6 flex flex-col justify-between shadow-2xl"
+                >
+                  <div className="space-y-6">
+                    {/* Header */}
+                    <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2.5 rounded-2xl bg-primary-500/20 border border-primary-500/40 text-primary-400">
+                          <Gamepad2 className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-extrabold text-white leading-tight">
+                            Gear<span className="text-primary-400">Forge</span> Menu
+                          </h3>
+                          <span className="text-[11px] font-semibold text-zinc-400 block">All Features & Control Hub</span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setIsHamburgerOpen(false)}
+                        className="p-2.5 rounded-full bg-white/10 text-zinc-400 hover:text-white hover:bg-white/20 transition cursor-pointer"
+                        title="Close Navigation Drawer"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    {/* User Profile Card */}
+                    {user && (
+                      <div className="space-y-2">
+                        <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${user.displayName}`}
+                                alt="Avatar"
+                                className="w-10 h-10 rounded-full border border-primary-400/50"
+                              />
+                              <div>
+                                <span className="text-sm font-bold text-white block">{user.displayName}</span>
+                                <span className="text-[11px] text-zinc-400">{user.email}</span>
+                              </div>
                             </div>
-                          </div>
-                          <div className="flex flex-col items-end gap-1.5">
-                            {(user.role === 'admin' || isSuperAdmin) && (
-                              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase shrink-0 border ${isSuperAdmin ? 'bg-primary-500/20 text-primary-300 border-primary-500/40' : 'bg-primary-500/20 text-primary-300 border-primary-500/40'
-                                }`}>
-                                {isSuperAdmin ? '👑 Super Admin' : '🛡️ Admin'}
-                              </span>
-                            )}
-                            {user.role !== 'admin' && user.role !== 'super_admin' && (
-                              <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase shrink-0 ${user.isTrialActive
+                            <div className="flex flex-col items-end gap-1.5">
+                              {(user.role === 'admin' || isSuperAdmin) && (
+                                <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase shrink-0 border ${isSuperAdmin ? 'bg-primary-500/20 text-primary-300 border-primary-500/40' : 'bg-primary-500/20 text-primary-300 border-primary-500/40'
+                                  }`}>
+                                  {isSuperAdmin ? '👑 Super Admin' : '🛡️ Admin'}
+                                </span>
+                              )}
+                              {user.role !== 'admin' && user.role !== 'super_admin' && (
+                                <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase shrink-0 ${user.isTrialActive
                                   ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
                                   : user.hasPermanentAdFree
                                     ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
                                     : user.isVip
                                       ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
                                       : 'bg-white/10 text-zinc-300'
-                                }`}>
-                                {user.isTrialActive ? '7-Day Trial' : user.hasPermanentAdFree ? 'Ad-Free' : user.isVip ? 'VIP Member' : 'Basic Tier'}
-                              </span>
-                            )}
+                                  }`}>
+                                  {user.isTrialActive ? '7-Day Trial' : user.hasPermanentAdFree ? 'Ad-Free' : user.isVip ? 'VIP Member' : 'Basic Tier'}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
 
-                      {/* Theme Selector */}
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
-                          <Palette className="w-4 h-4 text-primary-400" />
-                          App Theme
-                        </label>
-                        <button
-                          onClick={() => {
-                            setIsHamburgerOpen(false);
-                            setIsThemeEditorOpen(true);
-                          }}
-                          className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-sm text-white transition flex items-center justify-between cursor-pointer"
-                        >
-                          <div className="flex items-center gap-3">
-                            <div
-                              className="w-4 h-4 rounded-full border border-white/20 shadow-sm"
-                              style={{ backgroundColor: [...BACKGROUND_THEMES, ...customThemes].find(t => t.id === activeThemeId)?.color || BACKGROUND_THEMES[0].color }}
-                            />
-                            <span className="font-bold">{[...BACKGROUND_THEMES, ...customThemes].find(t => t.id === activeThemeId)?.name || 'Theme'}</span>
-                          </div>
-                          <span className="text-xs text-primary-400 bg-primary-500/10 px-2 py-1 rounded-md font-bold uppercase tracking-wide whitespace-nowrap">Create / Edit Theme</span>
-                        </button>
-                      </div>
-
-
-                      <div className="space-y-2 pt-2 border-t border-white/10 mt-4">
-                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2 pt-2">
-                          {isDarkMode ? <Moon className="w-4 h-4 text-primary-400" /> : <Sun className="w-4 h-4 text-primary-400" />}
-                          Appearance
-                        </label>
-                        <button
-                          onClick={() => setIsDarkMode(!isDarkMode)}
-                          className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-sm text-white transition flex items-center justify-between cursor-pointer"
-                        >
-                          <span>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
-                          <div className={`w-10 h-5 rounded-full p-1 transition ${isDarkMode ? 'bg-primary-500' : 'bg-zinc-600'}`}>
-                            <div className={`w-3 h-3 bg-white rounded-full transition transform ${isDarkMode ? 'translate-x-5' : 'translate-x-0'}`} />
-                          </div>
-                        </button>
-                      </div>
-
-                      {/* Admin Panel Access */}
-                      {(user.role === 'admin' || isSuperAdmin) && (
+                        {/* Theme Selector */}
                         <div className="space-y-2">
+                          <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
+                            <Palette className="w-4 h-4 text-primary-400" />
+                            App Theme
+                          </label>
                           <button
                             onClick={() => {
-                              setIsAdminPanelOpen(true);
                               setIsHamburgerOpen(false);
+                              setIsThemeEditorOpen(true);
                             }}
-                            className="w-full p-3 rounded-2xl bg-primary-500/20 hover:bg-primary-500/30 border border-primary-500/40 text-primary-300 text-left cursor-pointer transition flex items-center justify-between shadow-lg shadow-blue-500/10"
+                            className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-sm text-white transition flex items-center justify-between cursor-pointer"
                           >
-                            <div className="flex items-center gap-2.5">
-                              <ShieldCheck className="w-5 h-5 text-primary-400" />
-                              <div>
-                                <span className="font-extrabold text-xs block leading-tight">Admin Panel</span>
-                                <span className="text-[10px] text-primary-300/80 block leading-tight">Manage users, roles & bans</span>
-                              </div>
+                            <div className="flex items-center gap-3">
+                              <div
+                                className="w-4 h-4 rounded-full border border-white/20 shadow-sm"
+                                style={{ backgroundColor: [...BACKGROUND_THEMES, ...customThemes].find(t => t.id === activeThemeId)?.color || BACKGROUND_THEMES[0].color }}
+                              />
+                              <span className="font-bold">{[...BACKGROUND_THEMES, ...customThemes].find(t => t.id === activeThemeId)?.name || 'Theme'}</span>
                             </div>
-                            <ArrowRight className="w-4 h-4 text-primary-400 opacity-50" />
-                          </button>
-
-                          <button
-                            onClick={() => {
-                              setIsBugReportsPanelOpen(true);
-                              setIsHamburgerOpen(false);
-                            }}
-                            className="w-full p-3 rounded-2xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 text-left cursor-pointer transition flex items-center justify-between shadow-lg shadow-red-500/10"
-                          >
-                            <div className="flex items-center gap-2.5">
-                              <Bug className="w-5 h-5 text-red-400" />
-                              <div>
-                                <span className="font-extrabold text-xs block leading-tight">Bug Reports</span>
-                                <span className="text-[10px] text-red-300/80 block leading-tight">Review user-submitted issues</span>
-                              </div>
-                            </div>
-                            <ArrowRight className="w-4 h-4 text-red-400 opacity-50" />
+                            <span className="text-xs text-primary-400 bg-primary-500/10 px-2 py-1 rounded-md font-bold uppercase tracking-wide whitespace-nowrap">Create / Edit Theme</span>
                           </button>
                         </div>
-                      )}
-                    </div>
-                  )}
 
-                  {/* Navigation Links List */}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between px-1">
-                      <span className="text-[10px] font-extrabold text-primary-400 uppercase tracking-widest block">
-                        Quick App Sections (8)
-                      </span>
-                      <span className="text-[10px] text-zinc-500">Tap to jump</span>
-                    </div>
-                    <div className="space-y-1.5">
-                      {[
-                        { id: 'preset', icon: Sliders, label: 'Gear Configurator', desc: 'Custom loadouts & budget balancing', isVipFeature: false },
-                        { id: 'pcbuild', icon: Monitor, label: 'AI PC Builder', desc: 'Custom PC Parts list by AI', isVipFeature: false },
-                        { id: 'builder', icon: Cpu, label: 'AI FPS Builder', desc: 'Hardware bottlenecks & FPS predictor', isVipFeature: true },
-                        { id: 'price', icon: TrendingDown, label: 'Price History Graphs', desc: '6-month market price trends', isVipFeature: true },
-                        { id: 'forum', icon: MessageSquare, label: 'Item Review Forum', desc: 'Community gear ratings & feedback', isVipFeature: false },
-                        { id: 'ai', icon: Sparkles, label: '24/7 AI PC Consultant', desc: 'AI hardware builder assistant', isVipFeature: true },
-                        { id: 'catalog', icon: Layers, label: 'PH Gear Catalog', desc: '33+ PH gaming mice, keyboards & headsets', isVipFeature: false },
-                        { id: 'compare', icon: Sliders, label: 'Compare Gear Specs', desc: 'Side-by-side specs analyzer', isVipFeature: false },
-                        { id: 'directory', icon: Store, label: 'PH Stores Directory', desc: 'DataBlitz, Shopee & EasyPC', isVipFeature: false },
-                        { id: 'bug', icon: Bug, label: 'Report Bug', desc: 'Report an issue to the developer', isVipFeature: false, isAction: true },
-                      ].map((item) => {
-                        const Icon = item.icon;
-                        const isCurrent = activeTab === item.id;
 
-                        if ((item as any).isAction) {
+                        <div className="space-y-2 pt-2 border-t border-white/10 mt-4">
+                          <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2 pt-2">
+                            {isDarkMode ? <Moon className="w-4 h-4 text-primary-400" /> : <Sun className="w-4 h-4 text-primary-400" />}
+                            Appearance
+                          </label>
+                          <button
+                            onClick={() => setIsDarkMode(!isDarkMode)}
+                            className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-sm text-white transition flex items-center justify-between cursor-pointer"
+                          >
+                            <span>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
+                            <div className={`w-10 h-5 rounded-full p-1 transition ${isDarkMode ? 'bg-primary-500' : 'bg-zinc-600'}`}>
+                              <div className={`w-3 h-3 bg-white rounded-full transition transform ${isDarkMode ? 'translate-x-5' : 'translate-x-0'}`} />
+                            </div>
+                          </button>
+                        </div>
+
+                        {/* Admin Panel Access */}
+                        {(user.role === 'admin' || isSuperAdmin) && (
+                          <div className="space-y-2">
+                            <button
+                              onClick={() => {
+                                setIsAdminPanelOpen(true);
+                                setIsHamburgerOpen(false);
+                              }}
+                              className="w-full p-3 rounded-2xl bg-primary-500/20 hover:bg-primary-500/30 border border-primary-500/40 text-primary-300 text-left cursor-pointer transition flex items-center justify-between shadow-lg shadow-blue-500/10"
+                            >
+                              <div className="flex items-center gap-2.5">
+                                <ShieldCheck className="w-5 h-5 text-primary-400" />
+                                <div>
+                                  <span className="font-extrabold text-xs block leading-tight">Admin Panel</span>
+                                  <span className="text-[10px] text-primary-300/80 block leading-tight">Manage users, roles & bans</span>
+                                </div>
+                              </div>
+                              <ArrowRight className="w-4 h-4 text-primary-400 opacity-50" />
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                setIsBugReportsPanelOpen(true);
+                                setIsHamburgerOpen(false);
+                              }}
+                              className="w-full p-3 rounded-2xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 text-left cursor-pointer transition flex items-center justify-between shadow-lg shadow-red-500/10"
+                            >
+                              <div className="flex items-center gap-2.5">
+                                <Bug className="w-5 h-5 text-red-400" />
+                                <div>
+                                  <span className="font-extrabold text-xs block leading-tight">Bug Reports</span>
+                                  <span className="text-[10px] text-red-300/80 block leading-tight">Review user-submitted issues</span>
+                                </div>
+                              </div>
+                              <ArrowRight className="w-4 h-4 text-red-400 opacity-50" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Navigation Links List */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between px-1">
+                        <span className="text-[10px] font-extrabold text-primary-400 uppercase tracking-widest block">
+                          Quick App Sections (8)
+                        </span>
+                        <span className="text-[10px] text-zinc-500">Tap to jump</span>
+                      </div>
+                      <div className="space-y-1.5">
+                        {[
+                          { id: 'preset', icon: Sliders, label: 'Gear Configurator', desc: 'Custom loadouts & budget balancing', isVipFeature: false },
+                          { id: 'pcbuild', icon: Monitor, label: 'AI PC Builder', desc: 'Custom PC Parts list by AI', isVipFeature: false },
+                          { id: 'builder', icon: Cpu, label: 'AI FPS Builder', desc: 'Hardware bottlenecks & FPS predictor', isVipFeature: true },
+                          { id: 'price', icon: TrendingDown, label: 'Price History Graphs', desc: '6-month market price trends', isVipFeature: true },
+                          { id: 'forum', icon: MessageSquare, label: 'Item Review Forum', desc: 'Community gear ratings & feedback', isVipFeature: false },
+                          { id: 'ai', icon: Sparkles, label: '24/7 AI PC Consultant', desc: 'AI hardware builder assistant', isVipFeature: true },
+                          { id: 'catalog', icon: Layers, label: 'PH Gear Catalog', desc: '33+ PH gaming mice, keyboards & headsets', isVipFeature: false },
+                          { id: 'compare', icon: Sliders, label: 'Compare Gear Specs', desc: 'Side-by-side specs analyzer', isVipFeature: false },
+                          { id: 'directory', icon: Store, label: 'PH Stores Directory', desc: 'DataBlitz, Shopee & EasyPC', isVipFeature: false },
+                          { id: 'bug', icon: Bug, label: 'Report Bug', desc: 'Report an issue to the developer', isVipFeature: false, isAction: true },
+                        ].map((item) => {
+                          const Icon = item.icon;
+                          const isCurrent = activeTab === item.id;
+
+                          if ((item as any).isAction) {
+                            return (
+                              <button
+                                key={item.id}
+                                onClick={() => {
+                                  setIsReportBugModalOpen(true);
+                                  setIsHamburgerOpen(false);
+                                }}
+                                className="w-full p-3 rounded-2xl border border-red-500/30 text-left flex items-center justify-between transition cursor-pointer bg-red-500/10 hover:bg-red-500/20 group"
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className="p-2 rounded-xl shrink-0 flex items-center justify-center relative bg-red-500/20 text-red-400 group-hover:scale-110 transition-transform">
+                                    <Icon className="w-4 h-4" />
+                                  </div>
+                                  <div>
+                                    <span className="text-xs font-bold text-red-400 block group-hover:text-red-300 transition-colors">{item.label}</span>
+                                    <span className="text-[10px] text-red-400/70 block">{item.desc}</span>
+                                  </div>
+                                </div>
+                              </button>
+                            );
+                          }
+
                           return (
                             <button
                               key={item.id}
                               onClick={() => {
-                                setIsReportBugModalOpen(true);
+                                setActiveTab(item.id as any);
                                 setIsHamburgerOpen(false);
+                                triggerNotification(`Navigated to ${item.label}`);
                               }}
-                              className="w-full p-3 rounded-2xl border border-red-500/30 text-left flex items-center justify-between transition cursor-pointer bg-red-500/10 hover:bg-red-500/20 group"
-                            >
-                              <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-xl shrink-0 flex items-center justify-center relative bg-red-500/20 text-red-400 group-hover:scale-110 transition-transform">
-                                  <Icon className="w-4 h-4" />
-                                </div>
-                                <div>
-                                  <span className="text-xs font-bold text-red-400 block group-hover:text-red-300 transition-colors">{item.label}</span>
-                                  <span className="text-[10px] text-red-400/70 block">{item.desc}</span>
-                                </div>
-                              </div>
-                            </button>
-                          );
-                        }
-
-                        return (
-                          <button
-                            key={item.id}
-                            onClick={() => {
-                              setActiveTab(item.id as any);
-                              setIsHamburgerOpen(false);
-                              triggerNotification(`Navigated to ${item.label}`);
-                            }}
-                            className={`w-full p-3 rounded-2xl border text-left flex items-center justify-between transition cursor-pointer ${isCurrent
+                              className={`w-full p-3 rounded-2xl border text-left flex items-center justify-between transition cursor-pointer ${isCurrent
                                 ? 'bg-primary-500/20 border-primary-500/60 text-white shadow-lg'
                                 : 'bg-white/5 border-white/5 hover:bg-white/10 text-zinc-300'
-                              }`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className={`p-2 rounded-xl shrink-0 flex items-center justify-center relative ${isCurrent ? 'bg-primary-500 text-black font-bold' : 'bg-white/10 text-primary-400'}`}>
-                                <Icon className="w-4 h-4" />
-                                {item.isVipFeature && !hasActiveVip && (
-                                  <div className="absolute -top-1.5 -right-1.5 bg-[#0a0a0c] rounded-full border border-zinc-800 p-0.5">
-                                    <Lock className="w-2 h-2 text-primary-500" />
-                                  </div>
-                                )}
+                                }`}
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className={`p-2 rounded-xl shrink-0 flex items-center justify-center relative ${isCurrent ? 'bg-primary-500 text-black font-bold' : 'bg-white/10 text-primary-400'}`}>
+                                  <Icon className="w-4 h-4" />
+                                  {item.isVipFeature && !hasActiveVip && (
+                                    <div className="absolute -top-1.5 -right-1.5 bg-[#0a0a0c] rounded-full border border-zinc-800 p-0.5">
+                                      <Lock className="w-2 h-2 text-primary-500" />
+                                    </div>
+                                  )}
+                                </div>
+                                <div>
+                                  <span className="text-xs font-bold text-white block">{item.label}</span>
+                                  <span className="text-[10px] text-zinc-400 block">{item.desc}</span>
+                                </div>
                               </div>
-                              <div>
-                                <span className="text-xs font-bold text-white block">{item.label}</span>
-                                <span className="text-[10px] text-zinc-400 block">{item.desc}</span>
-                              </div>
-                            </div>
-                            {isCurrent ? (
-                              <span className="text-[10px] bg-primary-500 text-black font-extrabold px-2 py-0.5 rounded-full shrink-0">
-                                Active
-                              </span>
-                            ) : item.isVipFeature && !isSuperAdmin ? (
-                              <span className="text-[9px] bg-primary-500/20 text-primary-300 border border-primary-500/30 px-1.5 py-0.2 rounded font-bold uppercase tracking-wider shrink-0">
-                                VIP
-                              </span>
-                            ) : null}
-                          </button>
-                        );
-                      })}
+                              {isCurrent ? (
+                                <span className="text-[10px] bg-primary-500 text-black font-extrabold px-2 py-0.5 rounded-full shrink-0">
+                                  Active
+                                </span>
+                              ) : item.isVipFeature && !isSuperAdmin ? (
+                                <span className="text-[9px] bg-primary-500/20 text-primary-300 border border-primary-500/30 px-1.5 py-0.2 rounded font-bold uppercase tracking-wider shrink-0">
+                                  VIP
+                                </span>
+                              ) : null}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
+
+
+
+
                   </div>
 
+                  {/* Footer */}
+                  <div className="pt-6 border-t border-white/10 space-y-3 mt-6">
+                    <div className="flex items-center justify-between text-xs text-zinc-400">
+                      <span>GearForge v2.5 (Global)</span>
+                      <span>PH & Worldwide</span>
+                    </div>
+                    {user && (
+                      <div className="space-y-2">
+                        <button
+                          onClick={async () => {
+                            try {
+                              const { auth } = await import('./lib/firebase');
+                              await auth.signOut();
+                            } catch (e) {
+                              console.error('Sign out error:', e);
+                            }
+                            localStorage.removeItem('ph_gamer_user');
+                            setUser(null);
+                            setIsHamburgerOpen(false);
+                            triggerNotification("Signed out successfully.");
+                          }}
+                          className="w-full py-2.5 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-extrabold text-xs flex items-center justify-center gap-2 cursor-pointer transition"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          <span>Sign Out Account</span>
+                        </button>
 
-
-
-                </div>
-
-                {/* Footer */}
-                <div className="pt-6 border-t border-white/10 space-y-3 mt-6">
-                  <div className="flex items-center justify-between text-xs text-zinc-400">
-                    <span>GearForge v2.5 (Global)</span>
-                    <span>PH & Worldwide</span>
+                        <button
+                          onClick={() => {
+                            setIsHamburgerOpen(false);
+                            setIsDeleteModalOpen(true);
+                          }}
+                          className="w-full py-2.5 px-4 rounded-xl bg-red-600/20 hover:bg-red-600/30 border border-red-500/40 text-red-300 font-extrabold text-xs flex items-center justify-center gap-2 cursor-pointer transition"
+                        >
+                          <Trash2 className="w-4 h-4 text-red-400" />
+                          <span>Delete Account Permanently</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
-                  {user && (
-                    <div className="space-y-2">
-                      <button
-                        onClick={async () => {
-                          try {
-                            const { auth } = await import('./lib/firebase');
-                            await auth.signOut();
-                          } catch (e) {
-                            console.error('Sign out error:', e);
-                          }
-                          localStorage.removeItem('ph_gamer_user');
-                          setUser(null);
-                          setIsHamburgerOpen(false);
-                          triggerNotification("Signed out successfully.");
-                        }}
-                        className="w-full py-2.5 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-extrabold text-xs flex items-center justify-center gap-2 cursor-pointer transition"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        <span>Sign Out Account</span>
-                      </button>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
 
+          {/* Tab Viewport */}
+          <div className="min-h-[400px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -15, scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+              >
+                {['builder', 'price', 'ai'].includes(activeTab) && !hasActiveVip ? (
+                  <div className="bg-[var(--color-glass)] backdrop-blur-2xl p-8 rounded-[32px] border border-[var(--color-glass-border)] shadow-2xl flex flex-col items-center justify-center text-center space-y-6 py-20">
+                    <div className="w-20 h-20 rounded-3xl bg-primary-500/10 flex items-center justify-center border border-primary-500/20 shadow-[0_0_30px_rgba(245,158,11,0.1)]">
+                      <Lock className="w-10 h-10 text-primary-400" />
+                    </div>
+                    <div className="max-w-lg space-y-3">
+                      <h2 className="text-3xl font-black text-white">VIP Exclusive Feature</h2>
+                      <p className="text-zinc-400 leading-relaxed">
+                        Unlock advanced tools like the AI FPS Builder, Price History Graphs, and your 24/7 AI Hardware Consultant by upgrading to GearForge VIP.
+                      </p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md pt-4">
                       <button
                         onClick={() => {
-                          setIsHamburgerOpen(false);
-                          setIsDeleteModalOpen(true);
+                          const trialUser = {
+                            ...user,
+                            isVip: true,
+                            isTrialActive: true,
+                            vipTierName: '7-Day VIP Free Trial',
+                            trialEndsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+                          };
+                          handleUpdateUser(trialUser, "🎉 7-Day VIP Free Trial Activated! Enjoy full AI features & 0 ads.");
                         }}
-                        className="w-full py-2.5 px-4 rounded-xl bg-red-600/20 hover:bg-red-600/30 border border-red-500/40 text-red-300 font-extrabold text-xs flex items-center justify-center gap-2 cursor-pointer transition"
+                        className="w-full px-6 py-3.5 rounded-2xl bg-primary-500/10 hover:bg-primary-500/20 text-primary-400 border border-primary-500/30 font-extrabold text-sm transition-all"
                       >
-                        <Trash2 className="w-4 h-4 text-red-400" />
-                        <span>Delete Account Permanently</span>
+                        Start 7-Day Free Trial
+                      </button>
+                      <button
+                        onClick={() => {
+                          const vipUser = {
+                            ...user,
+                            isVip: true,
+                            hasPermanentAdFree: true,
+                            vipTierName: 'Permanent VIP Pass'
+                          };
+                          handleUpdateUser(vipUser, "⚡ Permanent VIP Status Unlocked!");
+                        }}
+                        className="w-full px-6 py-3.5 rounded-2xl bg-primary-500 hover:bg-primary-400 text-black border-2 border-primary-400 font-black text-sm transition-all shadow-lg shadow-primary-500/20"
+                      >
+                        Upgrade to VIP (₱149)
                       </button>
                     </div>
-                  )}
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
-
-        {/* Tab Viewport */}
-        <div className="min-h-[400px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 15, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -15, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-            >
-              {['builder', 'price', 'ai'].includes(activeTab) && !hasActiveVip ? (
-                <div className="bg-[var(--color-glass)] backdrop-blur-2xl p-8 rounded-[32px] border border-[var(--color-glass-border)] shadow-2xl flex flex-col items-center justify-center text-center space-y-6 py-20">
-                  <div className="w-20 h-20 rounded-3xl bg-primary-500/10 flex items-center justify-center border border-primary-500/20 shadow-[0_0_30px_rgba(245,158,11,0.1)]">
-                    <Lock className="w-10 h-10 text-primary-400" />
                   </div>
-                  <div className="max-w-lg space-y-3">
-                    <h2 className="text-3xl font-black text-white">VIP Exclusive Feature</h2>
-                    <p className="text-zinc-400 leading-relaxed">
-                      Unlock advanced tools like the AI FPS Builder, Price History Graphs, and your 24/7 AI Hardware Consultant by upgrading to GearForge VIP.
-                    </p>
-                  </div>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md pt-4">
-                    <button
-                      onClick={() => {
-                        const trialUser = {
-                          ...user,
-                          isVip: true,
-                          isTrialActive: true,
-                          vipTierName: '7-Day VIP Free Trial',
-                          trialEndsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
-                        };
-                        handleUpdateUser(trialUser, "🎉 7-Day VIP Free Trial Activated! Enjoy full AI features & 0 ads.");
-                      }}
-                      className="w-full px-6 py-3.5 rounded-2xl bg-primary-500/10 hover:bg-primary-500/20 text-primary-400 border border-primary-500/30 font-extrabold text-sm transition-all"
-                    >
-                      Start 7-Day Free Trial
-                    </button>
-                    <button
-                      onClick={() => {
-                        const vipUser = {
-                          ...user,
-                          isVip: true,
-                          hasPermanentAdFree: true,
-                          vipTierName: 'Permanent VIP Pass'
-                        };
-                        handleUpdateUser(vipUser, "⚡ Permanent VIP Status Unlocked!");
-                      }}
-                      className="w-full px-6 py-3.5 rounded-2xl bg-primary-500 hover:bg-primary-400 text-black border-2 border-primary-400 font-black text-sm transition-all shadow-lg shadow-primary-500/20"
-                    >
-                      Upgrade to VIP (₱149)
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  {activeTab === 'preset' && (
-                    <BudgetCalculator initialBudget={4500} onSaveLoadout={handleSaveLoadout} />
-                  )}
-                  {activeTab === 'pcbuild' && (
-                    <PCBuilder onSaveLoadout={handleSaveLoadout} />
-                  )}
-                  {activeTab === 'builder' && (
-                    <AIBudgetBuilder />
-                  )}
-                  {activeTab === 'price' && (
-                    <PriceHistoryGraph />
-                  )}
-                  {activeTab === 'forum' && (
-                    <ItemReviewForum currentUser={user} />
-                  )}
-                  {activeTab === 'ai' && (
-                    <CustomLoadoutPlanner onSaveLoadout={handleSaveLoadout} />
-                  )}
-                  {activeTab === 'catalog' && (
-                    <QuickCatalog />
-                  )}
-                  {activeTab === 'compare' && (
-                    <CompareAccessories />
-                  )}
-                  {activeTab === 'directory' && (
-                    <LocalStoresDirectory />
-                  )}
-                </>
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Permanent Account Deletion Modal */}
-        <AnimatePresence>
-          {isDeleteModalOpen && user && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--app-bg)]/80 backdrop-blur-md">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                className="w-full max-w-md bg-[var(--card-bg)] border border-red-500/40 p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden space-y-6"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-red-500/20 border border-red-500/40 flex items-center justify-center shrink-0">
-                    <AlertTriangle className="w-6 h-6 text-red-500" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-extrabold text-white tracking-tight">Delete Account Permanently?</h3>
-                    <p className="text-[10px] text-red-400 font-extrabold uppercase tracking-wider">Irreversible Action</p>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-950/30 border border-red-500/20 text-xs text-zinc-300 space-y-2.5">
-                  <p className="font-semibold text-white">
-                    Are you sure you want to permanently delete this account?
-                  </p>
-                  <div className="p-2.5 rounded-xl bg-[var(--app-bg)]/70 border border-red-500/30 font-mono text-primary-300 truncate font-bold text-center text-xs">
-                    {user.email || user.displayName}
-                  </div>
-                  <p className="text-zinc-400 leading-relaxed text-[11px]">
-                    This action will permanently erase:
-                  </p>
-                  <ul className="list-disc list-inside space-y-1 text-zinc-400 text-[11px] pl-1">
-                    <li>Saved PC hardware loadouts & gear setups</li>
-                    <li>VIP member status and subscription badges</li>
-                    <li>Price alerts and community forum reviews</li>
-                    <li>Cloud database account record</li>
-                  </ul>
-                </div>
-
-                <div className="flex items-center gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsDeleteModalOpen(false)}
-                    disabled={isDeletingAccount}
-                    className="flex-1 py-3 px-4 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handlePermanentDeleteAccount}
-                    disabled={isDeletingAccount}
-                    className="flex-1 py-3 px-4 rounded-2xl bg-red-600 hover:bg-red-700 border border-red-500 text-white font-extrabold text-xs transition flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-red-900/30 disabled:opacity-50"
-                  >
-                    {isDeletingAccount ? (
-                      <span>Deleting...</span>
-                    ) : (
-                      <>
-                        <Trash2 className="w-4 h-4" />
-                        <span>Yes, Delete Account</span>
-                      </>
+                ) : (
+                  <>
+                    {activeTab === 'preset' && (
+                      <BudgetCalculator initialBudget={4500} onSaveLoadout={handleSaveLoadout} />
                     )}
-                  </button>
-                </div>
+                    {activeTab === 'pcbuild' && (
+                      <PCBuilder onSaveLoadout={handleSaveLoadout} />
+                    )}
+                    {activeTab === 'builder' && (
+                      <AIBudgetBuilder />
+                    )}
+                    {activeTab === 'price' && (
+                      <PriceHistoryGraph />
+                    )}
+                    {activeTab === 'forum' && (
+                      <ItemReviewForum currentUser={user} />
+                    )}
+                    {activeTab === 'ai' && (
+                      <CustomLoadoutPlanner onSaveLoadout={handleSaveLoadout} />
+                    )}
+                    {activeTab === 'catalog' && (
+                      <QuickCatalog />
+                    )}
+                    {activeTab === 'compare' && (
+                      <CompareAccessories />
+                    )}
+                    {activeTab === 'directory' && (
+                      <LocalStoresDirectory />
+                    )}
+                  </>
+                )}
               </motion.div>
-            </div>
+            </AnimatePresence>
+          </div>
+
+          {/* Permanent Account Deletion Modal */}
+          <AnimatePresence>
+            {isDeleteModalOpen && user && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--app-bg)]/80 backdrop-blur-md">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                  className="w-full max-w-md bg-[var(--card-bg)] border border-red-500/40 p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden space-y-6"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-red-500/20 border border-red-500/40 flex items-center justify-center shrink-0">
+                      <AlertTriangle className="w-6 h-6 text-red-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-extrabold text-white tracking-tight">Delete Account Permanently?</h3>
+                      <p className="text-[10px] text-red-400 font-extrabold uppercase tracking-wider">Irreversible Action</p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-red-950/30 border border-red-500/20 text-xs text-zinc-300 space-y-2.5">
+                    <p className="font-semibold text-white">
+                      Are you sure you want to permanently delete this account?
+                    </p>
+                    <div className="p-2.5 rounded-xl bg-[var(--app-bg)]/70 border border-red-500/30 font-mono text-primary-300 truncate font-bold text-center text-xs">
+                      {user.email || user.displayName}
+                    </div>
+                    <p className="text-zinc-400 leading-relaxed text-[11px]">
+                      This action will permanently erase:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-zinc-400 text-[11px] pl-1">
+                      <li>Saved PC hardware loadouts & gear setups</li>
+                      <li>VIP member status and subscription badges</li>
+                      <li>Price alerts and community forum reviews</li>
+                      <li>Cloud database account record</li>
+                    </ul>
+                  </div>
+
+                  <div className="flex items-center gap-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsDeleteModalOpen(false)}
+                      disabled={isDeletingAccount}
+                      className="flex-1 py-3 px-4 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handlePermanentDeleteAccount}
+                      disabled={isDeletingAccount}
+                      className="flex-1 py-3 px-4 rounded-2xl bg-red-600 hover:bg-red-700 border border-red-500 text-white font-extrabold text-xs transition flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-red-900/30 disabled:opacity-50"
+                    >
+                      {isDeletingAccount ? (
+                        <span>Deleting...</span>
+                      ) : (
+                        <>
+                          <Trash2 className="w-4 h-4" />
+                          <span>Yes, Delete Account</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
+
+          {/* 8 Default Avatar Choice Modal */}
+          {user && (
+            <>
+              <RulesModal
+                isOpen={!user.hasAcceptedRules}
+                onAccept={handleAcceptRules}
+                onDecline={handleDeclineRules}
+              />
+              <AvatarChoiceModal
+                isOpen={isAvatarModalOpen}
+                onClose={() => setIsAvatarModalOpen(false)}
+                currentUser={user}
+                onSelectAvatar={(photoURL, avatarName) => {
+                  handleUpdateUser({ ...user, photoURL }, `✨ Avatar updated to ${avatarName}!`);
+                }}
+              />
+            </>
           )}
-        </AnimatePresence>
 
-        {/* 8 Default Avatar Choice Modal */}
-        {user && (
-          <>
-            <RulesModal
-              isOpen={!user.hasAcceptedRules}
-              onAccept={handleAcceptRules}
-              onDecline={handleDeclineRules}
-            />
-            <AvatarChoiceModal
-              isOpen={isAvatarModalOpen}
-              onClose={() => setIsAvatarModalOpen(false)}
+          {/* Admin Panel Modal */}
+          {user && (user.role === 'admin' || isSuperAdmin) && (
+            <AdminPanelModal
+              isOpen={isAdminPanelOpen}
+              onClose={() => setIsAdminPanelOpen(false)}
               currentUser={user}
-              onSelectAvatar={(photoURL, avatarName) => {
-                handleUpdateUser({ ...user, photoURL }, `✨ Avatar updated to ${avatarName}!`);
-              }}
-            />
-          </>
-        )}
-
-        {/* Admin Panel Modal */}
-        {user && (user.role === 'admin' || isSuperAdmin) && (
-          <AdminPanelModal
-            isOpen={isAdminPanelOpen}
-            onClose={() => setIsAdminPanelOpen(false)}
-            currentUser={user}
-            onUpdateCurrentUser={setUser}
-          />
-        )}
-
-        {/* Bug Reports Admin Panel Modal */}
-        {user && (user.role === 'admin' || isSuperAdmin) && (
-          <BugReportsPanelModal
-            isOpen={isBugReportsPanelOpen}
-            onClose={() => setIsBugReportsPanelOpen(false)}
-          />
-        )}
-
-        {/* Report Bug Modal for all users */}
-        {user && (
-          <ReportBugModal
-            isOpen={isReportBugModalOpen}
-            onClose={() => setIsReportBugModalOpen(false)}
-            user={user}
-          />
-        )}
-
-        {/* Global User Profile Modal */}
-        <AnimatePresence>
-          {selectedSearchUser && (
-            <UserProfileModal
-              username={selectedSearchUser}
-              currentUser={user}
-              onClose={() => setSelectedSearchUser(null)}
+              onUpdateCurrentUser={setUser}
             />
           )}
-        </AnimatePresence>
-      </main>
+
+          {/* Bug Reports Admin Panel Modal */}
+          {user && (user.role === 'admin' || isSuperAdmin) && (
+            <BugReportsPanelModal
+              isOpen={isBugReportsPanelOpen}
+              onClose={() => setIsBugReportsPanelOpen(false)}
+            />
+          )}
+
+          {/* Report Bug Modal for all users */}
+          {user && (
+            <ReportBugModal
+              isOpen={isReportBugModalOpen}
+              onClose={() => setIsReportBugModalOpen(false)}
+              user={user}
+            />
+          )}
+
+          {/* Global User Profile Modal */}
+          <AnimatePresence>
+            {selectedSearchUser && (
+              <UserProfileModal
+                username={selectedSearchUser}
+                currentUser={user}
+                onClose={() => setSelectedSearchUser(null)}
+              />
+            )}
+          </AnimatePresence>
+        </main>
+      </div>
     </div>
-  </div>
   );
 }
