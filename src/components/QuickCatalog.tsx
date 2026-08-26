@@ -3,6 +3,7 @@ import { ACCESSORY_CATALOG, BUDGET_TIERS } from '../data/accessories';
 import { CategoryType, Accessory } from '../types';
 import { Search, Star, ExternalLink, ShieldAlert, SlidersHorizontal, Gamepad, Sparkles, MessageSquare } from 'lucide-react';
 import AccessoryReviewSection from './AccessoryReviewSection';
+import ElectricBorder from './ElectricBorder';
 
 /**
  * QuickCatalog Component
@@ -121,11 +122,18 @@ export default function QuickCatalog() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map((item) => (
-            <div
+            <ElectricBorder
               key={item.id}
-              className="bg-[#141821]/70 backdrop-blur-md p-5 rounded-3xl border border-white/8 hover:border-predator-cyan/20 hover:shadow-lg transition duration-200 flex flex-col justify-between"
+              color="var(--theme-color, #00f2ff)"
+              speed={1.5}
+              chaos={0.12}
+              borderRadius={24}
+              className="h-full"
             >
-              <div>
+              <div
+                className="bg-[#141821]/70 backdrop-blur-md p-5 rounded-3xl border border-white/8 hover:border-predator-cyan/20 hover:shadow-lg transition duration-200 flex flex-col justify-between h-full"
+              >
+                <div>
                 <div className="flex justify-between items-start mb-4">
                   <span className="text-[10px] font-semibold text-[var(--theme-color)] bg-[var(--theme-color)]/10 px-3 py-1 rounded-full uppercase tracking-widest relative z-10 backdrop-blur-sm">
                     {item.category}
@@ -213,7 +221,8 @@ export default function QuickCatalog() {
                   <AccessoryReviewSection accessory={item} />
                 )}
               </div>
-            </div>
+              </div>
+            </ElectricBorder>
           ))}
         </div>
       )}

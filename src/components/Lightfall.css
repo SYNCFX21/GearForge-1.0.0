@@ -1,0 +1,10 @@
+.lightfall-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.lightfall-fallback {
+  background: linear-gradient(135deg, #050b14 0%, #100e0b 100%);
+}

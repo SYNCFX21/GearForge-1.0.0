@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import BudgetCalculator from './components/BudgetCalculator';
 import CustomLoadoutPlanner from './components/CustomLoadoutPlanner';
 import CompareAccessories from './components/CompareAccessories';
@@ -19,8 +19,12 @@ import UserSearch from './components/UserSearch';
 import UserProfileModal from './components/UserProfileModal';
 import RulesModal from './components/RulesModal';
 import PCBuilder from './components/PCBuilder';
-import ThreeBackground, { BACKGROUND_THEMES } from './components/ThreeBackground';
+import { BACKGROUND_THEMES } from './components/ThreeBackground';
+const ThreeBackground = React.lazy(() => import('./components/ThreeBackground'));
 import ThemeEditorModal, { CustomTheme } from './components/ThemeEditorModal';
+import DigitalRain from './components/DigitalRain';
+import MagicRings from './components/MagicRings';
+import DecryptedText from './components/DecryptedText';
 import { 
   Gamepad2, 
   Coins, 
@@ -181,8 +185,8 @@ export default function App() {
                 photoURL: firebaseUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${firebaseUser.uid}`,
                 providerId: 'firebase',
                 registeredAt: firebaseUser.metadata.creationTime ? new Date(firebaseUser.metadata.creationTime).toLocaleDateString('en-PH') : new Date().toLocaleDateString('en-PH'),
-                isVip: true, // Account default VIP status granted
-                vipTierName: 'VIP Gamer Pass'
+                isVip: false, // Default to false, will be overwritten by Firestore
+                vipTierName: undefined
               };
               
               const fsProfile = await getUserProfileFromFirestore(firebaseUser.uid);
@@ -490,10 +494,48 @@ export default function App() {
   const hasAdFree = Boolean(user.hasPermanentAdFree || hasActiveVip || isSuperAdmin || user.role === 'admin');
 
   return (
-    <div className="min-h-screen text-[#f5f5f7] antialiased selection:bg-primary-500 selection:text-black pb-16 relative overflow-hidden">
-      <ThreeBackground />
-      
-      {/* Top International Language Bar & Compliance Audit */}
+    <div 
+      className="min-h-screen text-[#f5f5f7] antialiased selection:bg-primary-500 selection:text-black pb-16 relative overflow-hidden"
+      style={{ backgroundColor: '#100e0b' }}
+    >
+      {/* Background layer */}
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        {activeTab === 'ai' ? (
+          <div className="h-full w-full opacity-60">
+            <MagicRings
+              color="#048fc7"
+              colorTwo="#003b9b"
+              ringCount={6}
+              speed={1.5}
+              attenuation={12}
+              lineThickness={2}
+              baseRadius={0.35}
+              radiusStep={0.1}
+              scaleRate={0.1}
+              opacity={1}
+              blur={0}
+              noiseAmount={0.1}
+              rotation={0}
+              ringGap={1.5}
+              fadeIn={0.7}
+              fadeOut={0.5}
+              followMouse={false}
+              mouseInfluence={0.2}
+              hoverScale={1.2}
+              parallax={0.05}
+              clickBurst={false}
+            />
+          </div>
+        ) : (
+          <div className="opacity-30 h-full w-full">
+            <DigitalRain />
+          </div>
+        )}
+      </div>
+
+      <div className="relative z-10">
+        
+        {/* Top International Language Bar & Compliance Audit */}
       <LanguageAndComplianceBar
         user={user}
         onToggleVip={handleToggleVip}
@@ -529,8 +571,21 @@ export default function App() {
             <div className="flex items-center gap-3 sm:gap-4">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-none">
-                    Gear<span className="text-primary-400">Forge</span>
+                  <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-none flex items-center">
+                    <DecryptedText
+                      text="Gear"
+                      speed={50}
+                      maxIterations={12}
+                      animateOn="hover"
+                    />
+                    <span className="text-primary-400">
+                      <DecryptedText
+                        text="Forge"
+                        speed={50}
+                        maxIterations={12}
+                        animateOn="hover"
+                      />
+                    </span>
                   </h1>
                 </div>
               </div>
@@ -1508,6 +1563,7 @@ export default function App() {
           )}
         </AnimatePresence>
       </main>
+      </div>
     </div>
   );
 }
