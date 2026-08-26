@@ -311,6 +311,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
       className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden select-none"
       style={{ backgroundColor: '#100e0b' }}
     >
+<<<<<<< HEAD
       {/* Lightfall Background */}
       <div className="absolute inset-0 z-0 pointer-events-auto" aria-hidden="true">
         <Suspense fallback={<div className="absolute inset-0 bg-[#050b14]" />}>
@@ -333,6 +334,44 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
           />
         </Suspense>
       </div>
+=======
+      {/* Phantom Arc - Aura Layers */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse 120% 145% at 50% -50%, rgba(0,0,0,0) 60%, rgb(12,24,210) 78%, rgba(0,0,0,0) 85%)",
+          mixBlendMode: "screen",
+          filter: "blur(72px)", /* Mobile would use 50px, but Tailwind arbitrary values or simple inline style is fine */
+          transform: "translateZ(0)",
+          willChange: "transform",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse 120% 145% at 50% -50%, rgba(0,0,0,0) 55%, rgba(12,24,210,0.4) 80%, rgba(0,0,0,0) 100%)",
+          mixBlendMode: "screen",
+          filter: "blur(252px)",
+          opacity: 0.9,
+          transform: "translateZ(0)",
+          willChange: "transform",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse 120% 145% at 50% -50%, rgba(0,0,0,0) 83.5%, #c8a8a6 84.5%, rgba(0,0,0,0) 85.5%)",
+          mixBlendMode: "lighten",
+          filter: "blur(72px)",
+          opacity: 0.8,
+          transform: "translateZ(0)",
+          willChange: "transform",
+        }}
+        aria-hidden="true"
+      />
+>>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
 
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch z-10 my-8">
         

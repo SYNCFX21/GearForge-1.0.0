@@ -23,7 +23,10 @@ import { BACKGROUND_THEMES } from './components/ThreeBackground';
 const ThreeBackground = React.lazy(() => import('./components/ThreeBackground'));
 import ThemeEditorModal, { CustomTheme } from './components/ThemeEditorModal';
 import DigitalRain from './components/DigitalRain';
+<<<<<<< HEAD
 import MagicRings from './components/MagicRings';
+=======
+>>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
 import DecryptedText from './components/DecryptedText';
 import { 
   Gamepad2, 
@@ -498,6 +501,7 @@ export default function App() {
       className="min-h-screen text-[#f5f5f7] antialiased selection:bg-primary-500 selection:text-black pb-16 relative overflow-hidden"
       style={{ backgroundColor: '#100e0b' }}
     >
+<<<<<<< HEAD
       {/* Background layer */}
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
         {activeTab === 'ai' ? (
@@ -531,6 +535,11 @@ export default function App() {
             <DigitalRain />
           </div>
         )}
+=======
+      {/* Digital Rain Background */}
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-30" aria-hidden="true">
+        <DigitalRain />
+>>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
       </div>
 
       <div className="relative z-10">

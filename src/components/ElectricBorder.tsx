@@ -25,7 +25,10 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
   const animationRef = useRef<number | null>(null);
   const timeRef = useRef<number>(0);
   const lastFrameTimeRef = useRef<number>(0);
+<<<<<<< HEAD
   const inViewRef = useRef<boolean>(true);
+=======
+>>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
 
   // Noise functions
   const random = useCallback((x: number) => {
@@ -156,7 +159,11 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
     if (!ctx) return;
 
     // Configuration
+<<<<<<< HEAD
     const octaves = 3; // Reduced from 10 for massive performance boost on lists
+=======
+    const octaves = 10;
+>>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
     const lacunarity = 1.6;
     const gain = 0.7;
     const amplitude = chaos;
@@ -187,12 +194,15 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
     const drawElectricBorder = (currentTime: number) => {
       if (!canvas || !ctx) return;
 
+<<<<<<< HEAD
       if (!inViewRef.current) {
         lastFrameTimeRef.current = currentTime;
         animationRef.current = requestAnimationFrame(drawElectricBorder);
         return;
       }
 
+=======
+>>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       if (dpr !== lastDpr) {
         lastDpr = dpr;
@@ -272,6 +282,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       animationRef.current = requestAnimationFrame(drawElectricBorder);
     };
 
+<<<<<<< HEAD
     // Handle intersection (pauses off-screen math)
     const intersectionObserver = new IntersectionObserver(
       (entries) => {
@@ -283,6 +294,8 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
     );
     intersectionObserver.observe(container);
 
+=======
+>>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
     // Handle resize
     const resizeObserver = new ResizeObserver(() => {
       const newSize = updateSize();
@@ -299,7 +312,10 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
       resizeObserver.disconnect();
+<<<<<<< HEAD
       intersectionObserver.disconnect();
+=======
+>>>>>>> 2a2c267950ff7c93788ce9fe87e468c220904ddf
     };
   }, [color, speed, chaos, borderRadius, octavedNoise, getRoundedRectPoint]);
 
