@@ -496,7 +496,7 @@ export default function App() {
   return (
     <div
       className="min-h-screen text-[#f5f5f7] antialiased selection:bg-primary-500 selection:text-black pb-16 relative overflow-hidden"
-      style={{ backgroundColor: '#100e0b' }}
+      style={{ backgroundColor: activeTab === 'ai' ? '#000000' : '#100e0b' }}
     >
 
       {/* Background layer */}
@@ -532,11 +532,6 @@ export default function App() {
             <DigitalRain />
           </div>
         )}
-
-        {/* Digital Rain Background */}
-        <div className="pointer-events-none absolute inset-0 z-0 opacity-30" aria-hidden="true">
-          <DigitalRain />
-        </div>
 
       </div>
 
