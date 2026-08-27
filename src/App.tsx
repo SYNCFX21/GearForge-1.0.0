@@ -500,7 +500,7 @@ export default function App() {
     >
 
       {/* Background layer */}
-      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+      <div className="pointer-events-none fixed inset-0 z-0 h-screen w-screen" aria-hidden="true">
         {activeTab === 'ai' ? (
           <div className="h-full w-full opacity-60">
             <MagicRings

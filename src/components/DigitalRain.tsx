@@ -267,6 +267,8 @@ function __OriginkitBase_DigitalRain(props: DigitalRainProps) {
             style={{
                 ...style,
                 position: "relative",
+                width: "100%",
+                height: "100%",
                 overflow: "hidden",
             }}
         >
