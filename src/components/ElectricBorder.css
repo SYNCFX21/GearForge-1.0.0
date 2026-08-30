@@ -1,9 +1,15 @@
 .electric-border {
-  --electric-light-color: oklch(from var(--electric-border-color) l c h);
+  --electric-light-color: var(--electric-border-color);
   position: relative;
   border-radius: inherit;
   overflow: visible;
   isolation: isolate;
+}
+
+@supports (color: oklch(from white l c h)) {
+  .electric-border {
+    --electric-light-color: oklch(from var(--electric-border-color) l c h);
+  }
 }
 
 .eb-canvas-container {

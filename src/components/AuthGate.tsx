@@ -55,7 +55,17 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
   const getFriendlyErrorMessage = (code?: string, rawMsg?: string): string => {
     switch (code) {
       case 'auth/operation-not-allowed':
-        return 'Firebase Email/Password login is not enabled in Firebase Console. Use Google Sign-In or Quick GearForge Sign-Up below.';
+        return 'This sign-in provider is not enabled in Firebase Console. Enable it under Authentication > Sign-in method, then try again.';
+      case 'auth/unauthorized-domain':
+        return 'This app domain is not authorized for Firebase sign-in. Add the current domain under Firebase Authentication > Settings > Authorized domains.';
+      case 'auth/popup-blocked':
+        return 'Your browser blocked the sign-in popup. Allow popups for GearForge and try again.';
+      case 'auth/popup-closed-by-user':
+        return 'The sign-in popup was closed before authentication finished.';
+      case 'auth/provider-already-linked':
+        return 'This sign-in provider is already linked to another account.';
+      case 'auth/account-exists-with-different-credential':
+        return 'An account already exists with this email using a different sign-in method. Sign in with that method first.';
       case 'auth/email-already-in-use':
         return 'This email is already registered in GearForge. Please switch to "Sign In" or use Google Sign-In.';
       case 'auth/weak-password':
@@ -226,7 +236,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
       onLoginSuccess(loggedUser);
     } catch (err: any) {
       console.error('Google login error:', err);
-      setError(err.message || 'Google authentication failed.');
+      setError(getFriendlyErrorMessage(err.code, err.message || 'Google authentication failed.'));
     } finally {
       setIsLoading(false);
     }
@@ -263,7 +273,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
       onLoginSuccess(loggedUser);
     } catch (err: any) {
       console.error('Facebook login error:', err);
-      setError(err.message || 'Facebook authentication failed.');
+      setError(getFriendlyErrorMessage(err.code, err.message || 'Facebook authentication failed.'));
     } finally {
       setIsLoading(false);
     }
@@ -300,7 +310,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
       onLoginSuccess(loggedUser);
     } catch (err: any) {
       console.error('Discord login error:', err);
-      setError(err.message || 'Discord authentication failed.');
+      setError(getFriendlyErrorMessage(err.code, err.message || 'Discord authentication failed.'));
     } finally {
       setIsLoading(false);
     }
