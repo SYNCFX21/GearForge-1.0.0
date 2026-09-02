@@ -236,6 +236,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
       onLoginSuccess(loggedUser);
     } catch (err: any) {
       console.error('Google login error:', err);
+      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') return;
       setError(getFriendlyErrorMessage(err.code, err.message || 'Google authentication failed.'));
     } finally {
       setIsLoading(false);
@@ -273,6 +274,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
       onLoginSuccess(loggedUser);
     } catch (err: any) {
       console.error('Facebook login error:', err);
+      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') return;
       setError(getFriendlyErrorMessage(err.code, err.message || 'Facebook authentication failed.'));
     } finally {
       setIsLoading(false);
@@ -310,6 +312,7 @@ export default function AuthGate({ onLoginSuccess }: AuthGateProps) {
       onLoginSuccess(loggedUser);
     } catch (err: any) {
       console.error('Discord login error:', err);
+      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') return;
       setError(getFriendlyErrorMessage(err.code, err.message || 'Discord authentication failed.'));
     } finally {
       setIsLoading(false);
